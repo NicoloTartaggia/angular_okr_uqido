@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Objective } from '../shared/models/objective.model';
 
@@ -8,19 +8,23 @@ import { Objective } from '../shared/models/objective.model';
   styleUrls: ['./objectives.component.scss']
 })
 export class ObjectivesComponent implements OnInit {
-  private objectiveUrl = 'https://us-central1-okr-platform.cloudfunctions.net/objectives?okrId=Y1GludUW1C8RegxLOENL';
-  private objectivesList: Objective[];
+  @Input()
+  currentOkrId: string;
+
+  private objectiveUrl: string;
+  private objectivesList: Objective[] = [];
 
   constructor(private http: HttpClient) { }
 
   ngOnInit() {
+    this.objectiveUrl = `https://us-central1-okr-platform.cloudfunctions.net/objectives?okrId=${this.currentOkrId}`;
     this.getObjectivesList();
   }
 
   // GET - Get all objectives in current okr and save them in objectivesList
   public getObjectivesList() {
     this.http.get(this.objectiveUrl)
-      .subscribe((data: any) => {
+      .subscribe((data: Objective[]) => {
         this.objectivesList = data;
       });
   }

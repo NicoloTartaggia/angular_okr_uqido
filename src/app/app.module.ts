@@ -3,12 +3,13 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { CurrentOkrComponent } from './current-okr/current-okr.component';
+import { CurrentOkrComponent } from './okrs/current-okr/current-okr.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ObjectivesComponent } from './objectives/objectives.component';
 import { KeysComponent } from './keys/keys.component';
 import {FormsModule} from "@angular/forms";
-import { KeyComponent } from './key/key.component';
+import { KeyComponent } from './keys/key/key.component';
+import { OkrsComponent } from './okrs/okrs.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { KeyComponent } from './key/key.component';
     CurrentOkrComponent,
     ObjectivesComponent,
     KeysComponent,
-    KeyComponent
+    KeyComponent,
+    OkrsComponent
   ],
   imports: [
     AppRoutingModule,

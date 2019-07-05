@@ -1,5 +1,5 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {Key} from '../shared/models/key.model';
+import { Component, Input, OnInit } from '@angular/core';
+import { Key } from '../../shared/models/key.model';
 
 @Component({
   selector: 'app-key',

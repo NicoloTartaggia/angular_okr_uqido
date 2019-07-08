@@ -12,16 +12,7 @@ export class CurrentOkrComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit() {
-    console.log(this.okr);
-  }
+  ngOnInit() {}
 
-  public isCurrentOkr(): boolean {
-    const currentDate = Math.round(new Date().getTime() / 1000);
-    if (this.okr.startingAt.seconds < currentDate && this.okr.endingAt.seconds >= currentDate) {
-      return true;
-    } else {
-      return false;
-    }
-  }
 }
+

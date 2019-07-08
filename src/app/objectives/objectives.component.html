@@ -1,8 +1,5 @@
 <!-- Scrolling through objectives and giving the objective id of each one as input to keys component-->
-<ul>
-  <li *ngFor="let objective of objectivesList"> {{objective.description}}
-    <ul>
-      <app-keys [objectiveId]="objective.id"></app-keys>
-    </ul>
-  </li>
-</ul>
+<ng-container *ngFor="let objective of objectivesList">
+  <mat-list-item>{{objective.description}}</mat-list-item>
+    <app-keys [objectiveId]="objective.id"></app-keys>
+</ng-container>

@@ -1,14 +1,16 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { CurrentOkrComponent } from './okrs/current-okr/current-okr.component';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { ObjectivesComponent } from './objectives/objectives.component';
-import { KeysComponent } from './keys/keys.component';
-import {FormsModule} from "@angular/forms";
+import { MaterialModule } from './material.module';
+import { NgModule } from '@angular/core';
+
+import { CurrentOkrComponent } from './okrs/current-okr/current-okr.component';
 import { KeyComponent } from './keys/key/key.component';
+import { KeysComponent } from './keys/keys.component';
+import { ObjectivesComponent } from './objectives/objectives.component';
 import { OkrsComponent } from './okrs/okrs.component';
 
 @NgModule({
@@ -23,8 +25,10 @@ import { OkrsComponent } from './okrs/okrs.component';
   imports: [
     AppRoutingModule,
     BrowserModule,
+    BrowserAnimationsModule,
+    FormsModule,
     HttpClientModule,
-    FormsModule
+    MaterialModule
   ],
   providers: [],
   bootstrap: [AppComponent]

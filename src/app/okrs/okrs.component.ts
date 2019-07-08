@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Okr } from '../shared/models/okr.model';
+import {Okr, OkrJSON} from '../shared/models/okr.model';
+import {Observable} from 'rxjs';
+import {filter, first, map} from 'rxjs/operators';
 
 @Component({
   selector: 'app-okrs',
@@ -9,18 +11,21 @@ import { Okr } from '../shared/models/okr.model';
 })
 export class OkrsComponent implements OnInit {
   private url = 'https://us-central1-okr-platform.cloudfunctions.net/okrs';
-  private okrList: Okr[] = [];
+  private currentOkr$: Observable<Okr>;
 
   constructor(private http: HttpClient) { }
 
   ngOnInit() {
-    this.setOkrList();
+    this.setCurrentOkr();
   }
 
-  public setOkrList() {
-    this.http.get(this.url)
-      .subscribe((data: Okr[]) => {
-        this.okrList = data;
-      });
+  public setCurrentOkr() {
+    const currentDate = new Date().getTime();
+    this.currentOkr$ = this.http.get(this.url).pipe(
+      map((data: OkrJSON[]) => {
+        return data.map((o) => Okr.fromJSON(o))
+          .filter(okr => okr.startingAt.getTime() < currentDate && okr.endingAt.getTime() >= currentDate)[0];
+      })
+    );
   }
 }

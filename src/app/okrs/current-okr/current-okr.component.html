@@ -1,2 +1,3 @@
-<app-objectives *ngIf="isCurrentOkr()" [currentOkrId]="okr.id"></app-objectives>
-<!--<app-objectives></app-objectives>-->
+<ng-container *ngIf="okr">
+    <app-objectives [currentOkrId]="okr?.id"></app-objectives>
+</ng-container>

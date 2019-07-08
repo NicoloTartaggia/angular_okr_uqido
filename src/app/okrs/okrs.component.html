@@ -1,7 +1,5 @@
 <h1>Uqido Okr</h1>
-<ng-container *ngFor="let okr of okrList">
-    <ul>
-        <app-current-okr [okr]="okr"></app-current-okr>
-    </ul>
-</ng-container>
+<mat-list>
+    <app-current-okr [okr]="currentOkr$ | async"></app-current-okr>
+</mat-list>
 

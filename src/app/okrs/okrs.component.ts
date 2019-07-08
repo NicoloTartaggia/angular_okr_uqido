@@ -23,7 +23,7 @@ export class OkrsComponent implements OnInit {
     const currentDate = new Date().getTime();
     this.currentOkr$ = this.http.get(this.url).pipe(
       map((data: OkrJSON[]) => {
-        return data.map((o) => Okr.fromJSON(o))
+        return data.map((okrs) => Okr.fromJSON(okrs))
           .filter(okr => okr.startingAt.getTime() < currentDate && okr.endingAt.getTime() >= currentDate)[0];
       })
     );

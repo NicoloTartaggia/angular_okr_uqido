@@ -3,8 +3,8 @@ import Timestamp = firebase.firestore.Timestamp;
 
 export interface OkrJSON {
   id: string;
-  readonly startingAt: Timestamp;
-  readonly endingAt: Timestamp;
+  startingAt: Timestamp;
+  endingAt: Timestamp;
 }
 
 export class Okr {

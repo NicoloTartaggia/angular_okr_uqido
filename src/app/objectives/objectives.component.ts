@@ -16,12 +16,15 @@ export class ObjectivesComponent implements OnInit, OnChanges {
 
   constructor(private http: HttpClient) { }
 
-  ngOnInit() {
-    this.setObjectivesList();
-  }
+  ngOnInit() {}
+
 
   ngOnChanges() {
+    if (!this.currentOkrId) {
+      return;
+    }
     this.objectiveUrl = `https://us-central1-okr-platform.cloudfunctions.net/objectives?okrId=${this.currentOkrId}`;
+    this.setObjectivesList();
   }
 
   // GET - Get all objectives in current okr and save them in objectivesList

@@ -4,23 +4,16 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { MaterialModule } from './material.module';
 import { NgModule } from '@angular/core';
 
-import { CurrentOkrComponent } from './okrs/current-okr/current-okr.component';
-import { KeyComponent } from './keys/key/key.component';
-import { KeysComponent } from './keys/keys.component';
-import { ObjectivesComponent } from './objectives/objectives.component';
-import { OkrsComponent } from './okrs/okrs.component';
+import { LoginComponent } from './login/login.component';
+import {LoginService} from './login/login.service';
+import {SharedModule} from './shared/shared.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CurrentOkrComponent,
-    ObjectivesComponent,
-    KeysComponent,
-    KeyComponent,
-    OkrsComponent
+    LoginComponent
   ],
   imports: [
     AppRoutingModule,
@@ -28,9 +21,9 @@ import { OkrsComponent } from './okrs/okrs.component';
     BrowserAnimationsModule,
     FormsModule,
     HttpClientModule,
-    MaterialModule
+    SharedModule
   ],
-  providers: [],
+  providers: [LoginService], // Using the same instance of this service
   bootstrap: [AppComponent]
 })
 export class AppModule { }

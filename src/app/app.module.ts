@@ -7,8 +7,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 
 import { LoginComponent } from './login/login.component';
-import {LoginService} from './login/login.service';
-import {SharedModule} from './shared/shared.module';
+import { LoginService } from './services/login.service';
+import { SharedModule } from './shared/shared.module';
+import { LoginGuard } from './services/login-guard.service';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,10 @@ import {SharedModule} from './shared/shared.module';
     HttpClientModule,
     SharedModule
   ],
-  providers: [LoginService], // Using the same instance of this service
+  providers: [
+    LoginService,    // Using the same instance of this service
+    LoginGuard
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

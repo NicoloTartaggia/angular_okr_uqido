@@ -1,16 +1,9 @@
-<!--<div *ngIf="auth.user$ | async; then authenticated else login">-->
-<!--    &lt;!&ndash; template will replace this div &ndash;&gt;-->
-<!--</div>-->
-
-<!--<ng-template #login>-->
-    <button mat-button (click)="auth.googleSignin()">
-        <mat-icon>
+<div id="login-container">
+    <h1 class="mat-display-3">Uqido Okr</h1>
+    <div id="button-container">
+        <button mat-button (click)="auth.googleSignin()">
             <img class="google-icon-svg" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"/>
-        </mat-icon>
-        Sign in with Google
-    </button>
-<!--</ng-template>-->
-
-<!--<ng-template #authenticated>-->
-<!--    <app-okrs></app-okrs>-->
-<!--</ng-template>-->
+            <span>Sign in with Google</span>
+        </button>
+    </div>
+</div>

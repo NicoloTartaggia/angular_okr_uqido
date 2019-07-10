@@ -1,6 +1,7 @@
-<ng-container>
-    <h1 class="mat-display-3">Uqido Okr</h1>
-</ng-container>
+<mat-toolbar>
+    <span>Uqido Okr</span>
+    <button mat-button (click)="auth.signOut()">Log Out</button>
+</mat-toolbar>
 <app-current-okr [okr]="currentOkr$ | async"></app-current-okr>
 
 

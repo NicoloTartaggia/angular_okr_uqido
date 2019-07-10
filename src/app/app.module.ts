@@ -4,33 +4,32 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { MaterialModule } from './material.module';
 import { NgModule } from '@angular/core';
 
-import { CurrentOkrComponent } from './okrs/current-okr/current-okr.component';
-import { KeyComponent } from './keys/key/key.component';
-import { KeysComponent } from './keys/keys.component';
-import { ObjectivesComponent } from './objectives/objectives.component';
-import { OkrsComponent } from './okrs/okrs.component';
+import { AuthService } from './services/auth.service';
+import { SharedModule } from './shared/shared.module';
+import { AuthGuard} from './auth/auth.guard';
+import { AuthModule } from './auth/auth.module';
+import { AuthComponent } from './auth/auth.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CurrentOkrComponent,
-    ObjectivesComponent,
-    KeysComponent,
-    KeyComponent,
-    OkrsComponent
+    AuthComponent
   ],
   imports: [
     AppRoutingModule,
+    AuthModule,
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
     HttpClientModule,
-    MaterialModule
+    SharedModule
   ],
-  providers: [],
+  providers: [
+    AuthService,
+    AuthGuard
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

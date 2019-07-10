@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {Okr, OkrJSON} from '../shared/models/okr.model';
 import {Observable} from 'rxjs';
-import {filter, first, map} from 'rxjs/operators';
+import { filter, first, map } from 'rxjs/operators';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-okrs',
@@ -13,7 +14,7 @@ export class OkrsComponent implements OnInit {
   private url = 'https://us-central1-okr-platform.cloudfunctions.net/okrs';
   private currentOkr$: Observable<Okr>;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private auth: AuthService) { }
 
   ngOnInit() {
     this.setCurrentOkr();

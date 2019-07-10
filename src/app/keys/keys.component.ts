@@ -27,13 +27,4 @@ export class KeysComponent implements OnInit {
         this.keysList = data;
       });
   }
-
-  /*public get keyList() {
-    this.http.get(`${this.keysUrl}?objectiveId=${this.objectiveId}`)
-      .subscribe((data) => {
-        this.keysList = data;
-        console.log();
-      });
-  }*/
-
 }

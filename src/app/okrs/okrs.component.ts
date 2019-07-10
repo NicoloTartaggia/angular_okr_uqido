@@ -20,6 +20,7 @@ export class OkrsComponent implements OnInit {
     this.setCurrentOkr();
   }
 
+  // GET - Get the current okr comparing current date with starting and ending date of each okr.
   public setCurrentOkr() {
     const currentDate = new Date().getTime();
     this.currentOkr$ = this.http.get(this.url).pipe(

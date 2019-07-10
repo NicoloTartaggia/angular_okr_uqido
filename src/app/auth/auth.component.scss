@@ -1,27 +1,39 @@
+button {
+  align-items: center;
+  border: 1px solid #000000;
+  font-size: 1.5em;
+  padding: 1em;
+}
+
+#button-container{
+  margin: 15% auto auto auto;
+  width: auto;
+}
+
 #login-container{
   display: flex;
   flex-direction: column;
 }
+
+.logo_img{
+  width:100px;
+}
+
+.mat-button img{
+  margin-right: 0.5em;
+  width: 3em;
+}
+
 .mat-display-3 {
   margin-top: 64px;
   text-align: center;
 }
-button{
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
 
-#button-container{
-  margin: 10% auto auto auto;
-  width: auto;
-}
-
-img{
-  margin-right: 1em;
-  width: 5em;
-}
-
-span{
-  font-size: 2em;
+@media only screen and (max-width: 340px) {
+  button{
+    font-size: 1em;
+  }
+  #button-container{
+    margin: 40% auto auto auto;
+  }
 }

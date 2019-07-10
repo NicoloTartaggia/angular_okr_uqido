@@ -1,27 +1,18 @@
-#login-container{
-  display: flex;
-  flex-direction: column;
-}
 .mat-display-3 {
   margin-top: 64px;
   text-align: center;
 }
-button{
-  display: flex;
-  flex-direction: row;
-  align-items: center;
+
+.button-container{
+  margin: 10rem auto auto auto;
+  text-align: center;
 }
 
-#button-container{
-  margin: 10% auto auto auto;
-  width: auto;
-}
-
-img{
+.google-icon-svg {
   margin-right: 1em;
   width: 5em;
 }
 
-span{
-  font-size: 2em;
+.google-btn-text {
+  font-size: 2rem;
 }

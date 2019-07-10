@@ -1,39 +1,40 @@
-button {
-  align-items: center;
-  border: 1px solid #000000;
-  font-size: 1.5em;
-  padding: 1em;
+.google-btn{
+  background-color: hsl(7, 71%, 55%);
+  padding: 1rem;
+  color: #ffffff;
+
+  &::after {
+    transition: all .2s ease-in-out;
+  }
+  &:hover::after {
+    background: hsla(0, 0, 0, 0.1);
+    box-shadow: inset 0 3px 0 hsla(0, 0, 0, 0.2);
+  }
 }
 
-#button-container{
-  margin: 15% auto auto auto;
-  width: auto;
+.google-btn-text {
+  padding-left: 1rem;
+  font-size: 1.5rem;
 }
 
-#login-container{
-  display: flex;
-  flex-direction: column;
+.header-container{
+  box-shadow: 0 6px 16px rgba(0,0,0,.05);
 }
 
-.logo_img{
-  width:100px;
+.logo-width{
+  padding-left: 2rem;
+  width: 10rem;
 }
 
-.mat-button img{
-  margin-right: 0.5em;
-  width: 3em;
-}
-
-.mat-display-3 {
-  margin-top: 64px;
+.main-content{
   text-align: center;
 }
 
-@media only screen and (max-width: 340px) {
-  button{
-    font-size: 1em;
-  }
-  #button-container{
-    margin: 40% auto auto auto;
-  }
+.welcome-container{
+  font-size: 4rem;
+}
+
+.welcome-text{
+  padding-top: 6rem;
+  font-size: 2.5rem
 }

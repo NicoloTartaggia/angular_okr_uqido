@@ -1,9 +1,19 @@
-<div id="login-container">
-    <img src="../../assets/resources/uqido_logo.png" class="logo_img" alt="Uqido logo">
-    <div id="button-container">
-        <button mat-button (click)="auth.googleSignin()">
-            <img class="google-icon-svg" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"/>
-            <i>Sign in with Google</i>
-        </button>
+<div>
+    <div class="header-container">
+        <div class="logo-width">
+            <img src="../../assets/resources/logo_UQIDO.svg"/>
+        </div>
+    </div>
+    <div class="main-content">
+        <div class="welcome-container">
+            <p>Benvenuto su Uqido OKR</p>
+            <p class="welcome-text">Sign in</p>
+        </div>
+        <div class="button-container">
+            <button mat-button class="google-btn"(click)="auth.googleSignin()">
+                <i class="fab fa-google fa-4x"></i>
+                <span class="google-btn-text">Sign in with Google</span>
+            </button>
+        </div>
     </div>
 </div>

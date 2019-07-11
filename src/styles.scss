@@ -2,10 +2,9 @@
 @import "@angular/material/prebuilt-themes/indigo-pink.css";
 
 body{
-  font-family: 'Oxygen', Helvetica, Arial, Verdana, sans-serif;
+  font-family: 'Oxygen' !important;
   margin: 0;
 }
-
 .header-container{
   box-shadow: 0 6px 16px rgba(0,0,0,.05);
 }

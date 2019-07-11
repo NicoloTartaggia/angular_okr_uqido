@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { User } from '../shared/models/user.model';
 
 import { Observable, of } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { map, switchMap, take } from 'rxjs/operators';
 
 import * as firebase from 'firebase';
 import { auth } from 'firebase/app';

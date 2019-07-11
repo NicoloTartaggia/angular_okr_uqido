@@ -41,9 +41,10 @@ export class AuthService {
     // Persistence sets to LOCAL, in order to mantain user logged in even if he closes the browser.
     firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
       .then(() => {
-        return firebase.auth().signInWithPopup(provider)
+        return firebase.auth().signInWithRedirect(provider)
           .then((results) => {
-            this.updateUserData(results.user);
+            console.log(results);
+            this.updateUserData(results);
             this.ngZone.run(() => {
               this.router.navigate(['../okrs']);
             });

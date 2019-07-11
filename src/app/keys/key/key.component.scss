@@ -1,7 +1,6 @@
 .info-container{
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
   padding: 0 0 0 1.5rem;
 }
 
@@ -15,11 +14,8 @@
   margin-top: 1rem;
 }
 
-.item-status-container{
-  flex-grow: 2;
-}
-
 .list-item {
+  cursor: pointer;
   font-family: 'Oxygen' !important;
   margin: 0;
 }
@@ -29,6 +25,6 @@
   min-width: 0;
 }
 
-.fa-info-circle, .fa-plus-circle{
+.fa-plus-circle{
   font-size: 1.5rem;
 }

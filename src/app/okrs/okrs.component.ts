@@ -12,9 +12,10 @@ import { AuthService } from '../services/auth.service';
 })
 export class OkrsComponent implements OnInit {
   private url = 'https://us-central1-okr-platform.cloudfunctions.net/okrs';
-  private currentOkr$: Observable<Okr>;
 
-  constructor(private http: HttpClient, private auth: AuthService) { }
+  currentOkr$: Observable<Okr>;
+
+  constructor(private http: HttpClient, public auth: AuthService) { }
 
   ngOnInit() {
     this.setCurrentOkr();

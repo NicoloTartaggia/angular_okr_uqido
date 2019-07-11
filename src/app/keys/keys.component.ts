@@ -11,7 +11,7 @@ export class KeysComponent implements OnInit {
   objectiveId: string;
 
   private keysUrl = 'https://us-central1-okr-platform.cloudfunctions.net/keys';
-  private keysList;
+  public keysList;
 
 
   constructor(private http: HttpClient) { }

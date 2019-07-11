@@ -1,7 +1,9 @@
-<mat-toolbar>
-    <span>Uqido Okr</span>
+ <div class="header-container">
+    <div class="logo">
+        <img src="../../assets/resources/logo_UQIDO.svg"/>
+    </div>
     <button mat-button (click)="auth.signOut()">Log Out</button>
-</mat-toolbar>
+</div>
 <app-current-okr [okr]="currentOkr$ | async"></app-current-okr>
 
 

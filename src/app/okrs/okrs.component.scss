@@ -1,5 +1,5 @@
 button{
-  font-size: 1em;
+  height: 90%;
 }
 
 span{
@@ -7,11 +7,9 @@ span{
   width: 95%;
 }
 
-.header-container{
+.masthead{
+  align-items: center;
   display: flex;
-}
-
-.logo{
-  padding-left: 2rem;
-  width: 10rem;
+  justify-content: space-between;
+  padding-right: 2rem;
 }

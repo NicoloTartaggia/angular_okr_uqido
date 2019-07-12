@@ -12,7 +12,14 @@ export class KeyComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
+  public keyPercentage() {
+    if (!this.key) {
+      return '0';
+    }
+    if (this.key.evaluationType !== 'check') {
+      return Math.floor((this.key.metricsCount / this.key.limit) * 100);
+    }
+  }
 }

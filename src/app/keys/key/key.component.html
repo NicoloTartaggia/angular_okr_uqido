@@ -1,1 +1,10 @@
-<mat-panel-description>{{key.description}}</mat-panel-description>
+<div class="item-description-container">
+    <div class="item-status-container">
+        <mat-panel-description class="list-item"><a href="" class="description-link">{{key.description}}</a></mat-panel-description>
+        <mat-progress-bar class="item-progress-bar" mode="determinate" value="40"></mat-progress-bar>
+    </div>
+    <div class="info-container">
+        <button mat-button class="plus-button"><i class="fas fa-plus-circle"></i></button>
+    </div>
+</div>
+<mat-divider></mat-divider>

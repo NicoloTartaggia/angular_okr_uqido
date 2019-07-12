@@ -1,2 +1,24 @@
 /* You can add global styles to this file, and also import other style files */
 @import "@angular/material/prebuilt-themes/indigo-pink.css";
+
+@import '~@angular/material/theming';
+
+// Define a custom typography config that overrides the font-family.
+$custom-typography: mat-typography-config(
+        $font-family: 'Oxygen' !important
+);
+
+@include angular-material-typography($custom-typography);
+
+body{
+  font-family: 'Oxygen' !important;
+  margin: 0;
+}
+.header-container{
+  box-shadow: 0 6px 16px rgba(0,0,0,.05);
+}
+
+.logo{
+  padding-left: 2rem;
+  width: 10rem;
+}

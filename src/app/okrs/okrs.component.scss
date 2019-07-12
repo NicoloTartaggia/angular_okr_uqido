@@ -1,8 +1,6 @@
-button{
-  font-size: 1em;
-}
-
-span{
-  font-size: 2em;
-  width: 95%;
+.masthead{
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  padding-right: 1rem;
 }

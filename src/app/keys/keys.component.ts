@@ -11,7 +11,7 @@ export class KeysComponent implements OnInit {
   objectiveId: string;
 
   private keysUrl = 'https://us-central1-okr-platform.cloudfunctions.net/keys';
-  private keysList;
+  public keysList;
 
 
   constructor(private http: HttpClient) { }
@@ -27,13 +27,4 @@ export class KeysComponent implements OnInit {
         this.keysList = data;
       });
   }
-
-  /*public get keyList() {
-    this.http.get(`${this.keysUrl}?objectiveId=${this.objectiveId}`)
-      .subscribe((data) => {
-        this.keysList = data;
-        console.log();
-      });
-  }*/
-
 }

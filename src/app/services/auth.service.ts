@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { User } from '../shared/models/user.model';
 
 import { Observable, of } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { map, switchMap, take } from 'rxjs/operators';
 
 import * as firebase from 'firebase';
 import { auth } from 'firebase/app';
@@ -35,14 +35,16 @@ export class AuthService {
   }
 
   async googleSignin() {
+    // Initializing new Google provider
     const provider = new auth.GoogleAuthProvider();
+
+    // Persistence sets to LOCAL, in order to mantain user logged in even if he closes the browser.
     firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
       .then(() => {
-        // const provider = new firebase.auth.GoogleAuthProvider();
-        return firebase.auth().signInWithPopup(provider)
+        return firebase.auth().signInWithRedirect(provider)
           .then((results) => {
-            // console.log(results);
-            this.updateUserData(results.user);
+            console.log(results);
+            this.updateUserData(results);
             this.ngZone.run(() => {
               this.router.navigate(['../okrs']);
             });
@@ -53,19 +55,6 @@ export class AuthService {
             const credential = error.credential;
           });
       });
-    // firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
-    // const credential = await this.afAuth.auth.signInWithPopup(provider);
-    //   // .then((results) => {
-    //   //   this.ngZone.run(() => {
-    //   //     this.router.navigate(['../okrs']);
-    //   //   });
-    //   // }).catch(error => {
-    //   //   const errorCode = error.code;
-    //   //   const errorMessage = error.message;
-    //   //   const email = error.email;
-    //   //   const credential = error.credential;
-    //   // });
-    // return this.updateUserData(credential.user);
   }
 
   private updateUserData(user) {
@@ -79,6 +68,8 @@ export class AuthService {
       photoURL: user.photoURL
     };
 
+    // Setting merge property to true, we specify that the data should be merged into the existing document.
+    // In this way, its contents will not be overwritten.
     return userRef.set(data, { merge: true });
   }
 

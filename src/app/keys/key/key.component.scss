@@ -1,0 +1,34 @@
+.description-link{
+  color: inherit;
+  text-decoration: none;
+}
+
+.info-container{
+  display: flex;
+  flex-direction: column;
+  padding: 0 0 0 1.5rem;
+}
+
+.item-description-container{
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 0;
+}
+
+.item-progress-bar{
+  height: 0.5rem;
+  margin-top: 1rem;
+}
+
+.list-item {
+  margin: 0;
+}
+
+.plus-button{
+  padding: 0;
+  min-width: 0;
+}
+
+.fa-plus-circle{
+  font-size: 1.5rem;
+}

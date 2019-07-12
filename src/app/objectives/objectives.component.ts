@@ -12,7 +12,7 @@ export class ObjectivesComponent implements OnInit, OnChanges {
   currentOkrId: string;
 
   private objectiveUrl: string;
-  private objectivesList: Objective[] = [];
+  public objectivesList: Objective[] = [];
 
   constructor(private http: HttpClient) { }
 

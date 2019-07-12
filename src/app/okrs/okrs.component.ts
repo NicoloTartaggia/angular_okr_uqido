@@ -12,14 +12,16 @@ import { AuthService } from '../services/auth.service';
 })
 export class OkrsComponent implements OnInit {
   private url = 'https://us-central1-okr-platform.cloudfunctions.net/okrs';
-  private currentOkr$: Observable<Okr>;
 
-  constructor(private http: HttpClient, private auth: AuthService) { }
+  currentOkr$: Observable<Okr>;
+
+  constructor(private http: HttpClient, public auth: AuthService) { }
 
   ngOnInit() {
     this.setCurrentOkr();
   }
 
+  // GET - Get the current okr comparing current date with starting and ending date of each okr.
   public setCurrentOkr() {
     const currentDate = new Date().getTime();
     this.currentOkr$ = this.http.get(this.url).pipe(

@@ -12,8 +12,9 @@ export class AuthGuard implements CanActivate {
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
 
     return this.auth.user$.pipe(
-      take(1),
-      map(user => !!user), // <-- map to boolean
+      take(1),  // Emits only the first count values emitted by the source Observable
+      map(user => !!user), // Map to boolean
+      // Perform a side effect for every emission on the source Observable, but return an Observable that is identical to the source.
       tap(loggedIn => {
         if (!loggedIn) {
           console.log('access denied');

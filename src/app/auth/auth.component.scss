@@ -1,18 +1,44 @@
-.mat-display-3 {
-  margin-top: 64px;
-  text-align: center;
-}
-
 .button-container{
-  margin: 10rem auto auto auto;
-  text-align: center;
+  padding-top: 8rem;
 }
 
-.google-icon-svg {
-  margin-right: 1em;
-  width: 5em;
+.google-btn{
+  background-color: hsl(7, 71%, 55%);
+  padding: 1rem;
+  color: #ffffff;
+
+  &::after {
+    transition: all .2s ease-in-out;
+  }
+  &:hover::after {
+    background: hsla(0, 0, 0, 0.1);
+    box-shadow: inset 0 3px 0 hsla(0, 0, 0, 0.2);
+  }
 }
 
 .google-btn-text {
-  font-size: 2rem;
+  padding-left: 1rem;
+  font-size: 1.5rem;
+}
+
+.header-container{
+  box-shadow: 0 6px 16px rgba(0,0,0,.05);
+}
+
+.logo{
+  padding-left: 2rem;
+  width: 10rem;
+}
+
+.main-content{
+  text-align: center;
+}
+
+.welcome-container{
+  padding-top: 6rem;
+  font-size: 3rem;
+}
+
+.welcome-text{
+  margin: 0;
 }

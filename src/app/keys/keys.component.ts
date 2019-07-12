@@ -1,5 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Key } from '../shared/models/key.model';
 
 @Component({
   selector: 'app-keys',
@@ -23,7 +24,7 @@ export class KeysComponent implements OnInit {
   // GET - Get all keys related to the objective with the id given in input
   public getKeyList() {
     this.http.get(`${this.keysUrl}?objectiveId=${this.objectiveId}`)
-      .subscribe((data) => {
+      .subscribe((data: Key[]) => {
         this.keysList = data;
       });
   }

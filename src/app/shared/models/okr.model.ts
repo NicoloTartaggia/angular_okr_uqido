@@ -14,7 +14,6 @@ export class Okr {
 
   constructor(object?: any) {
     if (object) {
-      console.log(object.startingAt, object.endingAt);
       this.id = object.id;
       this.startingAt = object.startingAt && new Date(object.startingAt.seconds * 1000);
       this.endingAt = object.endingAt && new Date(object.endingAt.seconds * 1000);

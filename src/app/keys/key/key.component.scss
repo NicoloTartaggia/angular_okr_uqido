@@ -15,6 +15,14 @@
   margin-top: 1rem;
 }
 
+.item-status-container {
+  flex: 1;
+  padding-right: 0;
+  @media screen and (min-width: 768px) {
+    padding-right: 4rem;
+  }
+}
+
 .list-item {
   cursor: pointer;
   font-family: 'Oxygen' !important;

@@ -1,3 +1,8 @@
+.description-link{
+  color: inherit;
+  text-decoration: none;
+}
+
 .info-container{
   display: flex;
   flex-direction: column;
@@ -24,8 +29,6 @@
 }
 
 .list-item {
-  cursor: pointer;
-  font-family: 'Oxygen' !important;
   margin: 0;
 }
 

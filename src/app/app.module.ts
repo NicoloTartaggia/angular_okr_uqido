@@ -5,6 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
+import { ChartsModule } from 'ng2-charts';
 
 import { AuthService } from './services/auth.service';
 import { SharedModule } from './shared/shared.module';
@@ -15,13 +16,14 @@ import { AuthComponent } from './auth/auth.component';
 @NgModule({
   declarations: [
     AppComponent,
-    AuthComponent
+    AuthComponent,
   ],
   imports: [
     AppRoutingModule,
     AuthModule,
     BrowserModule,
     BrowserAnimationsModule,
+    ChartsModule,
     FormsModule,
     HttpClientModule,
     SharedModule
@@ -30,6 +32,7 @@ import { AuthComponent } from './auth/auth.component';
     AuthService,
     AuthGuard
   ],
+  exports: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

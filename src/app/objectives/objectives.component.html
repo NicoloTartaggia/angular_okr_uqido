@@ -2,7 +2,12 @@
 
 <div class="body-container">
   <div class="contents-container">
-    <p class="objective-title">Obiettivi</p>
+    <div class="objective-info">
+      <p class="objective-title">Obiettivi</p>
+      <div class="chart-container">
+        <app-pie-chart></app-pie-chart>
+      </div>
+    </div>
     <mat-accordion>
       <mat-expansion-panel *ngFor="let objective of objectivesList">
         <mat-expansion-panel-header>{{objective.description}}</mat-expansion-panel-header>

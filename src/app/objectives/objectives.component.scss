@@ -1,3 +1,7 @@
+.chart-container{
+  width: 20rem;
+}
+
 .contents-container{
   margin: 3rem auto;
   width: 80%;
@@ -7,6 +11,24 @@
   font-size: 1rem;
 }
 
+.objective-info{
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-bottom: 2rem;
+}
+
 .objective-title{
   font-size: 3rem;
+}
+
+@media screen and (max-width: 470px) {
+  .chart-container{
+    width: 13rem;
+  }
+
+  .objective-title{
+    font-size: 2.5rem;
+  }
 }

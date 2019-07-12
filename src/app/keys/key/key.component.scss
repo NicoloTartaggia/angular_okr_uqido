@@ -6,6 +6,7 @@
 
 .item-description-container{
   display: flex;
+  justify-content: space-between;
   padding: 1rem 0;
 }
 
@@ -16,7 +17,6 @@
 
 .list-item {
   cursor: pointer;
-  font-family: 'Oxygen' !important;
   margin: 0;
 }
 

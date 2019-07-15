@@ -1,0 +1,40 @@
+<div *ngIf="data.evaluationType == 'limit'" class="main-dialog-container">
+    <p mat-dialog-title class="dialog-title">{{data.title}}</p>
+    <div class="dialog-contents" mat-dialog-content>
+        <form class="form">
+            <mat-form-field class="mat-form-container">
+                <textarea matInput [matTextareaAutosize] placeholder="Inserisci un miglioramento"></textarea>
+            </mat-form-field>
+            <div class="date-picker-container">
+                <input matInput [matDatepicker]="picker" placeholder="Choose a date" (click)="picker.open()" [formControl]="date"/>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </div>
+        </form>
+    </div>
+    <div class="buttons-container">
+        <button mat-raised-button (click)="onNoClick()">Annulla</button>
+        <button mat-raised-button color="primary">Conferma</button>
+    </div>
+</div>
+
+<div *ngIf="data.evaluationType == 'check'" class="main-dialog-container">
+    <p mat-dialog-title class="dialog-title">{{data.title}}</p>
+    <div class="dialog-contents" mat-dialog-content>
+        <form class="form">
+            <div *ngFor="let metric of data.metrics" class="checkbox-container">
+                <div>{{metric.description}}</div>
+                <mat-checkbox></mat-checkbox>
+            </div>
+            <div class="date-picker-container">
+                <input matInput [matDatepicker]="picker" placeholder="Choose a date" (click)="picker.open()" [formControl]="date"/>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </div>
+        </form>
+    </div>
+    <div class="buttons-container">
+        <button mat-raised-button (click)="onNoClick()">Annulla</button>
+        <button mat-raised-button color="primary">Conferma</button>
+    </div>
+</div>

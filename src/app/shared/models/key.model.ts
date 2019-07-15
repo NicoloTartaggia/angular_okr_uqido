@@ -4,4 +4,5 @@ export class Key {
   limit?: number; // optional, used in case evaluationType === 'limit'
   id: string;
   metricsCount: number;
+  metrics: any[];
 }

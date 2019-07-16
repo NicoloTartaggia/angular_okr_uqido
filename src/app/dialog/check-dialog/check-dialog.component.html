@@ -2,10 +2,12 @@
     <p mat-dialog-title class="dialog-title">{{data.title}}</p>
     <div class="dialog-contents" mat-dialog-content>
         <form class="form" [formGroup]="modalWithCheck">
-            <div *ngFor="let metric of data.metrics" class="radio-container">
-                <p>{{metric.description}}</p>
-    <!--            <mat-radio-button formControlName="checkMetric"></mat-radio-button>-->
-                <mat-radio-button></mat-radio-button>
+            <div class="radio-container">
+                <mat-radio-group formControlName="description">
+                    <mat-radio-button *ngFor="let metric of data.metrics" value="{{metric.description}}" class="radio-button-container">
+                     {{metric.description}}
+                    </mat-radio-button>
+                </mat-radio-group>
             </div>
             <div class="date-picker-container">
                 <input matInput [matDatepicker]="picker" formControlName="createdAt" placeholder="Choose a date" (click)="picker.open()"/>
@@ -16,6 +18,6 @@
     </div>
     <mat-dialog-actions class="buttons-container">
         <button mat-raised-button (click)="dialogRef.close()">Annulla</button>
-        <button mat-raised-button color="primary" (ngSubmit)="onSubmit()">Conferma</button>
+        <button mat-raised-button color="primary" (click)="onSubmit()">Conferma</button>
     </mat-dialog-actions>
 </div>

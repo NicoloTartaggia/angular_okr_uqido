@@ -10,13 +10,15 @@ import { AuthGuard} from './auth/auth.guard';
 import { AuthModule } from './auth/auth.module';
 import { AuthService } from './services/auth.service';
 import { SharedModule } from './shared/shared.module';
-import { DialogComponent } from './dialog/dialog.component';
+import { LimitDialogComponent } from './dialog/limit-dialog/limit-dialog.component';
+import { CheckDialogComponent } from './dialog/check-dialog/check-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AuthComponent,
-    DialogComponent
+    LimitDialogComponent,
+    CheckDialogComponent
   ],
   imports: [
     AppRoutingModule,
@@ -27,7 +29,8 @@ import { DialogComponent } from './dialog/dialog.component';
     SharedModule
   ],
   entryComponents: [
-    DialogComponent
+    LimitDialogComponent,
+    CheckDialogComponent
   ],
   providers: [
     AuthService,

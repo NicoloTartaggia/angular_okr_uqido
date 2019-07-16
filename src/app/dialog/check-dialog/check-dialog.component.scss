@@ -1,0 +1,41 @@
+.buttons-container, .radio-container{
+  display: flex;
+  padding-top: 2rem;
+}
+
+.buttons-container {
+  justify-content: space-evenly;
+}
+
+.date-picker-container{
+  border-bottom: solid 1px rgba(0,0,0,.42);
+  display: flex;
+  padding-top: 2rem;
+}
+
+.dialog-contents{
+  margin: 2rem auto;
+  display: flex;
+  justify-content: center;
+}
+
+.dialog-title{
+  font-size: 1rem !important;
+}
+
+.form{
+  min-width: 8rem;
+  max-width: 20rem;
+  width: 100%
+}
+
+.main-dialog-container{
+  max-width: 40rem;
+}
+
+.date-picker-container{
+  @media screen and (max-width: 576px) {
+    width: 90%;
+  }
+}
+

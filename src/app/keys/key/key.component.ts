@@ -1,7 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Key } from '../../shared/models/key.model';
-import { DialogComponent } from '../../dialog/dialog.component';
 import { MatDialog } from '@angular/material';
+import { LimitDialogComponent } from '../../dialog/limit-dialog/limit-dialog.component';
+import { CheckDialogComponent } from '../../dialog/check-dialog/check-dialog.component';
 
 @Component({
   selector: 'app-key',
@@ -11,6 +12,8 @@ import { MatDialog } from '@angular/material';
 export class KeyComponent implements OnInit {
   @Input()
   key: Key;
+
+  private metricUrl = `https://us-central1-okr-platform.cloudfunctions.net/metricsCreate`;
 
   constructor(public dialog: MatDialog) { }
 
@@ -26,17 +29,20 @@ export class KeyComponent implements OnInit {
   }
 
   public openDialog() {
-    const dialogRef = this.dialog.open(DialogComponent, {
-      data: {
-        title: this.key.description,
+    const data = {
+      title: this.key.description,
         evaluationType: this.key.evaluationType,
         id: this.key.id,
         metrics: this.key.metrics
-      }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
+    };
+    if (this.key.evaluationType === 'limit') {
+      this.dialog.open(LimitDialogComponent, {
+        data
+      });
+    } else {
+      this.dialog.open(CheckDialogComponent, {
+        data
+      });
+    }
   }
 }

@@ -14,6 +14,7 @@ import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firest
 export class AuthService {
 
   user$: Observable<User>;
+  user: User;
 
   constructor(
     private afAuth: AngularFireAuth,
@@ -25,6 +26,7 @@ export class AuthService {
       switchMap(user => {
         // Logged in
         if (user) {
+          this.user = user;
           return this.afs.doc<User>(`users/${user.uid}`).valueChanges();
         } else {
           // Logged out
@@ -32,6 +34,10 @@ export class AuthService {
         }
       })
     );
+  }
+
+  public getUserName() {
+    return this.user;
   }
 
   async googleSignin() {

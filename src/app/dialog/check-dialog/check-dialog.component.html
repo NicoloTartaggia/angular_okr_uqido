@@ -4,9 +4,11 @@
         <form class="form" [formGroup]="modalWithCheck">
             <div class="radio-container">
                 <mat-radio-group formControlName="description">
-                    <mat-radio-button *ngFor="let metric of data.metrics" value="{{metric.description}}" class="radio-button-container">
-                     {{metric.description}}
-                    </mat-radio-button>
+                    <ng-container *ngFor="let metric of data.metrics">
+                        <mat-radio-button *ngIf="metric.checked == false" value="{{metric.description}}" class="radio-button-container">
+                            {{metric.description}}
+                        </mat-radio-button>
+                    </ng-container>
                 </mat-radio-group>
             </div>
             <div class="date-picker-container">

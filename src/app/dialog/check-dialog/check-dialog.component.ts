@@ -50,22 +50,18 @@ export class CheckDialogComponent implements OnInit {
   ngOnInit() {
     this.modalWithCheck = new FormGroup({
       createdAt: new FormControl(moment()),
-      description: new FormControl('', Validators.required)
+      id: new FormControl('', Validators.required)
     });
   }
 
   onSubmit() {
-    for (const metric of this.data.metrics) {
-      if (this.modalWithCheck.value.description === metric.description) {
-        this.http.put(`${this.putUrl}/${metric.id}`, {
-          author: this.authService.getUserName().displayName,
-          checked: true,
-          createdAt: this.modalWithCheck.value.createdAt._d
-        }).subscribe(results => {
-          console.log(results);
-        });
-        this.dialogRef.close();
-      }
-    }
+    this.http.put(`${this.putUrl}/${this.modalWithCheck.value.id}`, {
+      author: this.authService.getUserName().displayName,
+      checked: true,
+      createdAt: this.modalWithCheck.value.createdAt._d
+    }).subscribe(results => {
+      console.log(results);
+    });
+    this.dialogRef.close();
   }
 }

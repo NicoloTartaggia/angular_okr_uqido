@@ -25,7 +25,9 @@ export class KeyComponent implements OnInit {
     }
     if (this.key.evaluationType !== 'check') {
       return Math.floor((this.key.metricsCount / this.key.limit) * 100);
-    }
+    } else {
+
+     }
   }
 
   public openDialog() {

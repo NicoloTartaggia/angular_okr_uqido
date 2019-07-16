@@ -1,8 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Key } from '../../shared/models/key.model';
 import { MatDialog } from '@angular/material';
-import { LimitDialogComponent } from '../../dialog/limit-dialog/limit-dialog.component';
-import { CheckDialogComponent } from '../../dialog/check-dialog/check-dialog.component';
+import { LimitDialogComponent } from '../../dialogs/limit-dialog/limit-dialog.component';
+import { CheckDialogComponent } from '../../dialogs/check-dialog/check-dialog.component';
+import { MetricsDialogComponent } from '../../dialogs/metrics-dialog/metrics-dialog.component';
 
 @Component({
   selector: 'app-key',
@@ -12,8 +13,6 @@ import { CheckDialogComponent } from '../../dialog/check-dialog/check-dialog.com
 export class KeyComponent implements OnInit {
   @Input()
   key: Key;
-
-  private metricUrl = `https://us-central1-okr-platform.cloudfunctions.net/metricsCreate`;
 
   constructor(public dialog: MatDialog) { }
 
@@ -26,16 +25,16 @@ export class KeyComponent implements OnInit {
     if (this.key.evaluationType !== 'check') {
       return Math.floor((this.key.metricsCount / this.key.limit) * 100);
     } else {
-
+      return Math.floor((this.key.metricsChecked / this.key.metricsCount) * 100);
      }
   }
 
   public openDialog() {
     const data = {
       title: this.key.description,
-        evaluationType: this.key.evaluationType,
-        id: this.key.id,
-        metrics: this.key.metrics
+      evaluationType: this.key.evaluationType,
+      id: this.key.id,
+      metrics: this.key.metrics
     };
     if (this.key.evaluationType === 'limit') {
       this.dialog.open(LimitDialogComponent, {
@@ -46,5 +45,13 @@ export class KeyComponent implements OnInit {
         data
       });
     }
+  }
+
+  public openMetricsDialog() {
+    this.dialog.open(MetricsDialogComponent, {
+      data: {
+        metrics: this.key.metrics
+      }
+    });
   }
 }

@@ -3,6 +3,7 @@ export class Key {
   evaluationType: string;
   limit?: number; // optional, used in case evaluationType === 'limit'
   id: string;
+  metricsChecked: number;
   metricsCount: number;
   metrics: any[];
 }

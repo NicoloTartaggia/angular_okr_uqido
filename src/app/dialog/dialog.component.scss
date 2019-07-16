@@ -1,14 +1,10 @@
-.buttons-container, .checkbox-container{
+.buttons-container, .radio-container{
   display: flex;
   padding-top: 2rem;
 }
 
 .buttons-container {
   justify-content: space-evenly;
-}
-
-.checkbox-container {
-  justify-content: space-between;
 }
 
 .date-picker-container{
@@ -39,6 +35,10 @@
 
 .mat-form-container{
   width: 100%;
+}
+
+.radio-container {
+  justify-content: space-between;
 }
 
 .date-picker-container, .mat-form-container {

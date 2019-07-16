@@ -7,7 +7,9 @@ import { MaterialModule } from '../material.module';
   imports:
     [
       CommonModule,
-      MaterialModule
+      FormsModule,
+      MaterialModule,
+      ReactiveFormsModule
     ],
   declarations: [ ],
   exports:

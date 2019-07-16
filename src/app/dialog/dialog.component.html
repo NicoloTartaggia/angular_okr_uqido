@@ -1,12 +1,12 @@
 <div *ngIf="data.evaluationType == 'limit'" class="main-dialog-container">
     <p mat-dialog-title class="dialog-title">{{data.title}}</p>
     <div class="dialog-contents" mat-dialog-content>
-        <form class="form">
+        <form class="form" [formGroup]="modalWithLimit" (ngSubmit)="onLimitSubmit()">
             <mat-form-field class="mat-form-container">
-                <textarea matInput [matTextareaAutosize] placeholder="Inserisci un miglioramento"></textarea>
+                <textarea matInput [matTextareaAutosize] formControlName="limitMetric" placeholder="Inserisci un miglioramento"></textarea>
             </mat-form-field>
             <div class="date-picker-container">
-                <input matInput [matDatepicker]="picker" placeholder="Choose a date" (click)="picker.open()" [formControl]="date"/>
+                <input matInput [matDatepicker]="picker" formControlName="dateMetric" placeholder="Choose a date" (click)="picker.open()"/>
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
             </div>
@@ -14,20 +14,21 @@
     </div>
     <div class="buttons-container">
         <button mat-raised-button (click)="onNoClick()">Annulla</button>
-        <button mat-raised-button color="primary">Conferma</button>
+        <button type="submit" mat-raised-button color="primary" [disabled]="!modalWithLimit.valid" (click)="onLimitSubmit()">Conferma</button>
     </div>
 </div>
 
 <div *ngIf="data.evaluationType == 'check'" class="main-dialog-container">
     <p mat-dialog-title class="dialog-title">{{data.title}}</p>
     <div class="dialog-contents" mat-dialog-content>
-        <form class="form">
-            <div *ngFor="let metric of data.metrics" class="checkbox-container">
+        <form class="form" [formGroup]="modalWithCheck">
+            <div *ngFor="let metric of data.metrics" class="radio-container">
                 <div>{{metric.description}}</div>
-                <mat-checkbox></mat-checkbox>
+<!--                <mat-radio-button formControlName="checkMetric"></mat-radio-button>-->
+                <mat-radio-button></mat-radio-button>
             </div>
             <div class="date-picker-container">
-                <input matInput [matDatepicker]="picker" placeholder="Choose a date" (click)="picker.open()" [formControl]="date"/>
+                <input matInput [matDatepicker]="picker" formControlName="dateMetric" placeholder="Choose a date" (click)="picker.open()"/>
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
             </div>
@@ -35,6 +36,6 @@
     </div>
     <div class="buttons-container">
         <button mat-raised-button (click)="onNoClick()">Annulla</button>
-        <button mat-raised-button color="primary">Conferma</button>
+        <button mat-raised-button color="primary" (ngSubmit)="onCheckSubmit()">Conferma</button>
     </div>
 </div>

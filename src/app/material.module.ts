@@ -2,7 +2,6 @@
 
 import { NgModule } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDatepickerModule} from '@angular/material/datepicker';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -11,11 +10,11 @@ import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatNativeDateModule } from '@angular/material';
+import { MatRadioModule } from '@angular/material/radio';
 
 @NgModule({
   imports: [
     MatButtonModule,
-    MatCheckboxModule,
     MatDatepickerModule,
     MatDialogModule,
     MatExpansionModule,
@@ -23,11 +22,11 @@ import { MatNativeDateModule } from '@angular/material';
     MatInputModule,
     MatListModule,
     MatNativeDateModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatRadioModule
   ],
   exports: [
     MatButtonModule,
-    MatCheckboxModule,
     MatDatepickerModule,
     MatDialogModule,
     MatExpansionModule,
@@ -35,7 +34,8 @@ import { MatNativeDateModule } from '@angular/material';
     MatInputModule,
     MatListModule,
     MatNativeDateModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatRadioModule
   ]
 })
 

@@ -60,6 +60,8 @@ export class LimitDialogComponent implements OnInit {
       createdAt: this.modalWithLimit.value.createdAt._d,
       description: this.modalWithLimit.value.description,
       keyId: this.data.id
+    }).subscribe(result => {
+      console.log(result);
     });
     this.dialogRef.close();
   }

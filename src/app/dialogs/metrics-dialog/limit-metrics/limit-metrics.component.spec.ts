@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MetricsDialogComponent } from './metrics-dialog.component';
+import { LimitMetricsComponent } from './limit-metrics.component';
 
-describe('MetricsDialogComponent', () => {
-  let component: MetricsDialogComponent;
-  let fixture: ComponentFixture<MetricsDialogComponent>;
+describe('LimitMetricsComponent', () => {
+  let component: LimitMetricsComponent;
+  let fixture: ComponentFixture<LimitMetricsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MetricsDialogComponent ]
+      declarations: [ LimitMetricsComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MetricsDialogComponent);
+    fixture = TestBed.createComponent(LimitMetricsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

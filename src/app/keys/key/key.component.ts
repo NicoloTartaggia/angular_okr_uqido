@@ -3,7 +3,8 @@ import { Key } from '../../shared/models/key.model';
 import { MatDialog } from '@angular/material';
 import { LimitDialogComponent } from '../../dialogs/limit-dialog/limit-dialog.component';
 import { CheckDialogComponent } from '../../dialogs/check-dialog/check-dialog.component';
-import { MetricsDialogComponent } from '../../dialogs/metrics-dialog/metrics-dialog.component';
+import { CheckMetricsComponent } from '../../dialogs/metrics-dialog/check-metrics/check-metrics.component';
+import { LimitMetricsComponent } from '../../dialogs/metrics-dialog/limit-metrics/limit-metrics.component';
 
 @Component({
   selector: 'app-key',
@@ -48,10 +49,17 @@ export class KeyComponent implements OnInit {
   }
 
   public openMetricsDialog() {
-    this.dialog.open(MetricsDialogComponent, {
-      data: {
-        metrics: this.key.metrics
-      }
-    });
+    const data = {
+      metrics: this.key.metrics
+    };
+    if (this.key.evaluationType === 'limit') {
+      this.dialog.open(LimitMetricsComponent, {
+        data
+      });
+    } else {
+      this.dialog.open(CheckMetricsComponent, {
+        data
+      });
+    }
   }
 }

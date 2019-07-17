@@ -56,10 +56,11 @@ export class LimitDialogComponent implements OnInit {
 
   onSubmit() {
     this.http.post(this.postUrl, {
-      description: this.modalWithLimit.value.description,
-      createdAt: this.modalWithLimit.value.createdAt._d,
       author: this.authService.getUserName().displayName,
+      createdAt: this.modalWithLimit.value.createdAt._d,
+      description: this.modalWithLimit.value.description,
       keyId: this.data.id
     });
+    this.dialogRef.close();
   }
 }

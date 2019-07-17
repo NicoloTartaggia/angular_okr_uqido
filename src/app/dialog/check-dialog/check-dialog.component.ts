@@ -37,7 +37,7 @@ export const MY_FORMATS = {
 })
 export class CheckDialogComponent implements OnInit {
   public modalWithCheck: FormGroup;
-  private postUrl = 'https://us-central1-okr-platform.cloudfunctions.net/metricsUpdate';
+  private putUrl = 'https://us-central1-okr-platform.cloudfunctions.net/metricsUpdate';
 
   constructor(private dateAdapter: DateAdapter<any>,
               public dialogRef: MatDialogRef<CheckDialogComponent>,
@@ -49,14 +49,23 @@ export class CheckDialogComponent implements OnInit {
 
   ngOnInit() {
     this.modalWithCheck = new FormGroup({
-      description: new FormControl('', Validators.required),
       createdAt: new FormControl(moment()),
+      description: new FormControl('', Validators.required)
     });
   }
 
   onSubmit() {
-    this.http.post(this.postUrl, {
-
-    });
+    for (const metric of this.data.metrics) {
+      if (this.modalWithCheck.value.description === metric.description) {
+        this.http.put(`${this.putUrl}/${metric.id}`, {
+          author: this.authService.getUserName().displayName,
+          checked: true,
+          createdAt: this.modalWithCheck.value.createdAt._d
+        }).subscribe(results => {
+          console.log(results);
+        });
+        this.dialogRef.close();
+      }
+    }
   }
 }

@@ -3,7 +3,7 @@
     <div class="dialog-contents" mat-dialog-content>
         <form class="form" [formGroup]="modalWithLimit" (ngSubmit)="onSubmit()">
             <mat-form-field class="mat-form-container">
-                <textarea matInput [matTextareaAutosize] formControlName="description" placeholder="Inserisci un miglioramento"></textarea>
+                <input matInput formControlName="description" placeholder="Inserisci un miglioramento"/>
             </mat-form-field>
             <mat-form-field class="example-full-width">
                 <input matInput formControlName="author" placeholder="Autore">

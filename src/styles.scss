@@ -40,3 +40,45 @@ body{
     max-width: 1140px;
   }
 }
+
+.buttons-container, .radio-container{
+  display: flex;
+  padding-top: 2rem;
+}
+
+.buttons-container {
+  justify-content: space-evenly;
+}
+
+.date-picker-container{
+  width: 90%;
+  @media screen and (min-width: 576px) {
+    border-bottom: solid 1px rgba(0,0,0,.42);
+    display: flex;
+    padding-top: 2rem;
+    width: auto;
+  }
+}
+
+.dialog-contents{
+  margin: 2rem auto;
+  display: flex;
+  justify-content: center;
+}
+
+.dialog-title{
+  font-size: 1rem !important;
+}
+
+.form{
+  min-width: 8rem;
+  max-width: 20rem;
+  width: 100%
+}
+
+.main-dialog-container{
+  max-width: 40rem;
+}
+.mat-form-container{
+  width: 100%;
+}

@@ -1,6 +1,6 @@
 <div class="item-description-container">
     <div class="item-status-container">
-        <mat-action-list class="list-item"><a mat-list-item (click)="openMetricsDialog()" role="button">{{key.description}}</a></mat-action-list>
+        <mat-action-list><a mat-list-item class="list-item" (click)="openMetricsDialog()" role="button">{{key.description}}</a></mat-action-list>
         <mat-progress-bar class="item-progress-bar" mode="determinate" value="{{keyPercentage()}}"></mat-progress-bar>
     </div>
     <div class="info-container">

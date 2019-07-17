@@ -1,0 +1,25 @@
+.mat-expansion-panel-header{
+  font-size: 1rem;
+}
+
+.objective-info{
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-bottom: 2rem;
+}
+
+.objective-title{
+  font-size: 2.5rem;
+  @media screen and (min-width: 576px) {
+    font-size: 3rem;
+  }
+}
+
+.chart-container{
+  width: 10rem;
+  @media screen and (min-width: 576px) {
+    width: 20rem;
+  }
+}

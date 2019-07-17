@@ -3,6 +3,10 @@
   text-decoration: none;
 }
 
+.fa-plus-circle{
+  font-size: 1.5rem;
+}
+
 .info-container{
   display: flex;
   flex-direction: column;
@@ -35,8 +39,4 @@
 .plus-button{
   padding: 0;
   min-width: 0;
-}
-
-.fa-plus-circle{
-  font-size: 1.5rem;
 }

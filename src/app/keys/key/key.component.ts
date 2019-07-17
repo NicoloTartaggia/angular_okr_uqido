@@ -1,5 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Key } from '../../shared/models/key.model';
+import { MatDialog } from '@angular/material';
+import { LimitDialogComponent } from '../../dialog/limit-dialog/limit-dialog.component';
+import { CheckDialogComponent } from '../../dialog/check-dialog/check-dialog.component';
 
 @Component({
   selector: 'app-key',
@@ -10,7 +13,9 @@ export class KeyComponent implements OnInit {
   @Input()
   key: Key;
 
-  constructor() { }
+  private metricUrl = `https://us-central1-okr-platform.cloudfunctions.net/metricsCreate`;
+
+  constructor(public dialog: MatDialog) { }
 
   ngOnInit() {}
 
@@ -20,6 +25,24 @@ export class KeyComponent implements OnInit {
     }
     if (this.key.evaluationType !== 'check') {
       return Math.floor((this.key.metricsCount / this.key.limit) * 100);
+    }
+  }
+
+  public openDialog() {
+    const data = {
+      title: this.key.description,
+        evaluationType: this.key.evaluationType,
+        id: this.key.id,
+        metrics: this.key.metrics
+    };
+    if (this.key.evaluationType === 'limit') {
+      this.dialog.open(LimitDialogComponent, {
+        data
+      });
+    } else {
+      this.dialog.open(CheckDialogComponent, {
+        data
+      });
     }
   }
 }

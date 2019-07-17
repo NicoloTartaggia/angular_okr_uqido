@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {Okr, OkrJSON} from '../shared/models/okr.model';
-import {Observable} from 'rxjs';
-import { filter, first, map } from 'rxjs/operators';
+import { Okr, OkrJSON } from '../shared/models/okr.model';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { AuthService } from '../services/auth.service';
 
 @Component({

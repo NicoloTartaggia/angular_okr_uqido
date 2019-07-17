@@ -1,0 +1,19 @@
+<div class="main-dialog-container">
+    <p mat-dialog-title class="dialog-title">{{data.title}}</p>
+    <div class="dialog-contents" mat-dialog-content>
+        <form class="form" [formGroup]="modalWithLimit" (ngSubmit)="onSubmit()">
+            <mat-form-field class="mat-form-container">
+                <input matInput formControlName="description" placeholder="Inserisci un miglioramento"/>
+            </mat-form-field>
+            <div class="date-picker-container">
+                <input matInput [matDatepicker]="picker" formControlName="createdAt" placeholder="Choose a date" (click)="picker.open()"/>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </div>
+        </form>
+    </div>
+    <div class="buttons-container">
+        <button mat-raised-button (click)="dialogRef.close()">Annulla</button>
+        <button type="submit" mat-raised-button color="primary" [disabled]="!modalWithLimit.valid" (click)="onSubmit()">Conferma</button>
+    </div>
+</div>

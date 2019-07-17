@@ -1,12 +1,3 @@
-.chart-container{
-  width: 20rem;
-}
-
-.contents-container{
-  margin: 3rem auto;
-  width: 80%;
-}
-
 .mat-expansion-panel-header{
   font-size: 1rem;
 }
@@ -20,15 +11,15 @@
 }
 
 .objective-title{
-  font-size: 3rem;
+  font-size: 2.5rem;
+  @media screen and (min-width: 576px) {
+    font-size: 3rem;
+  }
 }
 
-@media screen and (max-width: 470px) {
-  .chart-container{
-    width: 13rem;
-  }
-
-  .objective-title{
-    font-size: 2.5rem;
+.chart-container{
+  width: 10rem;
+  @media screen and (min-width: 576px) {
+    width: 20rem;
   }
 }

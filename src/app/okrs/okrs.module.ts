@@ -10,6 +10,10 @@ import { OkrsRoutingModule } from './okrs-routing.module';
 import { PieChartComponent } from '../pie-chart/pie-chart.component';
 import { SharedModule } from '../shared/shared.module';
 import { ChartsModule } from 'ng2-charts';
+import {LimitMetricsComponent} from '../dialogs/metrics-dialog/limit-metrics/limit-metrics.component';
+import {CheckMetricsComponent} from '../dialogs/metrics-dialog/check-metrics/check-metrics.component';
+import {LimitDialogComponent} from '../dialogs/limit-dialog/limit-dialog.component';
+import {CheckDialogComponent} from '../dialogs/check-dialog/check-dialog.component';
 
 @NgModule({
   imports: [
@@ -24,7 +28,17 @@ import { ChartsModule } from 'ng2-charts';
     KeysComponent,
     ObjectivesComponent,
     OkrsComponent,
-    PieChartComponent
+    PieChartComponent,
+    LimitDialogComponent,
+    CheckDialogComponent,
+    CheckMetricsComponent,
+    LimitMetricsComponent
+  ],
+  entryComponents: [
+    LimitDialogComponent,
+    CheckDialogComponent,
+    CheckMetricsComponent,
+    LimitMetricsComponent
   ]
 })
 export class OkrsModule { }

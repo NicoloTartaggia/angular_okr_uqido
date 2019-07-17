@@ -14,6 +14,7 @@ import { LimitDialogComponent } from './dialogs/limit-dialog/limit-dialog.compon
 import { CheckDialogComponent } from './dialogs/check-dialog/check-dialog.component';
 import { CheckMetricsComponent } from './dialogs/metrics-dialog/check-metrics/check-metrics.component';
 import { LimitMetricsComponent } from './dialogs/metrics-dialog/limit-metrics/limit-metrics.component';
+import { UiService } from './services/ui.service';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { LimitMetricsComponent } from './dialogs/metrics-dialog/limit-metrics/li
   ],
   providers: [
     AuthService,
-    AuthGuard
+    AuthGuard,
+    UiService
   ],
   exports: [],
   bootstrap: [AppComponent]

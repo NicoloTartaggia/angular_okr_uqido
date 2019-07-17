@@ -14,7 +14,7 @@
   padding-top: 2rem;
 }
 
-.dialog-contents{
+.dialog-contents, .spinner-container{
   margin: 2rem auto;
   display: flex;
   justify-content: center;
@@ -36,6 +36,10 @@
 
 .radio-container{
   padding-bottom: 2rem;
+}
+
+.spinner-container{
+  margin: 0;
 }
 
 .date-picker-container{

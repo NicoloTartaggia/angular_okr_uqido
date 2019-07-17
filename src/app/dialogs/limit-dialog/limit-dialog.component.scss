@@ -10,7 +10,7 @@
   padding-top: 1rem;
 }
 
-.dialog-contents{
+.dialog-contents, .spinner-container{
   margin: 2rem auto;
   display: flex;
   justify-content: center;
@@ -34,6 +34,9 @@
   width: 100%;
 }
 
+.spinner-container{
+  margin: 0;
+}
 
 .date-picker-container, .mat-form-container {
   @media screen and (max-width: 576px) {

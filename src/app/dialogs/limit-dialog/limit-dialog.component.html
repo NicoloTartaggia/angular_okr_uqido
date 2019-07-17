@@ -5,8 +5,11 @@
             <mat-form-field class="mat-form-container">
                 <textarea matInput [matTextareaAutosize] formControlName="description" placeholder="Inserisci un miglioramento"></textarea>
             </mat-form-field>
+            <mat-form-field class="example-full-width">
+                <input matInput formControlName="author" placeholder="Autore">
+            </mat-form-field>
             <div class="date-picker-container">
-                <input matInput [matDatepicker]="picker" formControlName="createdAt" placeholder="Choose a date" (click)="picker.open()"/>
+                <input matInput [matDatepicker]="picker" formControlName="createdAt" placeholder="Scegli una data" (click)="picker.open()"/>
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
             </div>

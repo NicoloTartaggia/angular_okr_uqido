@@ -50,13 +50,14 @@ export class LimitDialogComponent implements OnInit {
   ngOnInit() {
     this.modalWithLimit = new FormGroup({
       description: new FormControl('', Validators.required),
-      createdAt: new FormControl(moment()),
+      author: new FormControl(''),
+      createdAt: new FormControl(moment())
     });
   }
 
   onSubmit() {
     this.http.post(this.postUrl, {
-      author: this.authService.getUserName().displayName,
+      author: this.getAuthor(),
       createdAt: this.modalWithLimit.value.createdAt._d,
       description: this.modalWithLimit.value.description,
       keyId: this.data.id
@@ -64,5 +65,12 @@ export class LimitDialogComponent implements OnInit {
       console.log(result);
     });
     this.dialogRef.close();
+  }
+
+  public getAuthor(): string {
+    if (!this.modalWithLimit.value.author) {
+      return this.authService.getUserName().displayName;
+    }
+    return this.modalWithLimit.value.author;
   }
 }

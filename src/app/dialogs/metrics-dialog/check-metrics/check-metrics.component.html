@@ -1,0 +1,19 @@
+<table mat-table [dataSource]="datasource">
+    <ng-container matColumnDef="author">
+        <th mat-header-cell class="header-cell" *matHeaderCellDef>Autore</th>
+        <td mat-cell class="row-cell" *matCellDef="let metric">{{metric.author}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="description">
+        <th mat-header-cell class="header-cell" *matHeaderCellDef>Descrizione</th>
+        <td mat-cell class="row-cell" *matCellDef="let metric">{{metric.description}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="data">
+        <th mat-header-cell class="header-cell" *matHeaderCellDef>Data</th>
+        <td mat-cell class="row-cell" *matCellDef="let metric">{{metric.createdAt | date}}</td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>

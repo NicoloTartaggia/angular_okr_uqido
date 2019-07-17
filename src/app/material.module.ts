@@ -11,6 +11,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatNativeDateModule } from '@angular/material';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatTableModule } from '@angular/material/table';
 
 @NgModule({
   imports: [
@@ -23,7 +24,8 @@ import { MatRadioModule } from '@angular/material/radio';
     MatListModule,
     MatNativeDateModule,
     MatProgressBarModule,
-    MatRadioModule
+    MatRadioModule,
+    MatTableModule
   ],
   exports: [
     MatButtonModule,
@@ -35,7 +37,8 @@ import { MatRadioModule } from '@angular/material/radio';
     MatListModule,
     MatNativeDateModule,
     MatProgressBarModule,
-    MatRadioModule
+    MatRadioModule,
+    MatTableModule
   ]
 })
 

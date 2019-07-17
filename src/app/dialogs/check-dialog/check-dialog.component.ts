@@ -27,20 +27,20 @@ export const MY_FORMATS = {
 };
 
 @Component({
-  selector: 'app-limit-dialog',
-  templateUrl: './limit-dialog.component.html',
-  styleUrls: ['./limit-dialog.component.scss'],
+  selector: 'app-check-dialog',
+  templateUrl: './check-dialog.component.html',
+  styleUrls: ['./check-dialog.component.scss'],
   providers: [
     {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
     {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},
   ],
 })
-export class LimitDialogComponent implements OnInit {
-  public modalWithLimit: FormGroup;
-  private postUrl = 'https://us-central1-okr-platform.cloudfunctions.net/metricsCreate';
+export class CheckDialogComponent implements OnInit {
+  public modalWithCheck: FormGroup;
+  private putUrl = 'https://us-central1-okr-platform.cloudfunctions.net/metricsUpdate';
 
   constructor(private dateAdapter: DateAdapter<any>,
-              public dialogRef: MatDialogRef<LimitDialogComponent>,
+              public dialogRef: MatDialogRef<CheckDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any,
               private http: HttpClient,
               private authService: AuthService) {
@@ -48,18 +48,19 @@ export class LimitDialogComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.modalWithLimit = new FormGroup({
-      description: new FormControl('', Validators.required),
+    this.modalWithCheck = new FormGroup({
       createdAt: new FormControl(moment()),
+      id: new FormControl('', Validators.required)
     });
   }
 
   onSubmit() {
-    this.http.post(this.postUrl, {
+    this.http.put(`${this.putUrl}/${this.modalWithCheck.value.id}`, {
       author: this.authService.getUserName().displayName,
-      createdAt: this.modalWithLimit.value.createdAt._d,
-      description: this.modalWithLimit.value.description,
-      keyId: this.data.id
+      checked: true,
+      createdAt: this.modalWithCheck.value.createdAt._d
+    }).subscribe(results => {
+      console.log(results);
     });
     this.dialogRef.close();
   }

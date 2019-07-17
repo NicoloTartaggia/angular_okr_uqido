@@ -27,20 +27,20 @@ export const MY_FORMATS = {
 };
 
 @Component({
-  selector: 'app-check-dialog',
-  templateUrl: './check-dialog.component.html',
-  styleUrls: ['./check-dialog.component.scss'],
+  selector: 'app-limit-dialog',
+  templateUrl: './limit-dialog.component.html',
+  styleUrls: ['./limit-dialog.component.scss'],
   providers: [
     {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
     {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},
   ],
 })
-export class CheckDialogComponent implements OnInit {
-  public modalWithCheck: FormGroup;
-  private putUrl = 'https://us-central1-okr-platform.cloudfunctions.net/metricsUpdate';
+export class LimitDialogComponent implements OnInit {
+  public modalWithLimit: FormGroup;
+  private postUrl = 'https://us-central1-okr-platform.cloudfunctions.net/metricsCreate';
 
   constructor(private dateAdapter: DateAdapter<any>,
-              public dialogRef: MatDialogRef<CheckDialogComponent>,
+              public dialogRef: MatDialogRef<LimitDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any,
               private http: HttpClient,
               private authService: AuthService) {
@@ -48,24 +48,21 @@ export class CheckDialogComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.modalWithCheck = new FormGroup({
+    this.modalWithLimit = new FormGroup({
+      description: new FormControl('', Validators.required),
       createdAt: new FormControl(moment()),
-      description: new FormControl('', Validators.required)
     });
   }
 
   onSubmit() {
-    for (const metric of this.data.metrics) {
-      if (this.modalWithCheck.value.description === metric.description) {
-        this.http.put(`${this.putUrl}/${metric.id}`, {
-          author: this.authService.getUserName().displayName,
-          checked: true,
-          createdAt: this.modalWithCheck.value.createdAt._d
-        }).subscribe(results => {
-          console.log(results);
-        });
-        this.dialogRef.close();
-      }
-    }
+    this.http.post(this.postUrl, {
+      author: this.authService.getUserName().displayName,
+      createdAt: this.modalWithLimit.value.createdAt._d,
+      description: this.modalWithLimit.value.description,
+      keyId: this.data.id
+    }).subscribe(result => {
+      console.log(result);
+    });
+    this.dialogRef.close();
   }
 }

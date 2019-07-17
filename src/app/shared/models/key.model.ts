@@ -1,3 +1,5 @@
+import {Metric} from './metric.model';
+
 export class Key {
   description: string;
   evaluationType: string;
@@ -5,5 +7,5 @@ export class Key {
   id: string;
   metricsChecked: number;
   metricsCount: number;
-  metrics: any[];
+  metrics: Metric[];
 }

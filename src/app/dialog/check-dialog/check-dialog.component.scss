@@ -8,9 +8,13 @@
 }
 
 .date-picker-container{
-  border-bottom: solid 1px rgba(0,0,0,.42);
-  display: flex;
-  padding-top: 2rem;
+  width: 90%;
+  @media screen and (min-width: 576px) {
+    border-bottom: solid 1px rgba(0,0,0,.42);
+    display: flex;
+    padding-top: 2rem;
+    width: auto;
+  }
 }
 
 .dialog-contents{
@@ -34,8 +38,6 @@
 }
 
 .date-picker-container{
-  @media screen and (max-width: 576px) {
-    width: 90%;
-  }
+
 }
 

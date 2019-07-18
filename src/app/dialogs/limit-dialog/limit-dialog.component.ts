@@ -38,7 +38,8 @@ export const MY_FORMATS = {
   ],
 })
 export class LimitDialogComponent implements OnInit, OnDestroy {
-  private postUrl = 'https://us-central1-okr-platform.cloudfunctions.net/metricsCreate';
+  // private postUrl = 'https://us-central1-okr-platform.cloudfunctions.net/metricsCreate';
+  private postUrl = 'http://localhost:5001/okr-platform/us-central1/metricsUpdate';
   private loadingSubs: Subscription;
   public isLoading = false;  // Used for loading spinner
   public modalWithLimit: FormGroup;

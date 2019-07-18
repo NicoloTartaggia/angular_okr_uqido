@@ -23,7 +23,8 @@ export class ObjectivesComponent implements OnInit, OnChanges {
     if (!this.currentOkrId) {
       return;
     }
-    this.objectiveUrl = `https://us-central1-okr-platform.cloudfunctions.net/objectives?okrId=${this.currentOkrId}`;
+    // this.objectiveUrl = `https://us-central1-okr-platform.cloudfunctions.net/objectives?okrId=${this.currentOkrId}`;
+    this.objectiveUrl = `http://localhost:5001/okr-platform/us-central/objectives?okrId=${this.currentOkrId}`;
     this.setObjectivesList();
   }
 

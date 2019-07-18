@@ -38,7 +38,8 @@ export const MY_FORMATS = {
   ],
 })
 export class CheckDialogComponent implements OnInit {
-  private putUrl = 'https://us-central1-okr-platform.cloudfunctions.net/metricsUpdate';
+  // private putUrl = 'https://us-central1-okr-platform.cloudfunctions.net/metricsUpdate';
+  private putUrl = 'http://localhost:5001/okr-platform/us-central1/metricsUpdate';
   private loadingSubs: Subscription;
   public isLoading = false;  // Used for loading spinner
   public modalWithCheck: FormGroup;

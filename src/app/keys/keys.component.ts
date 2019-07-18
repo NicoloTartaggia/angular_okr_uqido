@@ -11,7 +11,8 @@ export class KeysComponent implements OnInit {
   @Input()
   objectiveId: string;
 
-  private keysUrl = 'https://us-central1-okr-platform.cloudfunctions.net/keys';
+  // private keysUrl = 'https://us-central1-okr-platform.cloudfunctions.net/keys';
+  private keysUrl = `http://localhost:5001/okr-platform/us-central/keys`;
   public keysList;
 
 

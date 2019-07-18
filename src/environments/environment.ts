@@ -7,7 +7,8 @@ export const environment = {
   config: {
     apiKey: 'AIzaSyC-4wigg58el_UqZ3kJ_YGZmLHHsxcD0JI',
     authDomain: 'okr-platform.firebaseapp.com',
-    databaseURL: 'https://okr-platform.firebaseio.com',
+    // databaseURL: 'https://okr-platform.firebaseio.com',
+    databaseURL: 'http://localhost:5001',
     projectId: 'okr-platform',
     storageBucket: 'okr-platform.appspot.com',
     messagingSenderId: '331935303484',

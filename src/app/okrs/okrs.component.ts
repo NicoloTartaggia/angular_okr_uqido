@@ -11,7 +11,8 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./okrs.component.scss']
 })
 export class OkrsComponent implements OnInit {
-  private url = 'https://us-central1-okr-platform.cloudfunctions.net/okrs';
+  // private url = 'https://us-central1-okr-platform.cloudfunctions.net/okrs';
+  private url = 'http://localhost:5001/okr-platform/us-central/okrs';
 
   currentOkr$: Observable<Okr>;
 

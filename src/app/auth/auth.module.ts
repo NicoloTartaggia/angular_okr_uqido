@@ -9,6 +9,7 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AuthService } from '../services/auth.service';
 import { environment } from '../../environments/environment';
 import { AuthComponent } from './auth.component';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -16,10 +17,11 @@ import { AuthComponent } from './auth.component';
   ],
   imports: [
     BrowserModule,
-    CommonModule,
     AngularFireModule.initializeApp(environment.config),
     AngularFirestoreModule,
     AngularFireAuthModule,
+    CommonModule,
+    SharedModule
   ],
   providers: [AuthService]
 })

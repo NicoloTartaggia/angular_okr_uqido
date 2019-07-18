@@ -10,10 +10,12 @@ import { AuthModule } from './auth/auth.module';
 import { AuthService } from './services/auth.service';
 import { SharedModule } from './shared/shared.module';
 import { UiService } from './services/ui.service';
+import { MetricsComponent } from './keys/key/metrics/metrics.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    MetricsComponent,
   ],
   imports: [
     AppRoutingModule,

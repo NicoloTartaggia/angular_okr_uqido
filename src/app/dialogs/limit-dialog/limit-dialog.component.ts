@@ -39,7 +39,7 @@ export const MY_FORMATS = {
 })
 export class LimitDialogComponent implements OnInit, OnDestroy {
   private postUrl = 'https://us-central1-okr-platform.cloudfunctions.net/metricsCreate';
-  private loadingSubs: Subscription;
+  private subscriptions: Subscription[] = [];
   public isLoading = false;  // Used for loading spinner
   public modalWithLimit: FormGroup;
 
@@ -53,9 +53,9 @@ export class LimitDialogComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.loadingSubs = this.uiService.laodingStateChanged.subscribe(isLoading => {
+    this.subscriptions.push(this.uiService.laodingStateChanged.subscribe(isLoading => {
       this.isLoading = isLoading;
-    });
+    }));
     this.modalWithLimit = new FormGroup({
       description: new FormControl('', Validators.required),
       createdAt: new FormControl(moment())
@@ -63,7 +63,7 @@ export class LimitDialogComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.loadingSubs.unsubscribe();
+    this.subscriptions.forEach(s => s.unsubscribe());
   }
 
   onSubmit() {

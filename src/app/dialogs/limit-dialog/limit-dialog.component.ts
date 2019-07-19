@@ -58,7 +58,6 @@ export class LimitDialogComponent implements OnInit, OnDestroy {
     }));
     this.modalWithLimit = new FormGroup({
       description: new FormControl('', Validators.required),
-      author: new FormControl(''),
       createdAt: new FormControl(moment())
     });
   }
@@ -70,7 +69,7 @@ export class LimitDialogComponent implements OnInit, OnDestroy {
   onSubmit() {
     this.uiService.laodingStateChanged.next(true);
     this.http.post(this.postUrl, {
-      author: this.getAuthor(),
+        author: this.authService.getUserName().displayName,
       createdAt: this.modalWithLimit.value.createdAt._d,
       description: this.modalWithLimit.value.description,
       keyId: this.data.id

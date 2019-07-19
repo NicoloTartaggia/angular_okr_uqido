@@ -44,9 +44,6 @@ body{
 .buttons-container{
   display: flex;
   padding-top: 2rem;
-}
-
-.buttons-container {
   justify-content: space-evenly;
 }
 
@@ -102,6 +99,11 @@ body{
   @media screen and (min-width: 576px){
     font-size: inherit;
   }
+}
+
+.plus-button{
+  padding: 0;
+  min-width: 0;
 }
 
 .radio-button-container{

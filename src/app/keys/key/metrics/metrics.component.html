@@ -1,3 +1,8 @@
+<div class="back-button-container">
+    <button mat-button class="plus-button" title="Previuos page" (click)=this.location.back()>
+        <i class="fas fa-arrow-circle-left"></i>
+    </button>
+</div>
 <div class="contents-container">
     <table mat-table class="mat-form-container" [dataSource]="metrics">
         <ng-container matColumnDef="author">

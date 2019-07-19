@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute, ParamMap} from '@angular/router';
-import {HttpClient} from '@angular/common/http';
-import {Metric} from '../../../shared/models/metric.model';
+import { ActivatedRoute } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { Metric } from '../../../shared/models/metric.model';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-check-metrics-dialog',
@@ -14,7 +15,8 @@ export class MetricsComponent implements OnInit {
   metrics: Metric[] = [];
 
   constructor(private route: ActivatedRoute,
-              private http: HttpClient) {}
+              private http: HttpClient,
+              private location: Location) {}
 
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');

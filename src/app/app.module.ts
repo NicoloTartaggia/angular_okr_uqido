@@ -10,6 +10,8 @@ import { AuthModule } from './auth/auth.module';
 import { AuthService } from './services/auth.service';
 import { SharedModule } from './shared/shared.module';
 
+import { UiService } from './services/ui.service';
+
 @NgModule({
   declarations: [
     AppComponent
@@ -24,7 +26,8 @@ import { SharedModule } from './shared/shared.module';
   ],
   providers: [
     AuthService,
-    AuthGuard
+    AuthGuard,
+    UiService
   ],
   exports: [],
   bootstrap: [AppComponent]

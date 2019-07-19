@@ -1,6 +1,8 @@
 .back-button-container{
-  margin-left: 2rem;
-  position: absolute;
+  @media screen and (min-width: 576px) {
+    position: absolute;
+  }
+  margin: 1rem;
 }
 
 .plus-button{
@@ -11,8 +13,9 @@
   padding-right: 2rem;
 }
 
-.contents-container, .metrics-row{
+.contents-container{
   display: flex;
+  margin: 1rem auto !important;
 }
 
 .contents-container{
@@ -34,7 +37,7 @@
 }
 
 .row-cell {
-  padding: 0 3rem !important;
+  padding: 0 !important;
   text-align: center;
 }
 

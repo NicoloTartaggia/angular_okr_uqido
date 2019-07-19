@@ -18,11 +18,11 @@
             </div>
         </form>
     </div>
-    <mat-dialog-actions *ngIf="!isLoading" class="buttons-container">
-        <button mat-raised-button (click)="dialogRef.close()">Annulla</button>
-        <button mat-raised-button color="primary" (click)="onSubmit()">Conferma</button>
+    <mat-dialog-actions class="buttons-container">
+        <button mat-raised-button (click)="dialogRef.close()" [disabled]="isLoading">Annulla</button>
+        <button type="submit" mat-raised-button color="primary" [disabled]="!modalWithCheck.valid || isLoading" (click)="onSubmit()">
+            <span *ngIf="!isLoading">Conferma</span>
+            <mat-spinner *ngIf="isLoading" [diameter]="36"></mat-spinner>
+        </button>
     </mat-dialog-actions>
-    <div *ngIf="isLoading" class="spinner-container">
-        <mat-spinner [diameter]="30"></mat-spinner>
-    </div>
 </div>

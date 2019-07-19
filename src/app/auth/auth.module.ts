@@ -8,7 +8,7 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 
 import { AuthService } from '../services/auth.service';
 import { environment } from '../../environments/environment';
-import {AuthComponent} from './auth.component';
+import { AuthComponent } from './auth.component';
 
 @NgModule({
   declarations: [

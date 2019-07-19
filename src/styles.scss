@@ -42,6 +42,7 @@ body{
 }
 
 .buttons-container, .radio-container{
+  display: flex;
   padding-top: 2rem;
 }
 
@@ -49,17 +50,32 @@ body{
   justify-content: space-evenly;
 }
 
+.cdk-global-overlay-wrapper{
+  overflow-x: hidden;
+  overflow-y: auto;
+  pointer-events: auto !important;
+}
+
 .date-picker-container{
   border-bottom: solid 1px rgba(0,0,0,.42);
   display: flex;
+  padding: 1rem 0;
+  width: 100%;
+}
+
+.date-picker-input{
   padding-top: 1rem;
   width: auto;
+  @media screen and (min-width: 576px){
+    width: 100%;
+  }
 }
 
 .dialog-contents{
-  margin: 2rem auto;
-  display: flex;
-  justify-content: center;
+  display: flex !important;
+  justify-content: center !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
 .dialog-title{
@@ -75,6 +91,37 @@ body{
 .main-dialog-container{
   max-width: 40rem;
 }
+
+.mat-dialog-container{
+  margin: 2rem 0;
+}
+
 .mat-form-container{
   width: 100%;
+}
+
+.mat-radio-label{
+  white-space: normal !important;
+}
+
+.mat-list-item-content{
+  padding: 0 !important;
+  font-size: 0.85rem;
+  @media screen and (min-width: 576px){
+    font-size: inherit;
+  }
+}
+
+.radio-button-container{
+  display: grid !important;
+  padding-bottom: 1rem;
+  width: auto;
+}
+
+.radio-container{
+  padding: 1rem 0;
+}
+
+.spinner-container{
+  margin: 0;
 }

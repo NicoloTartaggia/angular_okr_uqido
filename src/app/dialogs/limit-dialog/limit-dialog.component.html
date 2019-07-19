@@ -6,7 +6,7 @@
                 <input matInput formControlName="description" placeholder="Inserisci un miglioramento"/>
             </mat-form-field>
             <div class="date-picker-container">
-                <input matInput [matDatepicker]="picker" formControlName="createdAt" placeholder="Scegli una data" (click)="picker.open()"/>
+                <input matInput class="date-picker-input" [matDatepicker]="picker" formControlName="createdAt" placeholder="Scegli una data" (click)="picker.open()"/>
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
             </div>

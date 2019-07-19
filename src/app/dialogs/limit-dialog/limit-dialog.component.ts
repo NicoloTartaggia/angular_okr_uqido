@@ -69,7 +69,7 @@ export class LimitDialogComponent implements OnInit, OnDestroy {
   onSubmit() {
     this.uiService.laodingStateChanged.next(true);
     this.http.post(this.postUrl, {
-        author: this.authService.getUserName().displayName,
+      author: this.authService.getUserName().displayName,
       createdAt: this.modalWithLimit.value.createdAt._d,
       description: this.modalWithLimit.value.description,
       keyId: this.data.id
@@ -78,12 +78,5 @@ export class LimitDialogComponent implements OnInit, OnDestroy {
       console.log(result);
       this.dialogRef.close();
     });
-  }
-
-  public getAuthor(): string {
-    if (!this.modalWithLimit.value.author) {
-      return this.authService.getUserName().displayName;
-    }
-    return this.modalWithLimit.value.author;
   }
 }

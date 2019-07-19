@@ -9,7 +9,6 @@ import { AuthGuard} from './auth/auth.guard';
 import { AuthModule } from './auth/auth.module';
 import { AuthService } from './services/auth.service';
 import { SharedModule } from './shared/shared.module';
-
 import { UiService } from './services/ui.service';
 
 @NgModule({
@@ -32,4 +31,5 @@ import { UiService } from './services/ui.service';
   exports: [],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }

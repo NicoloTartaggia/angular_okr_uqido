@@ -20,7 +20,7 @@ export class KeyComponent implements OnInit {
   ngOnInit() {}
 
   public keyPercentage() {
-    if (!this.key) {
+    if (!this.key || this.key.metricsCount === 0) {
       return '0';
     }
     if (this.key.evaluationType !== 'check') {

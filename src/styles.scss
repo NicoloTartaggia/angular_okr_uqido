@@ -41,7 +41,7 @@ body{
   }
 }
 
-.buttons-container{
+.buttons-container, .radio-container{
   display: flex;
   padding-top: 2rem;
 }
@@ -58,7 +58,8 @@ body{
 }
 
 .date-picker-input{
-  width: 90%;
+  padding-top: 1rem;
+  width: auto;
   @media screen and (min-width: 576px){
     width: 100%;
   }

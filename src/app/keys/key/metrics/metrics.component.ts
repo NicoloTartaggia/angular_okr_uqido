@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { MetricsService } from '../../../services/metrics.service';
+import {ActivatedRoute, ParamMap} from '@angular/router';
+import {HttpClient} from '@angular/common/http';
+import {Metric} from '../../../shared/models/metric.model';
 
 @Component({
   selector: 'app-check-metrics-dialog',
@@ -10,9 +11,18 @@ import { MetricsService } from '../../../services/metrics.service';
 export class MetricsComponent implements OnInit {
 
   displayedColumns: string[] = ['author', 'description', 'data'];
-  metrics = [];
+  metrics: Metric[] = [];
 
-  constructor(public metricsService: MetricsService) {}
+  constructor(private route: ActivatedRoute,
+              private http: HttpClient) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    const id = this.route.snapshot.paramMap.get('id');
+    this.http.get(`https://us-central1-okr-platform.cloudfunctions.net/metrics?keyId=${id}`)
+      .subscribe((result: any[]) => {
+        this.metrics = result.map(metric => {
+          return Metric.fromJSON(metric);
+        });
+      });
+  }
 }

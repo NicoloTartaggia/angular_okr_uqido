@@ -51,13 +51,4 @@ export class KeyComponent implements OnInit {
       });
     }
   }
-
-  public async goToMetrics() {
-    if (this.key) {
-      await this.metricsService.setMetrics(this.key.metrics);
-    }
-    this.ngZone.run(() => {
-      this.router.navigate(['/metrics']);
-    });
-  }
 }

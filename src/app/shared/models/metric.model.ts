@@ -18,7 +18,7 @@ export class Metric {
     if (object) {
       this.author = object.author;
       this.checked = object.checked;
-      this.createdAt = object.createdAt && new Date(object.createdAt.seconds * 1000);
+      this.createdAt = object.createdAt && new Date(object.createdAt);
       this.description = object.description;
     }
   }

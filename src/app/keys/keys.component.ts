@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Key } from '../shared/models/key.model';
+import {StateService} from '../services/state.service';
 
 @Component({
   selector: 'app-keys',
@@ -11,21 +10,10 @@ export class KeysComponent implements OnInit {
   @Input()
   objectiveId: string;
 
-  private keysUrl = 'https://us-central1-okr-platform.cloudfunctions.net/keys';
-  public keysList;
 
-
-  constructor(private http: HttpClient) { }
+  constructor(private state: StateService) { }
 
   ngOnInit() {
-    this.getKeyList();
-  }
-
-  // GET - Get all keys related to the objective with the id given in input
-  public getKeyList() {
-    this.http.get(`${this.keysUrl}?objectiveId=${this.objectiveId}`)
-      .subscribe((data: Key[]) => {
-        this.keysList = data;
-      });
+    this.state.getKeyWithObjectiveId(this.objectiveId);
   }
 }

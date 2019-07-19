@@ -9,7 +9,7 @@
       </div>
     </div>
     <mat-accordion>
-      <mat-expansion-panel *ngFor="let objective of objectivesList">
+      <mat-expansion-panel *ngFor="let objective of (state.objectives | async)">
         <mat-expansion-panel-header>{{objective.description}}</mat-expansion-panel-header>
         <app-keys [objectiveId]="objective.id"></app-keys>
       </mat-expansion-panel>

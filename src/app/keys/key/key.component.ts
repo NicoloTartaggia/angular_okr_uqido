@@ -1,38 +1,25 @@
-import { Component, Input, NgZone, OnInit } from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input, NgZone, OnInit} from '@angular/core';
 import { Key } from '../../shared/models/key.model';
 import { MatDialog } from '@angular/material';
 import { LimitDialogComponent } from '../../dialogs/limit-dialog/limit-dialog.component';
 import { CheckDialogComponent } from '../../dialogs/check-dialog/check-dialog.component';
 import { Router } from '@angular/router';
 import {MetricsService} from '../../services/metrics.service';
+import {StateService} from '../../services/state.service';
 
 @Component({
   selector: 'app-key',
   templateUrl: './key.component.html',
-  styleUrls: ['./key.component.scss']
+  styleUrls: ['./key.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class KeyComponent implements OnInit {
   @Input()
   key: Key;
 
-  constructor(private router: Router,
-              private ngZone: NgZone,
-              private metricsService: MetricsService,
-              public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog) { }
 
-  ngOnInit() {
-  }
-
-  public keyPercentage() {
-    if (!this.key || this.key.metricsCount === 0) {
-      return '0';
-    }
-    if (this.key.evaluationType !== 'check') {
-      return Math.floor((this.key.metricsCount / this.key.limit) * 100);
-    } else {
-      return Math.floor((this.key.metricsChecked / this.key.metricsCount) * 100);
-     }
-  }
+  ngOnInit() {}
 
   public openDialog() {
     const data = {

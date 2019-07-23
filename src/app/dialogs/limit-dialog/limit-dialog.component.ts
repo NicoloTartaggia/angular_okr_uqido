@@ -13,6 +13,8 @@ import * as _moment from 'moment';
 // tslint:disable-next-line:no-duplicate-imports
 // @ts-ignore
 import { default as _rollupMoment } from 'moment';
+import {StateService} from '../../services/state.service';
+import {Metric, MetricJSON} from '../../shared/models/metric.model';
 
 const moment = _rollupMoment || _moment;
 
@@ -48,7 +50,8 @@ export class LimitDialogComponent implements OnInit, OnDestroy {
               @Inject(MAT_DIALOG_DATA) public data: any,
               private http: HttpClient,
               private authService: AuthService,
-              private uiService: UiService) {
+              private uiService: UiService,
+              private state: StateService) {
     this.dateAdapter.setLocale('it');
   }
 
@@ -73,8 +76,10 @@ export class LimitDialogComponent implements OnInit, OnDestroy {
       createdAt: this.modalWithLimit.value.createdAt._d,
       description: this.modalWithLimit.value.description,
       keyId: this.data.id
-    }).subscribe(result => {
+    }).subscribe((result: MetricJSON) => {
       this.uiService.laodingStateChanged.next(false);
+      this.state.updateMetricCount(this.data.id);
+      this.state.updateMetric(Metric.fromJSON(result));
       console.log(result);
       this.dialogRef.close();
     });

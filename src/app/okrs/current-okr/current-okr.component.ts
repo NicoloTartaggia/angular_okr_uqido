@@ -1,5 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Okr } from '../../shared/models/okr.model';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-current-okr',
@@ -7,9 +6,6 @@ import { Okr } from '../../shared/models/okr.model';
   styleUrls: ['./current-okr.component.scss']
 })
 export class CurrentOkrComponent implements OnInit {
-  @Input()
-  okr: Okr;
-
   constructor() {}
 
   ngOnInit() {}

@@ -4,7 +4,7 @@
     </button>
 </div>
 <div class="contents-container">
-    <table mat-table class="mat-form-container" [dataSource]="metrics">
+    <table mat-table class="mat-form-container" [dataSource]="(filterByKeyId(state.metrics | async))">
         <ng-container matColumnDef="author">
             <th mat-header-cell class="header-cell dialog-title" *matHeaderCellDef>Autore</th>
             <td mat-cell class="row-cell" *matCellDef="let metric">{{metric.author}}</td>

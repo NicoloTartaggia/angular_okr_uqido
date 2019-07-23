@@ -6,6 +6,8 @@ export interface MetricJSON {
   checked?: boolean;
   createdAt: Timestamp;
   description: string;
+  id: string;
+  keyId: string;
 }
 
 export class Metric {
@@ -13,6 +15,8 @@ export class Metric {
   checked?: boolean;
   createdAt: Date;
   description: string;
+  id: string;
+  keyId: string;
 
   constructor(object?: any) {
     if (object) {
@@ -20,6 +24,8 @@ export class Metric {
       this.checked = object.checked;
       this.createdAt = object.createdAt && new Date(object.createdAt);
       this.description = object.description;
+      this.id = object.id;
+      this.keyId = object.keyId;
     }
   }
 

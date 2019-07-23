@@ -22,7 +22,7 @@ export class StateService {
   private _metricsValue = {};
   private lastUpdate = {};
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   get currentOkr() {
     return this._currentOkr;
@@ -42,6 +42,7 @@ export class StateService {
 
   // GET - Get the current okr comparing current date with starting and ending date of each okr.
   getCurrentOkr() {
+    this.getClockifyWorkspaces();
     const currentDate = new Date().getTime();
     if (this.makeRequest(this.url)) {
       return;
@@ -120,4 +121,9 @@ export class StateService {
   private makeRequest(url) {
     return this.lastUpdate[url] && this.lastUpdate[url].getTime() > (new Date()).getTime() - 5 * 60 * 1000;
   }
+
+  getClockifyWorkspaces() {
+
+  }
+
 }

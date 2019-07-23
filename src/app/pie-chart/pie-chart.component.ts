@@ -14,10 +14,21 @@ export class PieChartComponent implements OnInit, OnDestroy {
   private subscription: Subscription[] = [];
 
   public objectives: Objective[] = [];
-  public pieChartLabels = ['Obiettivi completati (%)', 'Obiettivi non completati (%)'];
+  public pieChartLabels = [];
+  public data = [];
   public pieChartData = [];
   public pieChartType = 'pie';
   public pieChartLegend = false;
+  public pieChartColor:any = [
+    {
+      backgroundColor: ['rgba(30, 169, 224, 0.8)',
+        'rgba(255,165,0,0.9)',
+        'rgba(139, 136, 136, 0.9)',
+        'rgba(255, 161, 181, 0.9)',
+        'rgba(255, 102, 0, 0.9)'
+      ]
+    }
+  ];
   public pieChartOptions = {
     responsive: true
   };
@@ -31,10 +42,23 @@ export class PieChartComponent implements OnInit, OnDestroy {
 
     this.state.keys.subscribe((keys: Key[]) => {
       this.pieChartData = [];
+      this.pieChartLabels = [];
+      this.data = [];
       this.objectives.forEach((obj: Objective) => {
         const p = Object.values(keys).filter((key: Key) => key.objectiveId === obj.id).map((k: Key) => k.keyPercentage);
         this.pieChartData.push(p.reduce((a, b) => a + b, 0 ) / p.length);
+        this.pieChartLabels.push(obj.description);
       });
+      this.pieChartData.forEach(percentage => {
+        if (percentage >= 60) {
+          this.data.push(1 / this.pieChartData.length * 100);
+        } else {
+          this.data.push(percentage / this.pieChartData.length / 60 * 100);
+        }
+      });
+      this.data.push(Math.round(100 - this.data.reduce((a, b) => a + b, 0)));
+      this.pieChartLabels.push('Obiettivi incompleti');
+      return this.data;
     });
   }
 
@@ -42,21 +66,5 @@ export class PieChartComponent implements OnInit, OnDestroy {
     this.subscription.forEach((subscription: Subscription) => {
       subscription.unsubscribe();
     });
-  }
-
-  finalResults() {
-    const progressPercentage = [];
-    const data = [];
-    this.pieChartData.forEach(percentage => {
-      if (percentage >= 60) {
-        progressPercentage.push(1);
-      } else {
-        progressPercentage.push(percentage / 60);
-      }
-    });
-    const progress = progressPercentage.reduce((a, b) => a + b, 0) / progressPercentage.length;
-    data.push(Math.round(progress * 100));
-    data.push(Math.round(100 - (progress * 100)));
-    return data;
   }
 }

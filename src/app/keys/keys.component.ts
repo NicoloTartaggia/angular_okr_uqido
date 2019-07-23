@@ -12,8 +12,7 @@ export class KeysComponent implements OnInit {
   @Input()
   objectiveId: string;
 
-
-  constructor(private state: StateService) { }
+  constructor(public state: StateService) { }
 
   ngOnInit() {
     this.state.getKeyWithObjectiveId(this.objectiveId);

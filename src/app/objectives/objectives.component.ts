@@ -9,7 +9,7 @@ import {Okr} from '../shared/models/okr.model';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ObjectivesComponent implements OnInit {
-  constructor(private state: StateService) { }
+  constructor(public state: StateService) { }
 
   ngOnInit() {
     this.state.currentOkr.subscribe((currentOkr: Okr) => {

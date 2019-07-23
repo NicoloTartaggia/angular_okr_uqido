@@ -18,9 +18,9 @@ export class MetricsComponent implements OnInit {
   id: string;
 
   constructor(private http: HttpClient,
-              private location: Location,
               private route: ActivatedRoute,
-              private state: StateService
+              public location: Location,
+              public state: StateService
               ) {}
 
   ngOnInit() {

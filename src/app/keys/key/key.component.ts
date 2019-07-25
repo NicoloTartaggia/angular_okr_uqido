@@ -1,11 +1,9 @@
-import {ChangeDetectionStrategy, Component, Input, NgZone, OnInit} from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { Key } from '../../shared/models/key.model';
 import { MatDialog } from '@angular/material';
 import { LimitDialogComponent } from '../../dialogs/limit-dialog/limit-dialog.component';
 import { CheckDialogComponent } from '../../dialogs/check-dialog/check-dialog.component';
-import { Router } from '@angular/router';
-import {MetricsService} from '../../services/metrics.service';
-import {StateService} from '../../services/state.service';
+import { StateService } from '../../services/state.service';
 
 @Component({
   selector: 'app-key',
@@ -17,7 +15,9 @@ export class KeyComponent implements OnInit {
   @Input()
   key: Key;
 
-  constructor(public dialog: MatDialog) { }
+  public users;
+
+  constructor(public dialog: MatDialog, public state: StateService) { }
 
   ngOnInit() {}
 
@@ -32,7 +32,7 @@ export class KeyComponent implements OnInit {
       this.dialog.open(LimitDialogComponent, {
         data
       });
-    } else {
+    } else if (this.key.evaluationType === 'check') {
       this.dialog.open(CheckDialogComponent, {
         data
       });

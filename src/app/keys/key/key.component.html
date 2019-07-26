@@ -1,10 +1,13 @@
 <div class="item-description-container">
     <div class="item-status-container">
-        <mat-action-list><a mat-list-item class="list-item" [routerLink]="['..','keys',key.id,'metrics']" role="button">{{key.description}}</a></mat-action-list>
-        <mat-progress-bar *ngIf="key.evaluationType !== 'clockify'; else average" class="item-progress-bar" mode="determinate" value="{{key?.keyPercentage}}"></mat-progress-bar>
-        <ng-template #average><mat-progress-bar class="item-progress-bar" mode="determinate" value="{{(state.hours | async) / (state.users| async)}}"></mat-progress-bar></ng-template>
+        <mat-action-list>
+            <a mat-list-item class="list-item" [routerLink]="['..','keys',key.id,'metrics']" role="button">{{key.description}}</a>
+        </mat-action-list>
+        <mat-progress-bar *ngIf="key.evaluationType !== 'clockify'" class="item-progress-bar" mode="determinate" value="{{key?.keyPercentage}}"></mat-progress-bar>
+        <mat-progress-bar *ngIf="key.evaluationType === 'clockify'" class="item-progress-bar" mode="determinate" value="{{(state.clockifyAverage | async)}}"></mat-progress-bar>
     </div>
     <div class="info-container">
+        <button mat-button class="plus-button clockify-button" *ngIf="key.evaluationType === 'clockify'" (click)="openDialog()"><i class="fas fa-plus-circle"></i></button>
         <button mat-button class="plus-button" *ngIf="key.evaluationType !== 'clockify'" (click)="openDialog()"><i class="fas fa-plus-circle"></i></button>
     </div>
 </div>

@@ -1,22 +1,29 @@
 import { Injectable } from '@angular/core';
-import { Okr, OkrJSON } from '../shared/models/okr.model';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 import { Objective } from '../shared/models/objective.model';
-import { Key } from '../shared/models/key.model';
-import { Metric, MetricJSON } from '../shared/models/metric.model';
+import { Key, KeyJSON } from '../shared/models/key.model';
+import { Article, ArticleJSON } from '../shared/models/article.model';
 import { Entry } from '../shared/models/entry';
+import { Metric, MetricJSON } from '../shared/models/metric.model';
+import { Okr, OkrJSON } from '../shared/models/okr.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StateService {
   private objectiveUrl = 'https://us-central1-okr-platform.cloudfunctions.net/objectives';
-  private clockifyUrl = 'https://us-central1-okr-platform.cloudfunctions.net/clockify';
+  // private clockifyUrl = 'https://us-central1-okr-platform.cloudfunctions.net/clockify';
+  private clockifyUrl = 'http://localhost:5001/okr-platform/us-central1/clockify';
   private keysUrl = 'https://us-central1-okr-platform.cloudfunctions.net/keys';
   private metricsUrl = 'https://us-central1-okr-platform.cloudfunctions.net/metrics';
+  private metricsPostUrl = 'https://us-central1-okr-platform.cloudfunctions.net/metricsUpdate';
+  private techArticlesUrl = 'http://localhost:5001/okr-platform/us-central1/articles';
   private url = 'https://us-central1-okr-platform.cloudfunctions.net/okrs';
-  private _averageForEachPerson = new BehaviorSubject<any>([]);
+  private _articles = new BehaviorSubject<any>([]);
+  private _articlesValue = {};
+  private _articlesNumber = new BehaviorSubject<number>(0);
+  private _clockifyAverage = new BehaviorSubject<number>(0);
   private _objectives = new BehaviorSubject<Objective[]>([]);
   private _currentOkr = new BehaviorSubject<Okr>(new Okr());
   private _keys = new BehaviorSubject<any>([]);
@@ -24,16 +31,27 @@ export class StateService {
   private lastUpdate = {};
   private _metrics = new BehaviorSubject<any>([]);
   private _metricsValue = {};
-  private _users = new BehaviorSubject<number>(0);
 
   constructor(private http: HttpClient) {}
+
+  get articles() {
+    return this._articles;
+  }
+
+  get articlesNumber() {
+    return this._articlesNumber;
+  }
+
+  get objectives() {
+    return this._objectives;
+  }
 
   get currentOkr() {
     return this._currentOkr;
   }
 
-  get objectives() {
-    return this._objectives;
+  get clockifyAverage() {
+    return this._clockifyAverage;
   }
 
   get keys() {
@@ -44,20 +62,14 @@ export class StateService {
     return this._metrics;
   }
 
-  get hours() {
-    return this._averageForEachPerson;
-  }
-
-  get users() {
-    return this._users;
-  }
   // GET - Get the current okr comparing current date with starting and ending date of each okr.
   getCurrentOkr() {
-    this.getClockifyTimeEntries();
     const currentDate = new Date().getTime();
     if (this.makeRequest(this.url)) {
       return;
     }
+    this.getClockifyTimeEntries();
+    // this.getTechArticles();
     this.http.get(this.url).subscribe((data: OkrJSON[]) => {
       this.lastUpdate[this.url] = new Date();
       this._currentOkr
@@ -86,10 +98,17 @@ export class StateService {
       return;
     }
     this.http.get(url)
-      .subscribe((data: Key[]) => {
+      .subscribe((data: KeyJSON[]) => {
         this.lastUpdate[url] = new Date();
         data.forEach((key) => {
-          this._keysValue[key.id] = new Key(key);
+          const transformKey = Key.fromJSON(key);
+          this._keysValue[key.id] = transformKey;
+          // if (key.evaluationType === 'articlesLimit' && transformKey.lastUpdate.getTime() > (new Date().getTime() - 604800 * 1000)) {
+          if (key.evaluationType === 'articlesLimit') {
+            // console.log('tech updating...');
+            // every week\
+            // this.updateTechArticlesMetrics(transformKey);
+          }
         });
         this._keys.next(this._keysValue);
       });
@@ -134,30 +153,52 @@ export class StateService {
   }
 
   getClockifyTimeEntries() {
-    const currentMonth = new Date().getMonth();
     this.http.get(this.clockifyUrl)
-      .subscribe((arrayOfEntries: Array<Entry[]>) => {
-        let users = -1;
+      .subscribe((entries: Entry[]) => {
+        let users = 0;
         let average = 0;
-        arrayOfEntries.forEach((entries: Entry[]) => {
-          let hoursSum = 0;
-          entries.forEach((entryJSON: Entry) => {
-            const entry = new Entry(entryJSON);
-            if (entry.start.getMonth() === currentMonth) {
-              hoursSum += entry.end.getHours() - entry.start.getHours();
-            }
-          });
-          const currentAverage = hoursSum / 8;
-          if (currentAverage >= 1) {
+        entries.forEach((entry: Entry) => {
+          if (entry.average >= 1) {
             average += 1;
-            this._averageForEachPerson.next(average);
           } else {
-            average += currentAverage;
-            this._averageForEachPerson.next(average);
+            average += entry.average;
           }
           users += 1;
-          this._users.next(users);
+          console.log(users);
+          console.log(average);
         });
+        console.log((average / users) * 100)
+        this._clockifyAverage.next((average / users) * 100);
       });
+  }
+
+  getTechArticles() {
+    this.http.get(this.techArticlesUrl)
+      .subscribe((arrayOfArticles: Array<ArticleJSON[]>) => {
+        let totalArticles = 0;
+        arrayOfArticles.forEach((articles: ArticleJSON[]) => {
+          articles.forEach((article: ArticleJSON) => {
+            this._articlesValue[article.id] = Article.fromJSON(article);
+          });
+          this._articles.next(this._articlesValue);
+          totalArticles += 1;
+        });
+        this._articlesNumber.next(totalArticles);
+      });
+  }
+
+  updateTechArticlesMetrics(key: Key) {
+    this._articles.forEach((article: Article) => {
+      this.http.post(this.metricsPostUrl, {
+        author: '',
+        createdAt: article.date,
+        description: article.title,
+        keyId: key.id
+      })
+        .subscribe((result: Metric) => {
+          this.updateMetricCount(key.id);
+          this.updateMetric(result);
+        });
+    });
   }
 }

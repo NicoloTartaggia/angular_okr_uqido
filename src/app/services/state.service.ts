@@ -13,8 +13,7 @@ import { Okr, OkrJSON } from '../shared/models/okr.model';
 })
 export class StateService {
   private objectiveUrl = 'https://us-central1-okr-platform.cloudfunctions.net/objectives';
-  // private clockifyUrl = 'https://us-central1-okr-platform.cloudfunctions.net/clockify';
-  private clockifyUrl = 'http://localhost:5001/okr-platform/us-central1/clockify';
+  private clockifyUrl = 'https://us-central1-okr-platform.cloudfunctions.net/clockify';
   private keysUrl = 'https://us-central1-okr-platform.cloudfunctions.net/keys';
   private metricsUrl = 'https://us-central1-okr-platform.cloudfunctions.net/metrics';
   private metricsPostUrl = 'https://us-central1-okr-platform.cloudfunctions.net/metricsUpdate';
@@ -69,7 +68,6 @@ export class StateService {
       return;
     }
     this.getClockifyTimeEntries();
-    // this.getTechArticles();
     this.http.get(this.url).subscribe((data: OkrJSON[]) => {
       this.lastUpdate[this.url] = new Date();
       this._currentOkr
@@ -101,13 +99,10 @@ export class StateService {
       .subscribe((data: KeyJSON[]) => {
         this.lastUpdate[url] = new Date();
         data.forEach((key) => {
-          const transformKey = Key.fromJSON(key);
-          this._keysValue[key.id] = transformKey;
-          // if (key.evaluationType === 'articlesLimit' && transformKey.lastUpdate.getTime() > (new Date().getTime() - 604800 * 1000)) {
+          const transformedKey = Key.fromJSON(key);
+          this._keysValue[key.id] = transformedKey;
           if (key.evaluationType === 'articlesLimit') {
-            // console.log('tech updating...');
-            // every week\
-            // this.updateTechArticlesMetrics(transformKey);
+            this.getTechArticles(key.id);
           }
         });
         this._keys.next(this._keysValue);
@@ -164,16 +159,13 @@ export class StateService {
             average += entry.average;
           }
           users += 1;
-          console.log(users);
-          console.log(average);
         });
-        console.log((average / users) * 100)
         this._clockifyAverage.next((average / users) * 100);
       });
   }
 
-  getTechArticles() {
-    this.http.get(this.techArticlesUrl)
+  getTechArticles(keyId: string) {
+    this.http.get(`${this.techArticlesUrl}/${keyId}`)
       .subscribe((arrayOfArticles: Array<ArticleJSON[]>) => {
         let totalArticles = 0;
         arrayOfArticles.forEach((articles: ArticleJSON[]) => {
@@ -185,20 +177,5 @@ export class StateService {
         });
         this._articlesNumber.next(totalArticles);
       });
-  }
-
-  updateTechArticlesMetrics(key: Key) {
-    this._articles.forEach((article: Article) => {
-      this.http.post(this.metricsPostUrl, {
-        author: '',
-        createdAt: article.date,
-        description: article.title,
-        keyId: key.id
-      })
-        .subscribe((result: Metric) => {
-          this.updateMetricCount(key.id);
-          this.updateMetric(result);
-        });
-    });
   }
 }

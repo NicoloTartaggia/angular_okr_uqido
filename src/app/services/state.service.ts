@@ -16,7 +16,6 @@ export class StateService {
   private clockifyUrl = 'https://us-central1-okr-platform.cloudfunctions.net/clockify';
   private keysUrl = 'https://us-central1-okr-platform.cloudfunctions.net/keys';
   private metricsUrl = 'https://us-central1-okr-platform.cloudfunctions.net/metrics';
-  private metricsPostUrl = 'https://us-central1-okr-platform.cloudfunctions.net/metricsUpdate';
   private techArticlesUrl = 'http://localhost:5001/okr-platform/us-central1/articles';
   private url = 'https://us-central1-okr-platform.cloudfunctions.net/okrs';
   private _articles = new BehaviorSubject<any>([]);
@@ -59,6 +58,10 @@ export class StateService {
 
   get metrics() {
     return this._metrics;
+  }
+
+  setMetrics(actualMetrics: any) {
+    this._metrics.next(actualMetrics);
   }
 
   // GET - Get the current okr comparing current date with starting and ending date of each okr.

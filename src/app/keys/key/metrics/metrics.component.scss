@@ -16,10 +16,28 @@
 .contents-container{
   display: flex;
   margin: 1rem auto !important;
+  justify-content: center;
 }
 
-.contents-container{
-  justify-content: center;
+.delete-container{
+  align-items: center;
+}
+
+.delete-icon{
+  position: absolute;
+  margin-left: 2.5rem;
+  @media screen and (min-width: 576px) {
+    margin-left: 4rem
+  }
+  @media screen and (min-width: 768px) {
+    margin-left: 5rem
+  }
+  @media screen and (min-width: 992px) {
+    margin-left: 6rem
+  }
+  @media screen and (min-width: 1200px) {
+    margin-left: 7rem
+  }
 }
 
 .header-cell{

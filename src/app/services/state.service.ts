@@ -17,6 +17,7 @@ export class StateService {
   private keysUrl = 'https://us-central1-okr-platform.cloudfunctions.net/keys';
   private metricsUrl = 'https://us-central1-okr-platform.cloudfunctions.net/metrics';
   private techArticlesUrl = 'http://localhost:5001/okr-platform/us-central1/articles';
+  // private techArticlesUrl = 'https://us-central1-okr-platform.cloudfunctions.net/articles';
   private url = 'https://us-central1-okr-platform.cloudfunctions.net/okrs';
   private _articles = new BehaviorSubject<any>([]);
   private _articlesValue = {};
@@ -169,12 +170,10 @@ export class StateService {
 
   getTechArticles(keyId: string) {
     this.http.get(`${this.techArticlesUrl}/${keyId}`)
-      .subscribe((arrayOfArticles: Array<ArticleJSON[]>) => {
+      .subscribe((articles: ArticleJSON[]) => {
         let totalArticles = 0;
-        arrayOfArticles.forEach((articles: ArticleJSON[]) => {
-          articles.forEach((article: ArticleJSON) => {
-            this._articlesValue[article.id] = Article.fromJSON(article);
-          });
+        articles.forEach((article: ArticleJSON) => {
+          this._articlesValue[article.id] = Article.fromJSON(article);
           this._articles.next(this._articlesValue);
           totalArticles += 1;
         });

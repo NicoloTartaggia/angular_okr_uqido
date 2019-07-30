@@ -103,6 +103,11 @@ export class StateService {
       });
   }
 
+  getKeyEvaluationType(keyId: string): string {
+    const targetKey: any = Object.values(this._keys.value).filter((key: Key) => key.id === keyId);
+    return targetKey[0].evaluationType;
+  }
+
   getMetricsWithKeyId(keyId: string) {
     const url = `${this.metricsUrl}?keyId=${keyId}`;
     if (this.makeRequest(url)) {

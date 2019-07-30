@@ -19,6 +19,7 @@ export class MetricsComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = ['author', 'description', 'data'];
   id: string;
   private metricsDeletetUrl = 'https://us-central1-okr-platform.cloudfunctions.net/metricsDelete';
+  private metricsPutUrl = 'https://us-central1-okr-platform.cloudfunctions.net/metricsUpdate';
   private subscriptions: Subscription[] = [];
   public isLoading = false;
 
@@ -49,12 +50,22 @@ export class MetricsComponent implements OnInit, OnDestroy {
   deleteMetric(metric: Metric) {
     this.uiService.laodingStateChanged.next(true);
     this.state.downdateMetricCount(metric.keyId);
-    this.http.delete(`${this.metricsDeletetUrl}/${metric.id}`, {responseType: 'text'})
-      .subscribe(results => {
+    this.state.downdateMetric(metric.id);
+    const evaluationType = this.state.getKeyEvaluationType(metric.keyId);
+    if (evaluationType === 'limit') {
+      this.http.delete(`${this.metricsDeletetUrl}/${metric.id}`, {responseType: 'text'})
+        .subscribe(results => {
+          console.log(results);
+          this.uiService.laodingStateChanged.next(false);
+        });
+    } else if (evaluationType === 'check') {
+      this.http.put(`${this.metricsPutUrl}/${metric.id}`, {
+        checked: false
+      }).subscribe(results => {
         console.log(results);
-        this.state.downdateMetric(metric.id);
         this.uiService.laodingStateChanged.next(false);
       });
+    }
   }
 
 }

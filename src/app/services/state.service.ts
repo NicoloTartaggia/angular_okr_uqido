@@ -21,7 +21,6 @@ export class StateService {
   private url = 'https://us-central1-okr-platform.cloudfunctions.net/okrs';
   private _articles = new BehaviorSubject<any>([]);
   private _articlesValue = {};
-  private _articlesNumber = new BehaviorSubject<number>(0);
   private _clockifyAverage = new BehaviorSubject<number>(0);
   private _objectives = new BehaviorSubject<Objective[]>([]);
   private _currentOkr = new BehaviorSubject<Okr>(new Okr());
@@ -35,10 +34,6 @@ export class StateService {
 
   get articles() {
     return this._articles;
-  }
-
-  get articlesNumber() {
-    return this._articlesNumber;
   }
 
   get objectives() {
@@ -59,10 +54,6 @@ export class StateService {
 
   get metrics() {
     return this._metrics;
-  }
-
-  setMetrics(actualMetrics: any) {
-    this._metrics.next(actualMetrics);
   }
 
   // GET - Get the current okr comparing current date with starting and ending date of each okr.
@@ -103,8 +94,7 @@ export class StateService {
       .subscribe((data: KeyJSON[]) => {
         this.lastUpdate[url] = new Date();
         data.forEach((key) => {
-          const transformedKey = Key.fromJSON(key);
-          this._keysValue[key.id] = transformedKey;
+          this._keysValue[key.id] = Key.fromJSON(key);
           if (key.evaluationType === 'articlesLimit') {
             this.getTechArticles(key.id);
           }
@@ -128,6 +118,19 @@ export class StateService {
       });
   }
 
+  updateMetric(metric: Metric) {
+    this._metricsValue = {
+      ...this._metricsValue,
+      [metric.id]: metric
+    };
+    this._metrics.next(this._metricsValue);
+  }
+
+  downdateMetric(metricId: string) {
+    const metrics = Object.values(this._metrics.value).filter((metric: Metric) => metric.id !== metricId);
+    this._metrics.next(metrics);
+  }
+
   updateMetricCount(keyId) {
     this._keysValue = {
       ...this._keysValue,
@@ -139,12 +142,9 @@ export class StateService {
     this._keys.next(this._keysValue);
   }
 
-  updateMetric(metric: Metric) {
-    this._metricsValue = {
-      ...this._metricsValue,
-      [metric.id]: metric
-    };
-    this._metrics.next(this._metricsValue);
+  downdateMetricCount(keyId: string) {
+    const targetKey: any = Object.values(this._keys.value).filter((key: Key) => key.id === keyId);
+    targetKey[0].metricsCount -= 1;
   }
 
   private makeRequest(url) {
@@ -170,14 +170,13 @@ export class StateService {
 
   getTechArticles(keyId: string) {
     this.http.get(`${this.techArticlesUrl}/${keyId}`)
-      .subscribe((articles: ArticleJSON[]) => {
-        let totalArticles = 0;
-        articles.forEach((article: ArticleJSON) => {
-          this._articlesValue[article.id] = Article.fromJSON(article);
-          this._articles.next(this._articlesValue);
-          totalArticles += 1;
+      .subscribe((articles: any []) => {
+        articles.forEach((articleJSON) => {
+
+          // const articleJSON: ArticleJSON = JSON.parse(articleAsString);
+          this._articlesValue[articleJSON.id] = Article.fromJSON(articleJSON);
         });
-        this._articlesNumber.next(totalArticles);
+        this._articles.next(this._articlesValue);
       });
   }
 }

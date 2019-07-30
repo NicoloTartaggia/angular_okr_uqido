@@ -8,7 +8,7 @@ import { Subscription } from 'rxjs';
 import { UiService } from '../../../services/ui.service';
 
 @Component({
-  selector: 'app-check-metrics-dialog',
+  selector: 'app-metrics',
   templateUrl: './metrics.component.html',
   styleUrls: ['./metrics.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -46,13 +46,13 @@ export class MetricsComponent implements OnInit, OnDestroy {
     return Object.values(metric).filter((data: Metric) => data.keyId === this.id);
   }
 
-  deleteMetric(metricId: string) {
+  deleteMetric(metric: Metric) {
     this.uiService.laodingStateChanged.next(true);
-    this.http.delete(`${this.metricsDeletetUrl}/${metricId}`, {responseType: 'text'})
+    this.state.downdateMetricCount(metric.keyId);
+    this.http.delete(`${this.metricsDeletetUrl}/${metric.id}`, {responseType: 'text'})
       .subscribe(results => {
         console.log(results);
-        const metrics = Object.values(this.state.metrics.value).filter((data: Metric) => data.id !== metricId);
-        this.state.setMetrics(metrics);
+        this.state.downdateMetric(metric.id);
         this.uiService.laodingStateChanged.next(false);
       });
   }

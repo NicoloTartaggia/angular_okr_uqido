@@ -1,21 +1,29 @@
 export interface ArticleJSON {
-  date: string;
+  author: string;
+  createdAt: string;
+  description: string;
   id: string;
-  title: string;
+  keyId: string;
 }
 
 export class Article {
-  date: Date;
+  author: string;
+  createdAt: Date;
+  description: string;
   id: string;
-  title: string;
+  keyId: string;
 
   constructor(object?: any) {
-    this.date = object.date && new Date(object.date);
+    this.author = object.author;
+    this.createdAt = object.createdAt && new Date(object.createdAt);
     this.id = object.id;
-    this.title = object.title;
+    this.description = object.description;
+    this.keyId = object.keyId;
   }
 
   static fromJSON(json?: ArticleJSON): Article {
     return new Article(json);
   }
+
+  isEqual() {}
 }

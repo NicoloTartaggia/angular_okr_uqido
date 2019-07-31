@@ -50,22 +50,11 @@ export class MetricsComponent implements OnInit, OnDestroy {
   deleteMetric(metric: Metric) {
     this.uiService.laodingStateChanged.next(true);
     this.state.downdateMetricCount(metric.keyId);
-    this.state.downdateMetric(metric.id);
-    const evaluationType = this.state.getKeyEvaluationType(metric.keyId);
-    if (evaluationType === 'limit') {
-      this.http.delete(`${this.metricsDeletetUrl}/${metric.id}`, {responseType: 'text'})
-        .subscribe(results => {
-          console.log(results);
-          this.uiService.laodingStateChanged.next(false);
-        });
-    } else if (evaluationType === 'check') {
-      this.http.put(`${this.metricsPutUrl}/${metric.id}`, {
-        checked: false
-      }).subscribe(results => {
+    this.http.delete(`${this.metricsDeletetUrl}/${metric.id}`, {responseType: 'text'})
+      .subscribe(results => {
         console.log(results);
+        this.state.downdateMetric(metric.id);
         this.uiService.laodingStateChanged.next(false);
       });
-    }
   }
-
 }

@@ -176,9 +176,7 @@ export class StateService {
   getTechArticles(keyId: string) {
     this.http.get(`${this.techArticlesUrl}/${keyId}`)
       .subscribe((articles: any []) => {
-        articles.forEach((articleJSON) => {
-
-          // const articleJSON: ArticleJSON = JSON.parse(articleAsString);
+        articles.forEach((articleJSON: ArticleJSON) => {
           this._articlesValue[articleJSON.id] = Article.fromJSON(articleJSON);
         });
         this._articles.next(this._articlesValue);

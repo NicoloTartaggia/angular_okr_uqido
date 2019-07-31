@@ -13,7 +13,8 @@ import { Okr, OkrJSON } from '../shared/models/okr.model';
 })
 export class StateService {
   private objectiveUrl = 'https://us-central1-okr-platform.cloudfunctions.net/objectives';
-  private clockifyUrl = 'https://us-central1-okr-platform.cloudfunctions.net/clockify';
+  // private clockifyUrl = 'https://us-central1-okr-platform.cloudfunctions.net/clockify';
+  private clockifyUrl = 'http://localhost:5001/okr-platform/us-central1/clockify';
   private keysUrl = 'https://us-central1-okr-platform.cloudfunctions.net/keys';
   private metricsUrl = 'https://us-central1-okr-platform.cloudfunctions.net/metrics';
   private techArticlesUrl = 'http://localhost:5001/okr-platform/us-central1/articles';
@@ -31,10 +32,6 @@ export class StateService {
   private _metricsValue = {};
 
   constructor(private http: HttpClient) {}
-
-  get articles() {
-    return this._articles;
-  }
 
   get objectives() {
     return this._objectives;
@@ -103,11 +100,6 @@ export class StateService {
       });
   }
 
-  getKeyEvaluationType(keyId: string): string {
-    const targetKey: any = Object.values(this._keys.value).filter((key: Key) => key.id === keyId);
-    return targetKey[0].evaluationType;
-  }
-
   getMetricsWithKeyId(keyId: string) {
     const url = `${this.metricsUrl}?keyId=${keyId}`;
     if (this.makeRequest(url)) {
@@ -123,7 +115,15 @@ export class StateService {
       });
   }
 
-  updateMetric(metric: Metric) {
+  updateLimitMetric(metric: Metric) {
+    this._metricsValue = {
+      ...this._metricsValue,
+      [metric.id]: metric
+    };
+    this._metrics.next(this._metricsValue);
+  }
+
+  updateCheckMetric(metric: Metric) {
     this._metricsValue = {
       ...this._metricsValue,
       [metric.id]: metric
@@ -136,13 +136,27 @@ export class StateService {
     this._metrics.next(metrics);
   }
 
-  updateMetricCount(keyId) {
+  updateLimitMetricCount(keyId) {
     this._keysValue = {
       ...this._keysValue,
-      [keyId]: {
+      [keyId]: Key.fromJSON({
         ...this._keysValue[keyId],
         metricsCount: this._keysValue[keyId].metricsCount + 1
-      }
+      })
+    };
+    this._keys.next(this._keysValue);
+  }
+
+  updateCheckMetricCount(metric: Metric) {
+    const metricToUpdate = this._keysValue[metric.keyId].metrics.filter(m => m.description === metric.description)[0];
+    const index = this._keysValue[metric.keyId].metrics.indexOf(metricToUpdate);
+    this._keysValue[metric.keyId].metrics[index].checked = true;
+    this._keysValue = {
+      ...this._keysValue,
+      [metric.keyId]: Key.fromJSON({
+        ...this._keysValue[metric.keyId],
+        metricsChecked: this._keysValue[metric.keyId].metricsChecked  + 1
+      })
     };
     this._keys.next(this._keysValue);
   }

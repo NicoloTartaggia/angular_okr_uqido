@@ -40,7 +40,7 @@ export class PieChartComponent implements OnInit, OnDestroy {
       this.objectives = objectives;
     }));
 
-    this.state.keys.subscribe((keys: Key[]) => {
+    this.subscription.push(this.state.keys.subscribe((keys: Key[]) => {
       this.pieChartData = [];
       this.pieChartLabels = [];
       this.data = [];
@@ -59,7 +59,7 @@ export class PieChartComponent implements OnInit, OnDestroy {
       this.data.push(Math.round(100 - this.data.reduce((a, b) => a + b, 0)));
       this.pieChartLabels.push('Obiettivi incompleti');
       return this.data;
-    });
+    }));
   }
 
   ngOnDestroy() {

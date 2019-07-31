@@ -16,6 +16,8 @@ export class StateService {
   // private clockifyUrl = 'https://us-central1-okr-platform.cloudfunctions.net/clockify';
   private clockifyUrl = 'http://localhost:5001/okr-platform/us-central1/clockify';
   private keysUrl = 'https://us-central1-okr-platform.cloudfunctions.net/keys';
+  // private keysUpdateUrl = 'https://us-central1-okr-platform.cloudfunctions.net/keysUpdate';
+  private keysUpdateUrl = 'http://localhost:5001/okr-platform/us-central1/keysUpdate';
   private metricsUrl = 'https://us-central1-okr-platform.cloudfunctions.net/metrics';
   private techArticlesUrl = 'http://localhost:5001/okr-platform/us-central1/articles';
   // private techArticlesUrl = 'https://us-central1-okr-platform.cloudfunctions.net/articles';
@@ -91,9 +93,14 @@ export class StateService {
       .subscribe((data: KeyJSON[]) => {
         this.lastUpdate[url] = new Date();
         data.forEach((key) => {
-          this._keysValue[key.id] = Key.fromJSON(key);
-          if (key.evaluationType === 'articlesLimit') {
+          const actualKey = Key.fromJSON(key);
+          this._keysValue[key.id] = actualKey;
+          if (key.evaluationType === 'articlesLimit' && this.executeUpdate(actualKey)) {
             this.getTechArticles(key.id);
+            this.http.put(this.keysUpdateUrl, {
+              lastUpdate: new Date().getDate()
+            }).subscribe(result =>
+            console.log(result));
           }
         });
         this._keys.next(this._keysValue);
@@ -168,6 +175,11 @@ export class StateService {
 
   private makeRequest(url) {
     return this.lastUpdate[url] && this.lastUpdate[url].getTime() > (new Date()).getTime() - 5 * 60 * 1000;
+  }
+
+  private executeUpdate(key: Key): boolean {
+    const diff = 60 * 60 * 24 * 1000;  // milliseconds in a day
+    return ((new Date().getTime() - key.lastUpdate.getTime()) / diff) > 7;
   }
 
   getClockifyTimeEntries() {

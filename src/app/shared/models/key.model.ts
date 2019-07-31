@@ -31,7 +31,7 @@ export class Key {
       this.evaluationType = object.evaluationType;
       this.id = object.id;
       this.limit = object.limit;
-      this.lastUpdate = object.lastUpdate && new Date(object.lastUpdate);
+      this.lastUpdate = object.lastUpdate && new Date(object.lastUpdate.seconds * 1000);
       this.metricsChecked = object.metricsChecked;
       this.metricsCount = object.metricsCount;
       this.metrics = object.metrics;

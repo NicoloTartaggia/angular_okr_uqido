@@ -41,6 +41,10 @@ export class StateService {
     return this._okrs;
   }
 
+  setCurrentOkr(okr: Okr) {
+    this._currentOkr.next(okr);
+  }
+
   get currentOkr() {
     return this._currentOkr;
   }
@@ -79,7 +83,6 @@ export class StateService {
         }
       });
       this._okrs.next(this._okrsValue);
-      console.log(this._okrs)
       });
   }
 
@@ -88,12 +91,19 @@ export class StateService {
     return okr.startingAt.getTime() <= currentDate && okr.endingAt.getTime() >= currentDate;
   }
 
+  public updateCurrentOkr(okr: Okr) {
+    if (okr.id !== this._currentOkr.value.id) {
+      this.setCurrentOkr(okr);
+      this.setObjectives(okr.id);
+    }
+  }
+
   setObjectives(okrId: string) {
     if (!okrId) { return; }
     const url = `${this.objectiveUrl}?okrId=${okrId}`;
-    if (this.makeRequest(url)) {
-      return;
-    }
+    // if (this.makeRequest(url)) {
+    //   return;
+    // }
     this.http.get(url)
       .subscribe((data: Objective[]) => {
         this.lastUpdate[url] = new Date();

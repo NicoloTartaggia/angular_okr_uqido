@@ -39,7 +39,6 @@ export class PieChartComponent implements OnInit, OnDestroy {
     this.subscription.push(this.state.objectives.subscribe((objectives: Objective[]) => {
       this.objectives = objectives;
     }));
-
     this.subscription.push(this.state.keys.subscribe((keys: Key[]) => {
       this.pieChartData = [];
       this.pieChartLabels = [];

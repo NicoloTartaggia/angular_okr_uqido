@@ -56,7 +56,6 @@ export class CheckDialogComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.state.keys)
     this.loadingSubs = this.uiService.laodingStateChanged.subscribe(isLoading => {
       this.isLoading = isLoading;
     });

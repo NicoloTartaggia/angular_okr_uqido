@@ -10,9 +10,10 @@ $custom-typography: mat-typography-config(
 
 @include angular-material-typography($custom-typography);
 
-body{
+html, body{
   font-family: 'Oxygen' !important;
   margin: 0;
+  height: 100%;
 }
 .header-container{
   box-shadow: 0 6px 16px rgba(0,0,0,.05);

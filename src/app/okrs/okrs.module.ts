@@ -13,6 +13,8 @@ import { ChartsModule } from 'ng2-charts';
 
 import { LimitDialogComponent } from '../dialogs/limit-dialog/limit-dialog.component';
 import { CheckDialogComponent } from '../dialogs/check-dialog/check-dialog.component';
+import { SidenavComponent } from '../sidenav/sidenav.component';
+
 
 @NgModule({
   imports: [
@@ -29,8 +31,10 @@ import { CheckDialogComponent } from '../dialogs/check-dialog/check-dialog.compo
     LimitDialogComponent,
     ObjectivesComponent,
     OkrsComponent,
-    PieChartComponent
+    PieChartComponent,
+    SidenavComponent
   ],
+  exports: [],
   entryComponents: [
     CheckDialogComponent,
     LimitDialogComponent

@@ -1,13 +1,28 @@
- <div class="header-container">
-     <div class="masthead">
-        <div class="logo">
-            <img src="../../assets/resources/logo_UQIDO.svg"/>
-        </div>
-        <button mat-button (click)="auth.signOut()">
-            <i class="fas fa-sign-out-alt fa-2x" title="Log out"></i>
+<mat-sidenav-container class="sidenav-container" autosize >
+    <mat-sidenav #sidenav mode="over" role="navigation">
+        <button mat-button (click)="sidenav.toggle()">
+            <i class="material-icons">menu</i>
         </button>
-     </div>
-</div>
-<app-current-okr></app-current-okr>
+        <app-sidenav></app-sidenav>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+        <button mat-button (click)="sidenav.toggle()">
+            <i class="material-icons">menu</i>
+        </button>
+        <div class="header-container">
+            <div class="masthead">
+                <div class="logo">
+                    <img src="../../assets/resources/logo_UQIDO.svg"/>
+                </div>
+                <button mat-button (click)="auth.signOut()">
+                    <i class="fas fa-sign-out-alt fa-2x" title="Log out"></i>
+                </button>
+            </div>
+        </div>
+        <app-current-okr></app-current-okr>
+    </mat-sidenav-content>
+</mat-sidenav-container>
+
 
 

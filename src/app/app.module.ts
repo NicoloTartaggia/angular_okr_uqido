@@ -16,7 +16,7 @@ import { StateService } from './services/state.service';
 @NgModule({
   declarations: [
     AppComponent,
-    MetricsComponent,
+    MetricsComponent
   ],
   imports: [
     AppRoutingModule,

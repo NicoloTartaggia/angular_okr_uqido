@@ -11,6 +11,6 @@ export class OkrsComponent implements OnInit {
   constructor(public auth: AuthService, public state: StateService) { }
 
   ngOnInit() {
-    this.state.getCurrentOkr();
+    this.state.getOkrs();
   }
 }

@@ -8,10 +8,12 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
+import { MatMenuModule } from '@angular/material/menu';
 import { MatNativeDateModule } from '@angular/material';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTableModule } from '@angular/material/table';
 
 @NgModule({
@@ -23,10 +25,12 @@ import { MatTableModule } from '@angular/material/table';
     MatIconModule,
     MatInputModule,
     MatListModule,
+    MatMenuModule,
     MatNativeDateModule,
     MatProgressBarModule,
     MatRadioModule,
     MatProgressSpinnerModule,
+    MatSidenavModule,
     MatTableModule
   ],
   exports: [
@@ -37,10 +41,12 @@ import { MatTableModule } from '@angular/material/table';
     MatIconModule,
     MatInputModule,
     MatListModule,
+    MatMenuModule,
     MatNativeDateModule,
     MatProgressBarModule,
     MatProgressSpinnerModule,
     MatRadioModule,
+    MatSidenavModule,
     MatTableModule
   ]
 })

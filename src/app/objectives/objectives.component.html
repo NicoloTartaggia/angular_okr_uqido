@@ -17,6 +17,12 @@
         <mat-expansion-panel-header>{{objective.description}}</mat-expansion-panel-header>
         <app-keys [objectiveId]="objective.id"></app-keys>
       </mat-expansion-panel>
+      <button mat-mini-fab class="obj-button" color="primary">
+        <i class="material-icons">add</i>
+      </button>
+      <button mat-fab class="obj-big-button" color="primary" matTooltip="Aggiungi obiettivo" matTooltipClass="dialog-title">
+        <i class="material-icons">add</i>
+      </button>
     </mat-accordion>
   </div>
 </div>

@@ -1,0 +1,26 @@
+<div class="main-dialog-container">
+    <div class="dialog-contents" mat-dialog-content>
+        <form class="form" [formGroup]="keyModal" (ngSubmit)="onSubmit()">
+            <mat-form-field class="mat-form-container">
+                <input matInput formControlName="description" placeholder="Inserisci una nuova chiave"/>
+            </mat-form-field>
+            <mat-form-field class="mat-form-container">
+                <p>Che tipo di chiave vuoi aggiungere?</p>
+                <mat-select formControlName="type">
+                    <mat-option *ngFor="let type of types" [value]="type">{{type}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field class="mat-form-container" *ngIf="keyModal.value.type === 'Limit'">
+                <input matInput formControlName="limit" placeholder="Inserisci limite" type="number"/>
+            </mat-form-field>
+        </form>
+    </div>
+    <mat-dialog-actions class="buttons-container">
+        <button mat-raised-button (click)="dialogRef.close()" [disabled]="isLoading">Annulla</button>
+        <button type="submit" mat-raised-button color="primary" [disabled]="!keyModal.valid || isLoading" (click)="onSubmit()">
+            <span *ngIf="!isLoading">Conferma</span>
+            <mat-spinner *ngIf="isLoading" [diameter]="36"></mat-spinner>
+        </button>
+    </mat-dialog-actions>
+</div>
+

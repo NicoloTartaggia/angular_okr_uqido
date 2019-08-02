@@ -9,9 +9,13 @@
   padding-left: 1rem;
 }
 
+.mat-expansion-panel span{
+  align-items: center !important;
+}
+
 .mat-expansion-panel-header{
   font-size: 1rem;
-  padding: 1.5rem;
+  padding: 1.5rem 1.5rem 1.5rem 0;
 }
 
 .objective-info{
@@ -22,6 +26,10 @@
   @media screen and (min-width: 576px) {
     padding-bottom: 2rem;
   }
+}
+
+.objectives-options{
+  margin-right: 0.5rem;
 }
 
 .objective-title{

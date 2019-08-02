@@ -14,7 +14,13 @@
     </div>
     <mat-accordion>
       <mat-expansion-panel *ngFor="let objective of (state.objectives | async)">
-        <mat-expansion-panel-header>{{objective.description}}</mat-expansion-panel-header>
+        <mat-expansion-panel-header>
+          <button mat-icon-button [matMenuTriggerFor]="menu"><i class="material-icons objectives-options">more_vert</i></button>
+          <mat-menu #menu="matMenu">
+            <button mat-button>Aggiungi chiave</button>
+          </mat-menu>
+          {{objective.description}}
+        </mat-expansion-panel-header>
         <app-keys [objectiveId]="objective.id"></app-keys>
       </mat-expansion-panel>
       <button mat-mini-fab class="obj-button" color="primary" (click)="openDialog()">

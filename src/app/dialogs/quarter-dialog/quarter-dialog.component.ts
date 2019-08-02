@@ -4,6 +4,8 @@ import { DateAdapter, MatDialogRef } from '@angular/material';
 import { UiService } from '../../services/ui.service';
 import { Subscription } from 'rxjs';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Okr, OkrJSON } from '../../shared/models/okr.model';
+import { StateService } from '../../services/state.service';
 
 import * as _moment from 'moment';
 // tslint:disable-next-line:no-duplicate-imports
@@ -37,6 +39,7 @@ export class QuarterDialogComponent implements OnInit, OnDestroy {
 
   constructor(private http: HttpClient,
               private dateAdapter: DateAdapter<any>,
+              private state: StateService,
               private uiService: UiService,
               public dialogRef: MatDialogRef<QuarterDialogComponent>) {
     this.dateAdapter.setLocale('it');
@@ -61,10 +64,10 @@ export class QuarterDialogComponent implements OnInit, OnDestroy {
     this.http.post(this.postUrl, {
       createdAt: this.quarterModal.value.createdAt,
       endingAt: this.quarterModal.value.endingAt
-    }).subscribe((result) => {
+    }).subscribe((result: OkrJSON) => {
       console.log(result);
       this.uiService.laodingStateChanged.next(false);
-
+      // this.state.updateCurrentOkr(Okr.fromJSON(result));
       this.dialogRef.close();
     });
   }

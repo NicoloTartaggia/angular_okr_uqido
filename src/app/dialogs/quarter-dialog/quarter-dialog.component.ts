@@ -55,10 +55,6 @@ export class QuarterDialogComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy() {
-    this.subscriptions.forEach(s => s.unsubscribe());
-  }
-
   onSubmit() {
     this.uiService.laodingStateChanged.next(true);
     this.http.post(this.postUrl, {
@@ -70,5 +66,9 @@ export class QuarterDialogComponent implements OnInit, OnDestroy {
       // this.state.updateCurrentOkr(Okr.fromJSON(result));
       this.dialogRef.close();
     });
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach(s => s.unsubscribe());
   }
 }

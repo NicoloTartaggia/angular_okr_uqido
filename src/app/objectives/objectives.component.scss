@@ -1,3 +1,8 @@
+.add-key{
+  float: right;
+  margin-top: 1rem;
+}
+
 .chart-container{
   width: 10rem;
   @media screen and (min-width: 576px) {
@@ -15,7 +20,7 @@
 
 .mat-expansion-panel-header{
   font-size: 1rem;
-  padding: 1.5rem 1.5rem 1.5rem 0;
+  padding: 1.5rem;
 }
 
 .objective-info{

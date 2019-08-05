@@ -10,9 +10,23 @@
                     <mat-option *ngFor="let type of types" [value]="type">{{type}}</mat-option>
                 </mat-select>
             </mat-form-field>
-            <mat-form-field class="mat-form-container" *ngIf="keyModal.value.type === 'Limit'">
+            <mat-form-field class="mat-form-container" *ngIf="keyModal.value.type === 'limit' || keyModal.value.type === 'uqido tech'">
                 <input matInput formControlName="limit" placeholder="Inserisci limite" type="number"/>
             </mat-form-field>
+            <mat-list>
+                <mat-list-item class="list-item" *ngFor="let metric of metrics">
+                    <i class="material-icons fa-1x">remove</i>
+                    <p>{{metric.description}}</p>
+                </mat-list-item>
+            </mat-list>
+            <div class="dialog-contents" *ngIf="keyModal.value.type === 'check'">
+                <mat-form-field class="mat-form-container">
+                    <input matInput formControlName="check" placeholder="Inserisci metrica"/>
+                </mat-form-field>
+                <mat-action-list>
+                    <a mat-list-item class="list-item" role="button" (click)="buildMetrics()">Aggiungi</a>
+                </mat-action-list>
+            </div>
         </form>
     </div>
     <mat-dialog-actions class="buttons-container">

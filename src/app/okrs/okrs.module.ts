@@ -30,18 +30,19 @@ import { KeyDialogComponent } from '../dialogs/key-dialog/key-dialog.component';
     CurrentOkrComponent,
     KeyComponent,
     KeysComponent,
+    KeyDialogComponent,
     LimitDialogComponent,
     ObjectivesComponent,
     OkrsComponent,
     PieChartComponent,
     QuarterDialogComponent,
-    ObjectiveDialogComponent,
-    KeyDialogComponent
+    ObjectiveDialogComponent
   ],
   exports: [],
   entryComponents: [
     CheckDialogComponent,
     LimitDialogComponent,
+    KeyDialogComponent,
     ObjectiveDialogComponent,
     QuarterDialogComponent
   ]

@@ -45,8 +45,10 @@ export class PieChartComponent implements OnInit, OnDestroy {
       this.data = [];
       this.objectives.forEach((obj: Objective) => {
         const p = Object.values(keys).filter((key: Key) => key.objectiveId === obj.id).map((k: Key) => k.keyPercentage);
-        this.pieChartData.push(p.reduce((a, b) => a + b, 0 ) / p.length);
         this.pieChartLabels.push(obj.description);
+        if (p.length > 0) {
+          this.pieChartData.push(p.reduce((a, b) => a + b, 0 ) / p.length);
+        }
       });
       this.pieChartData.forEach(percentage => {
         if (percentage >= 60) {

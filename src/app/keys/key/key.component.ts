@@ -1,9 +1,12 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Key } from '../../shared/models/key.model';
 import { MatDialog } from '@angular/material';
 import { LimitDialogComponent } from '../../dialogs/limit-dialog/limit-dialog.component';
 import { CheckDialogComponent } from '../../dialogs/check-dialog/check-dialog.component';
 import { StateService } from '../../services/state.service';
+import { Subscription } from 'rxjs';
+import { UiService } from '../../services/ui.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-key',
@@ -11,15 +14,33 @@ import { StateService } from '../../services/state.service';
   styleUrls: ['./key.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class KeyComponent implements OnInit {
+export class KeyComponent implements OnInit, OnDestroy {
   @Input()
   key: Key;
 
+  private keysDeletetUrl = 'https://us-central1-okr-platform.cloudfunctions.net/keysDelete';
+  private subscriptions: Subscription[] = [];
+  public isLoading = false;
   public users;
 
-  constructor(public dialog: MatDialog, public state: StateService) { }
+  constructor(private http: HttpClient,
+              private state: StateService,
+              private uiService: UiService,
+              public dialog: MatDialog) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.subscriptions.push(this.uiService.laodingStateChanged.subscribe(isLoading => {
+      this.isLoading = isLoading;
+    }));
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach(s => s.unsubscribe());
+  }
+
+  get getState() {
+    return this.state;
+  }
 
   public openDialog() {
     const data = {
@@ -37,5 +58,15 @@ export class KeyComponent implements OnInit {
         data
       });
     }
+  }
+
+  deleteKey(key: Key) {
+    this.uiService.laodingStateChanged.next(true);
+    this.http.delete(`${this.keysDeletetUrl}/${key.id}`, {responseType: 'text'})
+      .subscribe(result => {
+        console.log(result);
+        this.uiService.laodingStateChanged.next(false);
+        this.state.downdateKey(key.id);
+      });
   }
 }

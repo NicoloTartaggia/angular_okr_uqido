@@ -147,6 +147,13 @@ export class StateService {
     this._keys.next(this._keysValue);
   }
 
+  downdateKey(keyId: string) {
+    const keys = Object.values(this._keys.value).filter((key: Key) => key.id !== keyId);
+    this._keys.next(keys);
+    const metricsToDelete = Object.values(this._metrics.value).filter((metric: Metric) => metric.keyId === keyId);
+    metricsToDelete.forEach((metric: Metric) => this.downdateMetric(metric.id));
+  }
+
   getMetricsWithKeyId(keyId: string) {
     const url = `${this.metricsUrl}?keyId=${keyId}`;
     // if (this.makeRequest(url)) {

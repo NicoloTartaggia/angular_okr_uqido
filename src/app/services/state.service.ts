@@ -5,22 +5,26 @@ import { BehaviorSubject } from 'rxjs';
 import { Objective } from '../shared/models/objective.model';
 import { Key } from '../shared/models/key.model';
 import { Metric, MetricJSON } from '../shared/models/metric.model';
+import { Entry } from '../shared/models/entry';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StateService {
-  private url = 'https://us-central1-okr-platform.cloudfunctions.net/okrs';
   private objectiveUrl = 'https://us-central1-okr-platform.cloudfunctions.net/objectives';
+  private clockifyUrl = 'https://us-central1-okr-platform.cloudfunctions.net/clockify';
   private keysUrl = 'https://us-central1-okr-platform.cloudfunctions.net/keys';
   private metricsUrl = 'https://us-central1-okr-platform.cloudfunctions.net/metrics';
-  private _currentOkr = new BehaviorSubject<Okr>(new Okr());
+  private url = 'https://us-central1-okr-platform.cloudfunctions.net/okrs';
+  private _averageForEachPerson = new BehaviorSubject<any>([]);
   private _objectives = new BehaviorSubject<Objective[]>([]);
+  private _currentOkr = new BehaviorSubject<Okr>(new Okr());
   private _keys = new BehaviorSubject<any>([]);
   private _keysValue = {};
+  private lastUpdate = {};
   private _metrics = new BehaviorSubject<any>([]);
   private _metricsValue = {};
-  private lastUpdate = {};
+  private _users = new BehaviorSubject<number>(0);
 
   constructor(private http: HttpClient) {}
 
@@ -40,9 +44,16 @@ export class StateService {
     return this._metrics;
   }
 
+  get hours() {
+    return this._averageForEachPerson;
+  }
+
+  get users() {
+    return this._users;
+  }
   // GET - Get the current okr comparing current date with starting and ending date of each okr.
   getCurrentOkr() {
-    this.getClockifyWorkspaces();
+    this.getClockifyTimeEntries();
     const currentDate = new Date().getTime();
     if (this.makeRequest(this.url)) {
       return;
@@ -122,8 +133,31 @@ export class StateService {
     return this.lastUpdate[url] && this.lastUpdate[url].getTime() > (new Date()).getTime() - 5 * 60 * 1000;
   }
 
-  getClockifyWorkspaces() {
-
+  getClockifyTimeEntries() {
+    const currentMonth = new Date().getMonth();
+    this.http.get(this.clockifyUrl)
+      .subscribe((arrayOfEntries: Array<Entry[]>) => {
+        let users = -1;
+        let average = 0;
+        arrayOfEntries.forEach((entries: Entry[]) => {
+          let hoursSum = 0;
+          entries.forEach((entryJSON: Entry) => {
+            const entry = new Entry(entryJSON);
+            if (entry.start.getMonth() === currentMonth) {
+              hoursSum += entry.end.getHours() - entry.start.getHours();
+            }
+          });
+          const currentAverage = hoursSum / 8;
+          if (currentAverage >= 1) {
+            average += 1;
+            this._averageForEachPerson.next(average);
+          } else {
+            average += currentAverage;
+            this._averageForEachPerson.next(average);
+          }
+          users += 1;
+          this._users.next(users);
+        });
+      });
   }
-
 }

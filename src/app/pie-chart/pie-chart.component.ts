@@ -19,7 +19,7 @@ export class PieChartComponent implements OnInit, OnDestroy {
   public pieChartData = [];
   public pieChartType = 'pie';
   public pieChartLegend = false;
-  public pieChartColor:any = [
+  public pieChartColor: any = [
     {
       backgroundColor: ['rgba(30, 169, 224, 0.8)',
         'rgba(255,165,0,0.9)',

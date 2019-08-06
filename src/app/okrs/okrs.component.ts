@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Okr, OkrJSON } from '../shared/models/okr.model';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { AuthService } from '../services/auth.service';
+import { StateService } from '../services/state.service';
 
 @Component({
   selector: 'app-okrs',
@@ -11,24 +8,9 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./okrs.component.scss']
 })
 export class OkrsComponent implements OnInit {
-  private url = 'https://us-central1-okr-platform.cloudfunctions.net/okrs';
-
-  currentOkr$: Observable<Okr>;
-
-  constructor(private http: HttpClient, public auth: AuthService) { }
+  constructor(public auth: AuthService, public state: StateService) { }
 
   ngOnInit() {
-    this.setCurrentOkr();
-  }
-
-  // GET - Get the current okr comparing current date with starting and ending date of each okr.
-  public setCurrentOkr() {
-    const currentDate = new Date().getTime();
-    this.currentOkr$ = this.http.get(this.url).pipe(
-      map((data: OkrJSON[]) => {
-        return data.map((okrs) => Okr.fromJSON(okrs))
-          .filter(okr => okr.startingAt.getTime() < currentDate && okr.endingAt.getTime() >= currentDate)[0];
-      })
-    );
+    this.state.getCurrentOkr();
   }
 }

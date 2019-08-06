@@ -1,7 +1,7 @@
 <div class="item-description-container">
     <div class="item-status-container">
         <mat-action-list><a mat-list-item class="list-item" [routerLink]="['..','keys',key.id,'metrics']" role="button">{{key.description}}</a></mat-action-list>
-        <mat-progress-bar class="item-progress-bar" mode="determinate" value="{{keyPercentage()}}"></mat-progress-bar>
+        <mat-progress-bar class="item-progress-bar" mode="determinate" value="{{key?.keyPercentage}}"></mat-progress-bar>
     </div>
     <div class="info-container">
         <button mat-button class="plus-button" (click)="openDialog()"><i class="fas fa-plus-circle"></i></button>

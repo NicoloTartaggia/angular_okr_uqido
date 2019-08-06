@@ -1,4 +1,4 @@
 <!-- Scrolling through keys of a specific objective and giving the key of each one as input to key component-->
-<mat-list-item *ngFor="let key of keysList">
+<mat-list-item *ngFor="let key of filterByObjectiveId((state.keys | async))">
   <app-key [key]="key"></app-key>
 </mat-list-item>

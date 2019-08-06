@@ -17,7 +17,15 @@
 
         <ng-container matColumnDef="data">
             <th mat-header-cell class="header-cell dialog-title" *matHeaderCellDef>Data</th>
-            <td mat-cell class="row-cell" *matCellDef="let metric">{{metric.createdAt | date}}</td>
+            <td mat-cell class="row-cell" *matCellDef="let metric">
+                <div class="contents-container delete-container">
+                    {{metric.createdAt | date}}
+                    <button mat-button color="warn" class="delete-icon" [disabled]="isLoading" (click)="deleteMetric(metric)">
+                        <i class="material-icons">delete</i>
+                    </button>
+<!--                    <mat-spinner *ngIf="isLoading" [diameter]="36"></mat-spinner>-->
+                </div>
+            </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

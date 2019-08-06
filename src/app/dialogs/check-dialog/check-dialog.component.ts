@@ -5,8 +5,10 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 
-import { UiService } from '../../services/ui.service';
+import { Metric, MetricJSON } from '../../shared/models/metric.model';
 import { AuthService } from '../../services/auth.service';
+import { StateService } from '../../services/state.service';
+import { UiService } from '../../services/ui.service';
 
 import { Subscription } from 'rxjs';
 import * as _moment from 'moment';
@@ -48,11 +50,13 @@ export class CheckDialogComponent implements OnInit {
               @Inject(MAT_DIALOG_DATA) public data: any,
               private http: HttpClient,
               private authService: AuthService,
+              private state: StateService,
               private uiService: UiService) {
     this.dateAdapter.setLocale('it');
   }
 
   ngOnInit() {
+    console.log(this.state.keys)
     this.loadingSubs = this.uiService.laodingStateChanged.subscribe(isLoading => {
       this.isLoading = isLoading;
     });
@@ -68,9 +72,11 @@ export class CheckDialogComponent implements OnInit {
       author: this.authService.getUserName().displayName,
       checked: true,
       createdAt: this.modalWithCheck.value.createdAt._d
-    }).subscribe(results => {
+    }).subscribe((result: MetricJSON) => {
       this.uiService.laodingStateChanged.next(false);
-      console.log(results);
+      this.state.updateCheckMetricCount(Metric.fromJSON(result));
+      this.state.updateCheckMetric(Metric.fromJSON(result));
+      console.log(result);
       this.dialogRef.close();
     });
   }

@@ -77,10 +77,10 @@ export class LimitDialogComponent implements OnInit, OnDestroy {
       description: this.modalWithLimit.value.description,
       keyId: this.data.id
     }).subscribe((result: MetricJSON) => {
-      this.uiService.laodingStateChanged.next(false);
-      this.state.updateMetricCount(this.data.id);
-      this.state.updateMetric(Metric.fromJSON(result));
       console.log(result);
+      this.uiService.laodingStateChanged.next(false);
+      this.state.updateLimitMetricCount(this.data.id);
+      this.state.updateLimitMetric(Metric.fromJSON(result));
       this.dialogRef.close();
     });
   }

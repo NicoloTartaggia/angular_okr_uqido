@@ -116,6 +116,16 @@ export class StateService {
     this._objectives.next(objectivesValue);
   }
 
+  downdateObjective(objectiveId: string) {
+    const objectives = Object.values(this._objectives.value).filter((objective: Objective) => objective.id !== objectiveId);
+    this._objectives.next(objectives);
+    this._keysValue = Object.values(this._keys.value).filter((key: Key) => key.objectiveId !== objectiveId);
+    this._keys.next(this._keysValue);
+    Object.values(this._keysValue).forEach((key: Key) => {
+      this._metricsValue = Object.values(this._metricsValue).filter((metric: Metric) => metric.keyId === key.id);
+    });
+  }
+
   getKeyWithObjectiveId(objectiveId: string) {
     const url = `${this.keysUrl}?objectiveId=${objectiveId}`;
     // if (this.makeRequest(url)) {

@@ -15,6 +15,10 @@
     <mat-accordion>
       <mat-expansion-panel *ngFor="let objective of (state.objectives | async)">
         <mat-expansion-panel-header>
+          <button mat-button *ngIf="!isLoading" (click)="deleteObjective(objective)" color="warn"><i class="material-icons">
+            delete
+          </i></button>
+          <mat-spinner *ngIf="isLoading" [diameter]="20"></mat-spinner>
           {{objective.description}}
         </mat-expansion-panel-header>
         <app-keys [objectiveId]="objective.id"></app-keys>

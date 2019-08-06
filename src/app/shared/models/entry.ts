@@ -1,20 +1,30 @@
-export interface TimeInterval {
+interface TimeInterval {
   end: string;
   start: string;
 }
 
+export interface EntryJSON {
+  activities: string[];
+  average: number;
+  totalUserTime: number;
+  start: string;
+}
+
 export class Entry {
-  description: string;
-  id: string;
-  userId: string;
+  activities: string[];
+  average: number;
+  totalUserTime: number;
   start: Date;
-  end: Date;
 
   constructor(object?: any) {
-    this.description = object.description;
-    this.id = object.id;
-    this.start = object.timeInterval.start && new Date(object.timeInterval.start);
-    this.end = object.timeInterval.end && new Date(object.timeInterval.end);
-    this.userId = object.userId;
+    if (object) {
+      this.activities = object.activities;
+      this.average = object.average;
+      this.totalUserTime = object.totalUserTime;
+      this.start = object.start && new Date(object.timeInterval.start);
+    }
+  }
+    static fromJSON(json?: EntryJSON) {
+      return new Entry(json);
   }
 }

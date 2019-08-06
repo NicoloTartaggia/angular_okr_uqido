@@ -68,9 +68,9 @@ export class StateService {
   // GET - Get the current okr comparing current date with starting and ending date of each okr.
   getOkrs() {
     const currentDate = new Date().getTime();
-    if (this.makeRequest(this.url)) {
-      return;
-    }
+    // if (this.makeRequest(this.url)) {
+    //   return;
+    // }
     this.getClockifyTimeEntries();
     this.http.get(this.url).subscribe((okrs: OkrJSON[]) => {
       this.lastUpdate[this.url] = new Date();
@@ -94,7 +94,6 @@ export class StateService {
   public updateCurrentOkr(okr: Okr) {
     if (okr.id !== this._currentOkr.value.id) {
       this.setCurrentOkr(okr);
-      this.setObjectives(okr.id);
     }
   }
 
@@ -119,16 +118,16 @@ export class StateService {
 
   getKeyWithObjectiveId(objectiveId: string) {
     const url = `${this.keysUrl}?objectiveId=${objectiveId}`;
-    if (this.makeRequest(url)) {
-      return;
-    }
+    // if (this.makeRequest(url)) {
+    //   return;
+    // }
     this.http.get(url)
       .subscribe((data: KeyJSON[]) => {
         this.lastUpdate[url] = new Date();
         data.forEach((key) => {
           const actualKey = Key.fromJSON(key);
           this._keysValue[key.id] = actualKey;
-          if (key.evaluationType === 'articlesLimit' && this.executeUpdate(actualKey)) {
+          if (key.evaluationType === 'uqido tech' && this.executeUpdate(actualKey)) {
             this.getTechArticles(key.id);
             this.http.put(this.keysUpdateUrl, {
               lastUpdate: new Date().getDate()
@@ -140,11 +139,19 @@ export class StateService {
       });
   }
 
+  updateKey(key: Key) {
+    this._keysValue = {
+      ...this._keysValue,
+      [key.id]: key
+    };
+    this._keys.next(this._keysValue);
+  }
+
   getMetricsWithKeyId(keyId: string) {
     const url = `${this.metricsUrl}?keyId=${keyId}`;
-    if (this.makeRequest(url)) {
-      return;
-    }
+    // if (this.makeRequest(url)) {
+    //   return;
+    // }
     this.http.get(url)
       .subscribe((data: MetricJSON[]) => {
         this.lastUpdate[url] = new Date();

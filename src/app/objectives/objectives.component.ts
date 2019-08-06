@@ -3,6 +3,7 @@ import { StateService } from '../services/state.service';
 import { Okr } from '../shared/models/okr.model';
 import { MatDialog } from '@angular/material';
 import { ObjectiveDialogComponent } from '../dialogs/objective-dialog/objective-dialog.component';
+import { KeyDialogComponent } from '../dialogs/key-dialog/key-dialog.component';
 
 @Component({
   selector: 'app-objectives',
@@ -34,7 +35,16 @@ export class ObjectivesComponent implements OnInit {
     return this.end;
   }
 
-  openDialog() {
+  openObjectiveDialog() {
     this.dialog.open(ObjectiveDialogComponent);
+  }
+
+  openKeyDialog(objectiveId: string) {
+    const data = {
+      objId: objectiveId
+    };
+    this.dialog.open(KeyDialogComponent, {
+      data
+    });
   }
 }

@@ -71,7 +71,7 @@ export class StateService {
     // if (this.makeRequest(this.url)) {
     //   return;
     // }
-    this.getClockifyTimeEntries();
+    // this.getClockifyTimeEntries();
     this.http.get(this.url).subscribe((okrs: OkrJSON[]) => {
       this.lastUpdate[this.url] = new Date();
       okrs.forEach((okr: OkrJSON) => {
@@ -150,18 +150,20 @@ export class StateService {
   }
 
   updateKey(key: Key) {
+    console.log(this._keysValue)
     this._keysValue = {
       ...this._keysValue,
       [key.id]: key
     };
     this._keys.next(this._keysValue);
+    console.log(this._keys)
   }
 
   downdateKey(keyId: string) {
-    const keys = Object.values(this._keys.value).filter((key: Key) => key.id !== keyId);
-    this._keys.next(keys);
-    const metricsToDelete = Object.values(this._metrics.value).filter((metric: Metric) => metric.keyId === keyId);
-    metricsToDelete.forEach((metric: Metric) => this.downdateMetric(metric.id));
+    this._keysValue = Object.values(this._keys.value).filter((key: Key) => key.id !== keyId);
+    this._keys.next(this._keysValue);
+    this._keysValue = Object.values(this._metrics.value).filter((metric: Metric) => metric.keyId === keyId);
+    this._metrics.next(this._keysValue);
   }
 
   getMetricsWithKeyId(keyId: string) {
@@ -196,8 +198,8 @@ export class StateService {
   }
 
   downdateMetric(metricId: string) {
-    const metrics = Object.values(this._metrics.value).filter((metric: Metric) => metric.id !== metricId);
-    this._metrics.next(metrics);
+    this._metricsValue = Object.values(this._metrics.value).filter((metric: Metric) => metric.id !== metricId);
+    this._metrics.next(this._metricsValue);
   }
 
   updateLimitMetricCount(keyId) {

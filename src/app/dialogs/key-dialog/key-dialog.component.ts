@@ -16,11 +16,12 @@ import { AuthService } from '../../services/auth.service';
 export class KeyDialogComponent implements OnInit, OnDestroy {
 
   private checkMetrics = [];
-  private postUrl = 'http://localhost:5001/okr-platform/us-central1/keysCreate';
+  // private postUrl = 'http://localhost:5001/okr-platform/us-central1/keysCreate';
+  private postUrl = 'https://us-central1-okr-platform.cloudfunctions.net/keysCreate';
   private subscriptions: Subscription[] = [];
   public isLoading = false;  // Used for loading spinner
   public keyModal: FormGroup;
-  public types = ['limit', 'check', 'uqido tech', 'clockify', 'pull Request'];
+  public types = ['limit', 'check', 'uqido tech', 'clockify', 'pull request'];
 
   constructor(private auth: AuthService,
               private http: HttpClient,
@@ -96,8 +97,8 @@ export class KeyDialogComponent implements OnInit, OnDestroy {
       key,
       metrics: this.metrics
     }).subscribe((keyJSON: KeyJSON) => {
-      console.log(keyJSON)
       this.uiService.laodingStateChanged.next(false);
+      console.log(keyJSON);
       this.state.updateKey(Key.fromJSON(keyJSON));
       });
     this.dialogRef.close();

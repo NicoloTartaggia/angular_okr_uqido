@@ -46,6 +46,7 @@ export class ObjectiveDialogComponent implements OnInit, OnDestroy {
       description: this.objectiveModal.value.description,
       okrId: this.state.currentOkr.value.id
     }).subscribe((result: Objective) => {
+      console.log(result)
       this.uiService.laodingStateChanged.next(false);
       this.state.updateObjective(result);
       this.dialogRef.close();

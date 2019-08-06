@@ -1,0 +1,16 @@
+<div class="main-dialog-container">
+    <div class="dialog-contents" mat-dialog-content>
+        <form class="form" [formGroup]="objectiveModal" (ngSubmit)="onSubmit()">
+            <mat-form-field class="mat-form-container">
+                <input matInput formControlName="description" placeholder="Inserisci un nuovo obiettivo"/>
+            </mat-form-field>
+        </form>
+    </div>
+    <mat-dialog-actions class="buttons-container">
+        <button mat-raised-button (click)="dialogRef.close()" [disabled]="isLoading">Annulla</button>
+        <button type="submit" mat-raised-button color="primary" [disabled]="!objectiveModal.valid || isLoading" (click)="onSubmit()">
+            <span *ngIf="!isLoading">Conferma</span>
+            <mat-spinner *ngIf="isLoading" [diameter]="36"></mat-spinner>
+        </button>
+    </mat-dialog-actions>
+</div>

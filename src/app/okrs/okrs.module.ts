@@ -14,6 +14,8 @@ import { ChartsModule } from 'ng2-charts';
 import { LimitDialogComponent } from '../dialogs/limit-dialog/limit-dialog.component';
 import { CheckDialogComponent } from '../dialogs/check-dialog/check-dialog.component';
 import { QuarterDialogComponent } from '../dialogs/quarter-dialog/quarter-dialog.component';
+import { ObjectiveDialogComponent } from '../dialogs/objective-dialog/objective-dialog.component';
+import { KeyDialogComponent } from '../dialogs/key-dialog/key-dialog.component';
 
 
 @NgModule({
@@ -32,13 +34,15 @@ import { QuarterDialogComponent } from '../dialogs/quarter-dialog/quarter-dialog
     ObjectivesComponent,
     OkrsComponent,
     PieChartComponent,
-    QuarterDialogComponent
-    // SidenavComponent
+    QuarterDialogComponent,
+    ObjectiveDialogComponent,
+    KeyDialogComponent
   ],
   exports: [],
   entryComponents: [
     CheckDialogComponent,
     LimitDialogComponent,
+    ObjectiveDialogComponent,
     QuarterDialogComponent
   ]
 })

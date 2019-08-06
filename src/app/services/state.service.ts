@@ -111,6 +111,12 @@ export class StateService {
       });
   }
 
+  updateObjective(objective: Objective) {
+    const objectivesValue = this._objectives.value;
+    objectivesValue.push(objective);
+    this._objectives.next(objectivesValue);
+  }
+
   getKeyWithObjectiveId(objectiveId: string) {
     const url = `${this.keysUrl}?objectiveId=${objectiveId}`;
     if (this.makeRequest(url)) {

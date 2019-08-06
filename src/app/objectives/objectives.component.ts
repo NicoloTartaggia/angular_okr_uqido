@@ -1,6 +1,8 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
-import {StateService} from '../services/state.service';
-import {Okr} from '../shared/models/okr.model';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { StateService } from '../services/state.service';
+import { Okr } from '../shared/models/okr.model';
+import { MatDialog } from '@angular/material';
+import { ObjectiveDialogComponent } from '../dialogs/objective-dialog/objective-dialog.component';
 
 @Component({
   selector: 'app-objectives',
@@ -13,7 +15,8 @@ export class ObjectivesComponent implements OnInit {
   private start;
   private end;
 
-  constructor(public state: StateService) {}
+  constructor(public dialog: MatDialog,
+              public state: StateService) {}
 
   ngOnInit() {
     this.state.currentOkr.subscribe((currentOkr: Okr) => {
@@ -29,5 +32,9 @@ export class ObjectivesComponent implements OnInit {
 
   get endingAt() {
     return this.end;
+  }
+
+  openDialog() {
+    this.dialog.open(ObjectiveDialogComponent);
   }
 }

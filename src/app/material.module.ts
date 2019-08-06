@@ -15,6 +15,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTableModule } from '@angular/material/table';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   imports: [
@@ -30,8 +32,10 @@ import { MatTableModule } from '@angular/material/table';
     MatProgressBarModule,
     MatRadioModule,
     MatProgressSpinnerModule,
+    MatSelectModule,
     MatSidenavModule,
-    MatTableModule
+    MatTableModule,
+    MatTooltipModule
   ],
   exports: [
     MatButtonModule,
@@ -46,8 +50,10 @@ import { MatTableModule } from '@angular/material/table';
     MatProgressBarModule,
     MatProgressSpinnerModule,
     MatRadioModule,
+    MatSelectModule,
     MatSidenavModule,
-    MatTableModule
+    MatTableModule,
+    MatTooltipModule
   ]
 })
 

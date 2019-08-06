@@ -96,6 +96,7 @@ export class KeyDialogComponent implements OnInit, OnDestroy {
       key,
       metrics: this.metrics
     }).subscribe((keyJSON: KeyJSON) => {
+      console.log(keyJSON)
       this.uiService.laodingStateChanged.next(false);
       this.state.updateKey(Key.fromJSON(keyJSON));
       });

@@ -1,0 +1,24 @@
+<div class="main-dialog-container">
+    <p mat-dialog-title class="dialog-title">Aggiungi un nuovo quarter</p>
+    <div class="dialog-contents" mat-dialog-content>
+        <form class="form" [formGroup]="quarterModal" (ngSubmit)="onSubmit()">
+            <div class="date-picker-container">
+                <input matInput class="date-picker-input" [matDatepicker]="beginPicker" formControlName="createdAt" placeholder="Data di inizio" (click)="beginPicker.open()"/>
+                <mat-datepicker-toggle matSuffix [for]="beginPicker"></mat-datepicker-toggle>
+                <mat-datepicker #beginPicker></mat-datepicker>
+            </div>
+            <div class="date-picker-container">
+                <input matInput class="date-picker-input" [matDatepicker]="endPicker" formControlName="endingAt" placeholder="Data di fine" (click)="endPicker.open()"/>
+                <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+                <mat-datepicker #endPicker></mat-datepicker>
+            </div>
+        </form>
+    </div>
+    <mat-dialog-actions class="buttons-container">
+        <button mat-raised-button (click)="dialogRef.close()" [disabled]="isLoading">Annulla</button>
+        <button type="submit" mat-raised-button color="primary" [disabled]="!quarterModal.valid || isLoading" (click)="onSubmit()">
+            <span *ngIf="!isLoading">Conferma</span>
+            <mat-spinner *ngIf="isLoading" [diameter]="36"></mat-spinner>
+        </button>
+    </mat-dialog-actions>
+</div>

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy} from '@angular/core';
 import { StateService } from '../services/state.service';
 import { Objective } from '../shared/models/objective.model';
 import { Key } from '../shared/models/key.model';

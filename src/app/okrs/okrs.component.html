@@ -22,6 +22,12 @@
                 </mat-menu>
             </div>
             <div>
+                <button mat-button class="dialog-title sidenav-item" (click)="createQuarter(sidenav)">
+                    <i class="material-icons fa-2x sidenav-icon">add</i>
+                    Aggiungi quarter
+                </button>
+            </div>
+            <div>
                 <button mat-button class="dialog-title sidenav-item" (click)="auth.signOut()">
                     <i class="fas fa-sign-out-alt fa-2x sidenav-icon" title="Log out"></i>
                     Log Out

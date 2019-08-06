@@ -3,7 +3,11 @@
 <div class="body-container">
   <div class="contents-container">
     <div class="objective-info">
-      <p class="objective-title">Obiettivi</p>
+      <div class="okr-info">
+        <p class="objective-title">Obiettivi</p>
+        <p>Inizio: <i class="date-info"> {{startingAt | date}}</i></p>
+        <p>Fine: <i class="date-info"> {{endingAt | date}}</i></p>
+      </div>
       <div class="chart-container">
         <app-pie-chart></app-pie-chart>
       </div>

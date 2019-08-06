@@ -26,6 +26,8 @@ export class StateService {
   private _articlesValue = {};
   private _clockifyAverage = new BehaviorSubject<number>(0);
   private _objectives = new BehaviorSubject<Objective[]>([]);
+  private _okrs = new BehaviorSubject<any>([]);
+  private _okrsValue = {};
   private _currentOkr = new BehaviorSubject<Okr>(new Okr());
   private _keys = new BehaviorSubject<any>([]);
   private _keysValue = {};
@@ -35,12 +37,20 @@ export class StateService {
 
   constructor(private http: HttpClient) {}
 
-  get objectives() {
-    return this._objectives;
+  get okrs() {
+    return this._okrs;
+  }
+
+  setCurrentOkr(okr: Okr) {
+    this._currentOkr.next(okr);
   }
 
   get currentOkr() {
     return this._currentOkr;
+  }
+
+  get objectives() {
+    return this._objectives;
   }
 
   get clockifyAverage() {
@@ -56,27 +66,44 @@ export class StateService {
   }
 
   // GET - Get the current okr comparing current date with starting and ending date of each okr.
-  getCurrentOkr() {
+  getOkrs() {
     const currentDate = new Date().getTime();
     if (this.makeRequest(this.url)) {
       return;
     }
     this.getClockifyTimeEntries();
-    this.http.get(this.url).subscribe((data: OkrJSON[]) => {
+    this.http.get(this.url).subscribe((okrs: OkrJSON[]) => {
       this.lastUpdate[this.url] = new Date();
-      this._currentOkr
-        .next(data.map((okrs) =>
-          Okr.fromJSON(okrs))
-          .filter(okr => okr.startingAt.getTime() < currentDate && okr.endingAt.getTime() >= currentDate)[0]);
+      okrs.forEach((okr: OkrJSON) => {
+        const actualOKr = Okr.fromJSON(okr);
+        this._okrsValue[okr.id] = actualOKr;
+        if (this.isCurrentOkr(actualOKr)) {
+
+          this._currentOkr.next(actualOKr);
+        }
       });
+      this._okrs.next(this._okrsValue);
+      });
+  }
+
+  private isCurrentOkr(okr: Okr): boolean {
+    const currentDate = new Date().getTime();
+    return okr.startingAt.getTime() <= currentDate && okr.endingAt.getTime() >= currentDate;
+  }
+
+  public updateCurrentOkr(okr: Okr) {
+    if (okr.id !== this._currentOkr.value.id) {
+      this.setCurrentOkr(okr);
+      this.setObjectives(okr.id);
+    }
   }
 
   setObjectives(okrId: string) {
     if (!okrId) { return; }
     const url = `${this.objectiveUrl}?okrId=${okrId}`;
-    if (this.makeRequest(url)) {
-      return;
-    }
+    // if (this.makeRequest(url)) {
+    //   return;
+    // }
     this.http.get(url)
       .subscribe((data: Objective[]) => {
         this.lastUpdate[url] = new Date();

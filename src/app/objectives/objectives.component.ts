@@ -9,12 +9,25 @@ import {Okr} from '../shared/models/okr.model';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ObjectivesComponent implements OnInit {
-  constructor(public state: StateService) { }
+
+  private start;
+  private end;
+
+  constructor(public state: StateService) {}
 
   ngOnInit() {
     this.state.currentOkr.subscribe((currentOkr: Okr) => {
+      this.start = currentOkr.startingAt;
+      this.end = currentOkr.endingAt;
       this.state.setObjectives(currentOkr.id);
     });
   }
-}
 
+  get startingAt() {
+    return this.start;
+  }
+
+  get endingAt() {
+    return this.end;
+  }
+}

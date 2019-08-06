@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { AuthGuard } from './auth/auth.guard';
 import { AuthComponent } from './auth/auth.component';
+import { MetricsComponent } from './keys/key/metrics/metrics.component';
 
 const routes: Routes = [
   {
@@ -19,6 +20,7 @@ const routes: Routes = [
     ]
   },
   { path: 'login', component: AuthComponent },
+  { path: 'keys/:id/metrics', component: MetricsComponent },
   { path: '**', redirectTo: '/okrs' }
 ];
 

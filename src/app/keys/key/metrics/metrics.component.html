@@ -1,0 +1,26 @@
+<div class="back-button-container">
+    <button mat-button class="plus-button" title="Previuos page" (click)=this.location.back()>
+        <i class="fas fa-arrow-circle-left"></i>
+    </button>
+</div>
+<div class="contents-container">
+    <table mat-table class="mat-form-container" [dataSource]="metrics">
+        <ng-container matColumnDef="author">
+            <th mat-header-cell class="header-cell dialog-title" *matHeaderCellDef>Autore</th>
+            <td mat-cell class="row-cell" *matCellDef="let metric">{{metric.author}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="description">
+            <th mat-header-cell class="header-cell dialog-title" *matHeaderCellDef>Descrizione</th>
+            <td mat-cell class="row-cell" *matCellDef="let metric">{{metric.description}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="data">
+            <th mat-header-cell class="header-cell dialog-title" *matHeaderCellDef>Data</th>
+            <td mat-cell class="row-cell" *matCellDef="let metric">{{metric.createdAt | date}}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+</div>

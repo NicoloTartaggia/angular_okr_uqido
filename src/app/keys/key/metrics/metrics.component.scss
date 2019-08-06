@@ -1,0 +1,43 @@
+.back-button-container{
+  @media screen and (min-width: 576px) {
+    position: absolute;
+  }
+  margin: 1rem;
+}
+
+.plus-button{
+  font-size: 2rem;
+}
+
+.column-header{
+  padding-right: 2rem;
+}
+
+.contents-container{
+  display: flex;
+  margin: 1rem auto !important;
+}
+
+.contents-container{
+  justify-content: center;
+}
+
+.header-cell{
+  text-align: center;
+  padding: 1rem !important;
+  @media screen and (min-width: 576px) {
+    padding: 3rem !important;
+  }
+}
+
+.metrics-header{
+  display: flex;
+  justify-content: space-around;
+  padding: 1rem 0;
+}
+
+.row-cell {
+  padding: 0 !important;
+  text-align: center;
+}
+

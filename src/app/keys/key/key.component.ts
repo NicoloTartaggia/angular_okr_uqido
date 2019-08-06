@@ -1,10 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, NgZone, OnInit } from '@angular/core';
 import { Key } from '../../shared/models/key.model';
 import { MatDialog } from '@angular/material';
 import { LimitDialogComponent } from '../../dialogs/limit-dialog/limit-dialog.component';
 import { CheckDialogComponent } from '../../dialogs/check-dialog/check-dialog.component';
-import { CheckMetricsComponent } from '../../dialogs/metrics-dialog/check-metrics/check-metrics.component';
-import { LimitMetricsComponent } from '../../dialogs/metrics-dialog/limit-metrics/limit-metrics.component';
+import { Router } from '@angular/router';
+import {MetricsService} from '../../services/metrics.service';
 
 @Component({
   selector: 'app-key',
@@ -15,9 +15,13 @@ export class KeyComponent implements OnInit {
   @Input()
   key: Key;
 
-  constructor(public dialog: MatDialog) { }
+  constructor(private router: Router,
+              private ngZone: NgZone,
+              private metricsService: MetricsService,
+              public dialog: MatDialog) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
   public keyPercentage() {
     if (!this.key || this.key.metricsCount === 0) {
@@ -43,21 +47,6 @@ export class KeyComponent implements OnInit {
       });
     } else {
       this.dialog.open(CheckDialogComponent, {
-        data
-      });
-    }
-  }
-
-  public openMetricsDialog() {
-    const data = {
-      metrics: this.key.metrics
-    };
-    if (this.key.evaluationType === 'limit') {
-      this.dialog.open(LimitMetricsComponent, {
-        data
-      });
-    } else {
-      this.dialog.open(CheckMetricsComponent, {
         data
       });
     }

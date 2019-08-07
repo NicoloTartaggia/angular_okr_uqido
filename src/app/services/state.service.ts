@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject } from 'rxjs';
+import {BehaviorSubject, Subject} from 'rxjs';
 import { Objective } from '../shared/models/objective.model';
 import { Key, KeyJSON } from '../shared/models/key.model';
 import { Article, ArticleJSON } from '../shared/models/article.model';
@@ -34,6 +34,7 @@ export class StateService {
   private lastUpdate = {};
   private _metrics = new BehaviorSubject<any>([]);
   private _metricsValue = {};
+  private optionValue = false;
 
   constructor(private http: HttpClient) {}
 
@@ -64,6 +65,11 @@ export class StateService {
   get metrics() {
     return this._metrics;
   }
+
+  get option() {
+    return this.optionValue;
+  }
+
 
   // GET - Get the current okr comparing current date with starting and ending date of each okr.
   getOkrs() {
@@ -267,5 +273,22 @@ export class StateService {
         });
         this._articles.next(this._articlesValue);
       });
+  }
+
+  changeOption() {
+    this.optionValue = !this.optionValue;
+    if (this.optionValue) {
+      this.addAdminButtons();
+    } else {
+      this.removeAdminButtons();
+    }
+  }
+
+  addAdminButtons() {
+    document.querySelectorAll('.admin-button').forEach(el => el.classList.add('show-button'));
+  }
+
+  removeAdminButtons() {
+    document.querySelectorAll('.admin-button').forEach(el => el.classList.remove('show-button'));
   }
 }

@@ -1,37 +1,40 @@
 <!-- Scrolling through objectives and giving the objective id of each one as input to keys component-->
 
 <div class="body-container">
-  <div class="contents-container">
-    <div class="objective-info">
-      <div class="okr-info">
-        <p class="objective-title">Obiettivi</p>
-        <p>Inizio: <i class="date-info"> {{startingAt | date}}</i></p>
-        <p>Fine: <i class="date-info"> {{endingAt | date}}</i></p>
-      </div>
-      <div class="chart-container">
-        <app-pie-chart></app-pie-chart>
-      </div>
+    <div class="contents-container">
+        <div class="objective-info">
+            <div class="okr-info">
+                <p class="objective-title">Obiettivi</p>
+                <p>Inizio: <i class="date-info"> {{startingAt | date}}</i></p>
+                <p>Fine: <i class="date-info"> {{endingAt | date}}</i></p>
+            </div>
+            <div class="chart-container">
+                <app-pie-chart></app-pie-chart>
+            </div>
+        </div>
+        <mat-accordion>
+            <mat-expansion-panel *ngFor="let objective of (state.objectives | async)">
+                <mat-expansion-panel-header>
+                    <button mat-button *ngIf="!isLoading" class="admin-button" (click)="deleteObjective(objective)"
+                            color="warn"><i class="material-icons">
+                        delete
+                    </i></button>
+                    <mat-spinner *ngIf="isLoading" [diameter]="20"></mat-spinner>
+                    {{objective.description}}
+                </mat-expansion-panel-header>
+                <app-keys [objectiveId]="objective.id"></app-keys>
+                <button mat-raised-button class="add-key" matTooltip="Aggiungi chiave" color="primary"
+                        (click)="openKeyDialog(objective.id)">Aggiungi chiave
+                </button>
+            </mat-expansion-panel>
+            <button mat-mini-fab class="admin-button obj-button" color="primary" (click)="openObjectiveDialog()">
+                <i class="material-icons">add</i>
+            </button>
+            <button mat-fab class="admin-button obj-big-button" color="primary"
+                    matTooltip="Aggiungi obiettivo" matTooltipClass="dialog-title" (click)="openObjectiveDialog()">
+                <i class="material-icons">add</i>
+            </button>
+        </mat-accordion>
     </div>
-    <mat-accordion>
-      <mat-expansion-panel *ngFor="let objective of (state.objectives | async)">
-        <mat-expansion-panel-header>
-          <button mat-button *ngIf="!isLoading" (click)="deleteObjective(objective)" color="warn"><i class="material-icons">
-            delete
-          </i></button>
-          <mat-spinner *ngIf="isLoading" [diameter]="20"></mat-spinner>
-          {{objective.description}}
-        </mat-expansion-panel-header>
-        <app-keys [objectiveId]="objective.id"></app-keys>
-        <button mat-raised-button class="add-key" matTooltip="Aggiungi chiave" color="primary" (click)="openKeyDialog(objective.id)">Aggiungi chiave</button>
-      </mat-expansion-panel>
-      <button mat-mini-fab class="obj-button" color="primary" (click)="openObjectiveDialog()">
-        <i class="material-icons">add</i>
-      </button>
-      <button mat-fab class="obj-big-button" color="primary"
-              matTooltip="Aggiungi obiettivo" matTooltipClass="dialog-title" (click)="openObjectiveDialog()">
-        <i class="material-icons">add</i>
-      </button>
-    </mat-accordion>
-  </div>
 </div>
 

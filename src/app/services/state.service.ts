@@ -150,13 +150,14 @@ export class StateService {
   }
 
   updateKey(key: Key) {
-    console.log(this._keysValue)
     this._keysValue = {
       ...this._keysValue,
       [key.id]: key
     };
     this._keys.next(this._keysValue);
-    console.log(this._keys)
+    key.metrics.forEach((metric: Metric) => {
+      this.updateCheckMetric(metric);
+    });
   }
 
   downdateKey(keyId: string) {

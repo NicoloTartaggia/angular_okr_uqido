@@ -43,7 +43,7 @@ export class KeyComponent implements OnInit, OnDestroy {
   }
 
   public openDialog() {
-    console.log(this.key.metrics)
+    console.log(this.key)
     const data = {
       title: this.key.description,
       evaluationType: this.key.evaluationType,

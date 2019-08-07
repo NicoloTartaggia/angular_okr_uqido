@@ -63,7 +63,7 @@ export class QuarterDialogComponent implements OnInit, OnDestroy {
     }).subscribe((result: OkrJSON) => {
       console.log(result);
       this.uiService.laodingStateChanged.next(false);
-      // this.state.updateCurrentOkr(Okr.fromJSON(result));
+      this.state.updateCurrentOkr(Okr.fromJSON(result));
       this.dialogRef.close();
     });
   }

@@ -57,7 +57,7 @@ export class KeyDialogComponent implements OnInit, OnDestroy {
     this.checkMetrics.push({
       author: this.auth.getUserName().displayName,
       checked: false,
-      createdAt: JSON.stringify(new Date()),
+      createdAt: new Date(),
       description: this.keyModal.value.check
     });
     this.keyModal.patchValue({
@@ -95,7 +95,7 @@ export class KeyDialogComponent implements OnInit, OnDestroy {
     }
     this.http.post(this.postUrl, {
       key,
-      metrics: this.metrics
+      metrics: this.checkMetrics
     }).subscribe((keyJSON: KeyJSON) => {
       this.uiService.laodingStateChanged.next(false);
       console.log(keyJSON);

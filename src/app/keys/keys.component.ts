@@ -15,7 +15,6 @@ export class KeysComponent implements OnInit {
   constructor(public state: StateService) { }
 
   ngOnInit() {
-    console.log('pol')
     this.state.getKeyWithObjectiveId(this.objectiveId);
   }
 

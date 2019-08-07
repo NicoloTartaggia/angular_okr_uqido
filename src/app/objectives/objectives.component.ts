@@ -65,12 +65,12 @@ export class ObjectivesComponent implements OnInit, OnDestroy {
   }
 
   deleteObjective(objective: Objective) {
-    this.uiService.laodingStateChanged.next(true);
-    this.http.delete(`${this.objectivesDeletetUrl}/${objective.id}`, {responseType: 'text'})
-      .subscribe(result => {
-        console.log(result);
-        this.uiService.laodingStateChanged.next(false);
-        this.state.downdateObjective(objective.id);
-      });
+    // this.uiService.laodingStateChanged.next(true);
+    // this.http.delete(`${this.objectivesDeletetUrl}/${objective.id}`, {responseType: 'text'})
+    //   .subscribe(result => {
+    //     console.log(result);
+    //     this.uiService.laodingStateChanged.next(false);
+    //     this.state.downdateObjective(objective.id);
+    //   });
   }
 }

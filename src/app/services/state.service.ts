@@ -278,17 +278,9 @@ export class StateService {
   changeOption() {
     this.optionValue = !this.optionValue;
     if (this.optionValue) {
-      this.addAdminButtons();
+      document.querySelectorAll('.admin-button').forEach(el => el.classList.add('show-button'));
     } else {
-      this.removeAdminButtons();
+      document.querySelectorAll('.admin-button').forEach(el => el.classList.remove('show-button'));
     }
-  }
-
-  addAdminButtons() {
-    document.querySelectorAll('.admin-button').forEach(el => el.classList.add('show-button'));
-  }
-
-  removeAdminButtons() {
-    document.querySelectorAll('.admin-button').forEach(el => el.classList.remove('show-button'));
   }
 }

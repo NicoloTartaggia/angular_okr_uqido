@@ -9,7 +9,7 @@
     <div class="info-container">
         <button mat-button class="plus-button clockify-button" *ngIf="key.evaluationType === 'clockify'"><i class="fas fa-plus-circle"></i></button>
         <button mat-button class="plus-button" *ngIf="key.evaluationType !== 'clockify'" (click)="openDialog()"><i class="fas fa-plus-circle"></i></button>
-        <button mat-button class="plus-button admin-button  " (click)="deleteKey(key)" color="warn">
+        <button mat-button class="plus-button" [ngClass]="{'admin-button': true, 'show-button': state.option}" (click)="deleteKey(key)" color="warn">
             <i *ngIf="!isLoading" class="material-icons">delete</i>
             <mat-spinner *ngIf="isLoading" [diameter]="20"></mat-spinner>
         </button>

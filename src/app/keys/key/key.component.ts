@@ -7,6 +7,7 @@ import { StateService } from '../../services/state.service';
 import { Subscription } from 'rxjs';
 import { UiService } from '../../services/ui.service';
 import { HttpClient } from '@angular/common/http';
+import { ConfirmDialogComponent } from '../../dialogs/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-key',
@@ -26,7 +27,8 @@ export class KeyComponent implements OnInit, OnDestroy {
   constructor(private http: HttpClient,
               private state: StateService,
               private uiService: UiService,
-              public dialog: MatDialog) { }
+              public dialog: MatDialog) {
+  }
 
   ngOnInit() {
     this.subscriptions.push(this.uiService.laodingStateChanged.subscribe(isLoading => {
@@ -61,12 +63,17 @@ export class KeyComponent implements OnInit, OnDestroy {
   }
 
   deleteKey(key: Key) {
-    this.uiService.laodingStateChanged.next(true);
-    this.http.delete(`${this.keysDeletetUrl}/${key.id}`, {responseType: 'text'})
-      .subscribe(result => {
-        console.log(result);
-        this.uiService.laodingStateChanged.next(false);
-        this.state.downdateKey(key.id);
-      });
+    const dialofRef = this.dialog.open(ConfirmDialogComponent);
+    dialofRef.afterClosed().subscribe(confirmResult => {
+      if (confirmResult) {
+        this.uiService.laodingStateChanged.next(true);
+        this.http.delete(`${this.keysDeletetUrl}/${key.id}`, {responseType: 'text'})
+          .subscribe(result => {
+            console.log(result);
+            this.uiService.laodingStateChanged.next(false);
+            this.state.downdateKey(key.id);
+          });
+      }
+    });
   }
 }

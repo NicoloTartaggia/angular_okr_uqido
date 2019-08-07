@@ -12,10 +12,12 @@ import { SharedModule } from './shared/shared.module';
 import { UiService } from './services/ui.service';
 import { MetricsComponent } from './keys/key/metrics/metrics.component';
 import { StateService } from './services/state.service';
+import { ConfirmDialogComponent } from './dialogs/confirm-dialog/confirm-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    ConfirmDialogComponent,
     MetricsComponent
   ],
   imports: [
@@ -31,6 +33,9 @@ import { StateService } from './services/state.service';
     AuthGuard,
     StateService,
     UiService
+  ],
+  entryComponents: [
+    ConfirmDialogComponent
   ],
   exports: [],
   bootstrap: [AppComponent]

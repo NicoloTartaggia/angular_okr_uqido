@@ -8,6 +8,7 @@ import { Objective } from '../shared/models/objective.model';
 import { UiService } from '../services/ui.service';
 import { Subscription } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import {ConfirmDialogComponent} from '../dialogs/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-objectives',
@@ -65,12 +66,17 @@ export class ObjectivesComponent implements OnInit, OnDestroy {
   }
 
   deleteObjective(objective: Objective) {
-    // this.uiService.laodingStateChanged.next(true);
-    // this.http.delete(`${this.objectivesDeletetUrl}/${objective.id}`, {responseType: 'text'})
-    //   .subscribe(result => {
-    //     console.log(result);
-    //     this.uiService.laodingStateChanged.next(false);
-    //     this.state.downdateObjective(objective.id);
-    //   });
+    const dialogRef = this.dialog.open(ConfirmDialogComponent);
+    dialogRef.afterClosed().subscribe(resultConfirm => {
+      if (resultConfirm) {
+        this.uiService.laodingStateChanged.next(true);
+        this.http.delete(`${this.objectivesDeletetUrl}/${objective.id}`, {responseType: 'text'})
+          .subscribe(result => {
+            console.log(result);
+            this.uiService.laodingStateChanged.next(false);
+            this.state.downdateObjective(objective.id);
+          });
+      }
+    });
   }
 }

@@ -1,11 +1,13 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
-import { Location } from '@angular/common';
-import { StateService } from '../../../services/state.service';
-import { Metric } from '../../../shared/models/metric.model';
-import { Subscription } from 'rxjs';
-import { UiService } from '../../../services/ui.service';
+import {ChangeDetectionStrategy, Component, OnDestroy, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {HttpClient} from '@angular/common/http';
+import {Location} from '@angular/common';
+import {StateService} from '../../../services/state.service';
+import {Metric} from '../../../shared/models/metric.model';
+import {Subscription} from 'rxjs';
+import {UiService} from '../../../services/ui.service';
+import {ConfirmDialogComponent} from '../../../dialogs/confirm-dialog/confirm-dialog.component';
+import {MatDialog} from '@angular/material';
 
 @Component({
   selector: 'app-metrics',
@@ -25,10 +27,12 @@ export class MetricsComponent implements OnInit, OnDestroy {
 
   constructor(private http: HttpClient,
               private route: ActivatedRoute,
+              private uiService: UiService,
+              public dialog: MatDialog,
               public location: Location,
-              public state: StateService,
-              private uiService: UiService
-              ) {}
+              public state: StateService
+  ) {
+  }
 
   ngOnInit() {
     this.subscriptions.push(this.uiService.laodingStateChanged.subscribe(isLoading => {
@@ -43,18 +47,25 @@ export class MetricsComponent implements OnInit, OnDestroy {
   }
 
   filterByKeyId(metric) {
-    if (!metric) { return []; }
+    if (!metric) {
+      return [];
+    }
     return Object.values(metric).filter((data: Metric) => data.keyId === this.id);
   }
 
   deleteMetric(metric: Metric) {
-    this.uiService.laodingStateChanged.next(true);
-    this.state.downdateMetricCount(metric.keyId);
-    this.http.delete(`${this.metricsDeletetUrl}/${metric.id}`, {responseType: 'text'})
-      .subscribe(results => {
-        console.log(results);
-        this.state.downdateMetric(metric.id);
-        this.uiService.laodingStateChanged.next(false);
-      });
+    const dialofRef = this.dialog.open(ConfirmDialogComponent);
+    dialofRef.afterClosed().subscribe(confirmResult => {
+      if (confirmResult) {
+        this.uiService.laodingStateChanged.next(true);
+        this.state.downdateMetricCount(metric.keyId);
+        this.http.delete(`${this.metricsDeletetUrl}/${metric.id}`, {responseType: 'text'})
+          .subscribe(results => {
+            console.log(results);
+            this.state.downdateMetric(metric.id);
+            this.uiService.laodingStateChanged.next(false);
+          });
+      }
+    });
   }
 }

@@ -17,7 +17,6 @@ import { QuarterDialogComponent } from '../dialogs/quarter-dialog/quarter-dialog
 import { ObjectiveDialogComponent } from '../dialogs/objective-dialog/objective-dialog.component';
 import { KeyDialogComponent } from '../dialogs/key-dialog/key-dialog.component';
 
-
 @NgModule({
   imports: [
     ChartsModule,

@@ -25,9 +25,9 @@ export class KeyComponent implements OnInit, OnDestroy {
   public users;
 
   constructor(private http: HttpClient,
-              private state: StateService,
               private uiService: UiService,
-              public dialog: MatDialog) {
+              public dialog: MatDialog,
+              public state: StateService) {
   }
 
   ngOnInit() {

@@ -15,15 +15,18 @@
         <mat-accordion>
             <mat-expansion-panel *ngFor="let objective of (state.objectives | async)">
                 <mat-expansion-panel-header>
-                    <button mat-button *ngIf="!isLoading" [ngClass]="{'admin-button': true, 'show-button': state.option}" (click)="deleteObjective(objective); $event.stopPropagation()"
-                            color="warn"><i class="material-icons">
-                        delete
-                    </i></button>
+                    <button mat-button [disabled]="isLoading"
+                            [ngClass]="{'admin-button': true, 'show-button': state.option}"
+                            (click)="deleteObjective(objective); $event.stopPropagation()"
+                            color="warn">
+                        <i class="material-icons" *ngIf="!isLoading">delete</i></button>
                     <mat-spinner *ngIf="isLoading" [diameter]="20"></mat-spinner>
                     {{objective.description}}
                 </mat-expansion-panel-header>
                 <app-keys [objectiveId]="objective.id"></app-keys>
-                <button mat-raised-button class="add-key" [ngClass]="{'admin-button': true, 'show-button': state.option}" matTooltip="Aggiungi chiave" color="primary"
+                <button mat-raised-button class="add-key"
+                        [ngClass]="{'admin-button': true, 'show-button': state.option}" matTooltip="Aggiungi chiave"
+                        color="primary"
                         (click)="openKeyDialog(objective.id)">Aggiungi chiave
                 </button>
             </mat-expansion-panel>

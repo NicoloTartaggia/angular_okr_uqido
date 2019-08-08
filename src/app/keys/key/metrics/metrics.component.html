@@ -20,10 +20,10 @@
             <td mat-cell class="row-cell" *matCellDef="let metric">
                 <div class="contents-container delete-container">
                     {{metric.createdAt | date}}
-                    <button mat-button color="warn" class="delete-icon" [disabled]="isLoading" (click)="deleteMetric(metric)">
-                        <i class="material-icons">delete</i>
+                    <button mat-button color="warn" class="delete-icon" [disabled]="isLoading$ | async" (click)="deleteMetric(metric)">
+                        <i class="material-icons" *ngIf="!(isLoading$ | async)">delete</i>
+                        <mat-spinner *ngIf="isLoading$ | async" [diameter]="20"></mat-spinner>
                     </button>
-<!--                    <mat-spinner *ngIf="isLoading" [diameter]="36"></mat-spinner>-->
                 </div>
             </td>
         </ng-container>

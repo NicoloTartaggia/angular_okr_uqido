@@ -13,14 +13,14 @@ import { Okr, OkrJSON } from '../shared/models/okr.model';
 })
 export class StateService {
   private objectiveUrl = 'https://us-central1-okr-platform.cloudfunctions.net/objectives';
-  // private clockifyUrl = 'https://us-central1-okr-platform.cloudfunctions.net/clockify';
-  private clockifyUrl = 'http://localhost:5001/okr-platform/us-central1/clockify';
+  private clockifyUrl = 'https://us-central1-okr-platform.cloudfunctions.net/clockify';
+  // private clockifyUrl = 'http://localhost:5001/okr-platform/us-central1/clockify';
   private keysUrl = 'https://us-central1-okr-platform.cloudfunctions.net/keys';
   // private keysUpdateUrl = 'https://us-central1-okr-platform.cloudfunctions.net/keysUpdate';
   private keysUpdateUrl = 'http://localhost:5001/okr-platform/us-central1/keysUpdate';
   private metricsUrl = 'https://us-central1-okr-platform.cloudfunctions.net/metrics';
-  private techArticlesUrl = 'http://localhost:5001/okr-platform/us-central1/articles';
-  // private techArticlesUrl = 'https://us-central1-okr-platform.cloudfunctions.net/articles';
+  // private techArticlesUrl = 'http://localhost:5001/okr-platform/us-central1/articles';
+  private techArticlesUrl = 'https://us-central1-okr-platform.cloudfunctions.net/articles';
   private url = 'https://us-central1-okr-platform.cloudfunctions.net/okrs';
   private _articles = new BehaviorSubject<any>([]);
   private _articlesValue = {};
@@ -143,13 +143,13 @@ export class StateService {
         data.forEach((key) => {
           const actualKey = Key.fromJSON(key);
           this._keysValue[key.id] = actualKey;
-          if (key.evaluationType === 'uqido tech' && this.executeUpdate(actualKey)) {
-            this.getTechArticles(key.id);
-            this.http.put(this.keysUpdateUrl, {
-              lastUpdate: new Date().getDate()
-            }).subscribe(result =>
-            console.log(result));
-          }
+          // if (key.evaluationType === 'uqido tech' && this.executeUpdate(actualKey)) {
+          //   this.getTechArticles(key.id);
+          //   this.http.put(this.keysUpdateUrl, {
+          //     lastUpdate: new Date().getDate()
+          //   }).subscribe(result =>
+          //   console.log(result));
+          // }
         });
         this._keys.next(this._keysValue);
       });
@@ -239,9 +239,9 @@ export class StateService {
     targetKey[0].metricsCount -= 1;
   }
 
-  private makeRequest(url) {
-    return this.lastUpdate[url] && this.lastUpdate[url].getTime() > (new Date()).getTime() - 5 * 60 * 1000;
-  }
+  // private makeRequest(url) {
+  //   return this.lastUpdate[url] && this.lastUpdate[url].getTime() > (new Date()).getTime() - 5 * 60 * 1000;
+  // }
 
   private executeUpdate(key: Key): boolean {
     const diff = 60 * 60 * 24 * 1000;  // milliseconds in a day

@@ -24,7 +24,6 @@ export class AuthService {
   ) {
     this.user$ = this.afAuth.authState.pipe(
       switchMap(user => {
-        console.log(user)
         // Logged in
         if (user) {
           this.user = user;

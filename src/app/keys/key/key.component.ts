@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material';
 import { LimitDialogComponent } from '../../dialogs/limit-dialog/limit-dialog.component';
 import { CheckDialogComponent } from '../../dialogs/check-dialog/check-dialog.component';
 import { StateService } from '../../services/state.service';
-import { Subscription } from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import { UiService } from '../../services/ui.service';
 import { HttpClient } from '@angular/common/http';
 import { ConfirmDialogComponent } from '../../dialogs/confirm-dialog/confirm-dialog.component';
@@ -15,13 +15,12 @@ import { ConfirmDialogComponent } from '../../dialogs/confirm-dialog/confirm-dia
   styleUrls: ['./key.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class KeyComponent implements OnInit, OnDestroy {
+export class KeyComponent implements OnInit {
   @Input()
   key: Key;
 
   private keysDeletetUrl = 'https://us-central1-okr-platform.cloudfunctions.net/keysDelete';
-  private subscriptions: Subscription[] = [];
-  public isLoading = false;
+  public isLoading$: Observable<boolean>;
   public users;
 
   constructor(private http: HttpClient,
@@ -31,13 +30,7 @@ export class KeyComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.subscriptions.push(this.uiService.laodingStateChanged.subscribe(isLoading => {
-      this.isLoading = isLoading;
-    }));
-  }
-
-  ngOnDestroy() {
-    this.subscriptions.forEach(s => s.unsubscribe());
+    this.isLoading$ = this.uiService.laodingStateChanged;
   }
 
   get getState() {

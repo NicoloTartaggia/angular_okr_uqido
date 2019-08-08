@@ -40,7 +40,8 @@ export const MY_FORMATS = {
   ],
 })
 export class LimitDialogComponent implements OnInit, OnDestroy {
-  private postUrl = 'https://us-central1-okr-platform.cloudfunctions.net/metricsCreate';
+  private postUrl = 'http://localhost:5001/okr-platform/us-central1/metricsCreate';
+  // private postUrl = 'https://us-central1-okr-platform.cloudfunctions.net/metricsCreate';
   private subscriptions: Subscription[] = [];
   public isLoading = false;  // Used for loading spinner
   public modalWithLimit: FormGroup;
@@ -76,11 +77,15 @@ export class LimitDialogComponent implements OnInit, OnDestroy {
       createdAt: this.modalWithLimit.value.createdAt._d,
       description: this.modalWithLimit.value.description,
       keyId: this.data.id
+    }, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
+      }
     }).subscribe((result: MetricJSON) => {
-      console.log(result);
       this.uiService.laodingStateChanged.next(false);
-      this.state.updateLimitMetricCount(this.data.id);
       this.state.updateLimitMetric(Metric.fromJSON(result));
+      this.state.updateLimitMetricCount(this.data.id);
       this.dialogRef.close();
     });
   }

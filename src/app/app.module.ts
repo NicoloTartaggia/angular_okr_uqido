@@ -13,12 +13,10 @@ import { UiService } from './services/ui.service';
 import { MetricsComponent } from './keys/key/metrics/metrics.component';
 import { StateService } from './services/state.service';
 import { ConfirmDialogComponent } from './dialogs/confirm-dialog/confirm-dialog.component';
-import { AlertDialogComponent } from './dialogs/alert-dialog/alert-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    AlertDialogComponent,
     ConfirmDialogComponent,
     MetricsComponent
   ],
@@ -37,7 +35,6 @@ import { AlertDialogComponent } from './dialogs/alert-dialog/alert-dialog.compon
     UiService
   ],
   entryComponents: [
-    AlertDialogComponent,
     ConfirmDialogComponent
   ],
   exports: [],

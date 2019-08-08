@@ -15,7 +15,6 @@ import * as _moment from 'moment';
 import {default as _rollupMoment} from 'moment';
 import {StateService} from '../../services/state.service';
 import {Metric, MetricJSON} from '../../shared/models/metric.model';
-import {AlertDialogComponent} from '../alert-dialog/alert-dialog.component';
 
 const moment = _rollupMoment || _moment;
 
@@ -72,28 +71,27 @@ export class LimitDialogComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach(s => s.unsubscribe());
   }
 
+  get currentState() {
+    return this.state;
+  }
+
   onSubmit() {
-    const creationDate = new Date(this.modalWithLimit.value.createdAt._d);
-    if (creationDate < this.state.currentOkr.value.startingAt || creationDate > this.state.currentOkr.value.endingAt) {
-      this.dialog.open(AlertDialogComponent, {role: 'alertdialog'});
-    } else {
-      this.uiService.laodingStateChanged.next(true);
-      this.http.post(this.postUrl, {
-        author: this.authService.getUserName().displayName,
-        createdAt: this.modalWithLimit.value.createdAt._d,
-        description: this.modalWithLimit.value.description,
-        keyId: this.data.id
-      }, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*'
-        }
-      }).subscribe((result: MetricJSON) => {
-        this.uiService.laodingStateChanged.next(false);
-        this.state.updateLimitMetric(Metric.fromJSON(result));
-        this.state.updateLimitMetricCount(this.data.id);
-        this.dialogRef.close();
-      });
-    }
+    this.uiService.laodingStateChanged.next(true);
+    this.http.post(this.postUrl, {
+      author: this.authService.getUserName().displayName,
+      createdAt: this.modalWithLimit.value.createdAt._d,
+      description: this.modalWithLimit.value.description,
+      keyId: this.data.id
+    }, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
+      }
+    }).subscribe((result: MetricJSON) => {
+      this.uiService.laodingStateChanged.next(false);
+      this.state.updateLimitMetric(Metric.fromJSON(result));
+      this.state.updateLimitMetricCount(this.data.id);
+      this.dialogRef.close();
+    });
   }
 }

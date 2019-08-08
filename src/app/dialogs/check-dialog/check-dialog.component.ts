@@ -15,8 +15,6 @@ import * as _moment from 'moment';
 // tslint:disable-next-line:no-duplicate-imports
 // @ts-ignore
 import { default as _rollupMoment } from 'moment';
-import {AlertDialogComponent} from '../alert-dialog/alert-dialog.component';
-
 const moment = _rollupMoment || _moment;
 
 export const MY_FORMATS = {
@@ -67,23 +65,22 @@ export class CheckDialogComponent implements OnInit {
     });
   }
 
+  get currentState() {
+    return this.state;
+  }
+
   onSubmit() {
-    const creationDate = new Date(this.modalWithCheck.value.createdAt._d);
-    if (creationDate < this.state.currentOkr.value.startingAt || creationDate > this.state.currentOkr.value.endingAt) {
-      this.dialog.open(AlertDialogComponent, {role: 'alertdialog'});
-    } else {
-      this.uiService.laodingStateChanged.next(true);
-      this.http.put(`${this.putUrl}/${this.modalWithCheck.value.id}`, {
-        author: this.authService.getUserName().displayName,
-        checked: true,
-        createdAt: this.modalWithCheck.value.createdAt._d
-      }).subscribe((result: MetricJSON) => {
-        this.uiService.laodingStateChanged.next(false);
-        this.state.updateCheckMetricCount(Metric.fromJSON(result));
-        // this.state.updateCheckMetric(Metric.fromJSON(result));
-        console.log(result);
-        this.dialogRef.close();
-      });
-    }
+    this.uiService.laodingStateChanged.next(true);
+    this.http.put(`${this.putUrl}/${this.modalWithCheck.value.id}`, {
+      author: this.authService.getUserName().displayName,
+      checked: true,
+      createdAt: this.modalWithCheck.value.createdAt._d
+    }).subscribe((result: MetricJSON) => {
+      this.uiService.laodingStateChanged.next(false);
+      this.state.updateCheckMetricCount(Metric.fromJSON(result));
+      // this.state.updateCheckMetric(Metric.fromJSON(result));
+      console.log(result);
+      this.dialogRef.close();
+    });
   }
 }

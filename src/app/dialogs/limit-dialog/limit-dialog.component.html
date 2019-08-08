@@ -6,7 +6,9 @@
                 <input matInput formControlName="description" placeholder="Inserisci un miglioramento"/>
             </mat-form-field>
             <div class="date-picker-container">
-                <input matInput class="date-picker-input" [matDatepicker]="picker" formControlName="createdAt" placeholder="Scegli una data" (click)="picker.open()"/>
+                <input matInput class="date-picker-input" [min]="currentState.currentOkr.value.startingAt"
+                       [max]="currentState.currentOkr.value.endingAt" [matDatepicker]="picker" formControlName="createdAt"
+                       placeholder="Scegli una data" (click)="picker.open()"/>
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
             </div>
@@ -14,7 +16,8 @@
     </div>
     <mat-dialog-actions class="buttons-container">
         <button mat-raised-button (click)="dialogRef.close()" [disabled]="isLoading">Annulla</button>
-        <button type="submit" mat-raised-button color="primary" [disabled]="!modalWithLimit.valid || isLoading" (click)="onSubmit()">
+        <button type="submit" mat-raised-button color="primary" [disabled]="!modalWithLimit.valid || isLoading"
+                (click)="onSubmit()">
             <span *ngIf="!isLoading">Conferma</span>
             <mat-spinner *ngIf="isLoading" [diameter]="36"></mat-spinner>
         </button>

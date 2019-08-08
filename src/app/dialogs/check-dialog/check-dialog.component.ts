@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {MatDialogRef, MAT_DIALOG_DATA, MatDialog} from '@angular/material/dialog';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
@@ -15,6 +15,7 @@ import * as _moment from 'moment';
 // tslint:disable-next-line:no-duplicate-imports
 // @ts-ignore
 import { default as _rollupMoment } from 'moment';
+import {AlertDialogComponent} from '../alert-dialog/alert-dialog.component';
 
 const moment = _rollupMoment || _moment;
 
@@ -46,6 +47,7 @@ export class CheckDialogComponent implements OnInit {
   public modalWithCheck: FormGroup;
 
   constructor(private dateAdapter: DateAdapter<any>,
+              public dialog: MatDialog,
               public dialogRef: MatDialogRef<CheckDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any,
               private http: HttpClient,
@@ -66,17 +68,22 @@ export class CheckDialogComponent implements OnInit {
   }
 
   onSubmit() {
-    this.uiService.laodingStateChanged.next(true);
-    this.http.put(`${this.putUrl}/${this.modalWithCheck.value.id}`, {
-      author: this.authService.getUserName().displayName,
-      checked: true,
-      createdAt: this.modalWithCheck.value.createdAt._d
-    }).subscribe((result: MetricJSON) => {
-      this.uiService.laodingStateChanged.next(false);
-      this.state.updateCheckMetricCount(Metric.fromJSON(result));
-      // this.state.updateCheckMetric(Metric.fromJSON(result));
-      console.log(result);
-      this.dialogRef.close();
-    });
+    const creationDate = new Date(this.modalWithCheck.value.createdAt._d);
+    if (creationDate < this.state.currentOkr.value.startingAt || creationDate > this.state.currentOkr.value.endingAt) {
+      this.dialog.open(AlertDialogComponent, {role: 'alertdialog'});
+    } else {
+      this.uiService.laodingStateChanged.next(true);
+      this.http.put(`${this.putUrl}/${this.modalWithCheck.value.id}`, {
+        author: this.authService.getUserName().displayName,
+        checked: true,
+        createdAt: this.modalWithCheck.value.createdAt._d
+      }).subscribe((result: MetricJSON) => {
+        this.uiService.laodingStateChanged.next(false);
+        this.state.updateCheckMetricCount(Metric.fromJSON(result));
+        // this.state.updateCheckMetric(Metric.fromJSON(result));
+        console.log(result);
+        this.dialogRef.close();
+      });
+    }
   }
 }

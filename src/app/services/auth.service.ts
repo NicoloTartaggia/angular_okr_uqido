@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { User } from '../shared/models/user.model';
 
 import { Observable, of } from 'rxjs';
-import { map, switchMap, take } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 
 import * as firebase from 'firebase';
 import { auth } from 'firebase/app';
@@ -24,10 +24,11 @@ export class AuthService {
   ) {
     this.user$ = this.afAuth.authState.pipe(
       switchMap(user => {
+        console.log(user)
         // Logged in
         if (user) {
           this.user = user;
-          return this.afs.doc<User>(`users/${user.uid}`).valueChanges();
+          return of(user);
         } else {
           // Logged out
           return of(null);

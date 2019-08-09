@@ -139,3 +139,10 @@ html, body{
 .spinner-container{
   margin: 0;
 }
+
+.admin-button {
+  display: none !important;
+  &.show-button {
+    display: block !important;
+  }
+}

@@ -61,7 +61,6 @@ export class CheckDialogComponent implements OnInit {
       this.isLoading = isLoading;
     });
     this.modalWithCheck = new FormGroup({
-      // addMetric: new FormControl(''),
       createdAt: new FormControl(moment()),
       id: new FormControl('', Validators.required)
     });
@@ -85,19 +84,4 @@ export class CheckDialogComponent implements OnInit {
       this.dialogRef.close();
     });
   }
-
-  // onAddition() {
-  //   this.uiService.laodingStateChanged.next(true);
-  //   this.http.post(`${this.postUrl}/${this.modalWithCheck.value.id}`, {
-  //     author: this.authService.getUserName().displayName,
-  //     checked: false,
-  //     createdAt: this.modalWithCheck.value.createdAt._d,
-  //     description: this.modalWithCheck.value.addMetric,
-  //     keyId: this.data.id
-  //   }).subscribe((result: MetricJSON) => {
-  //     this.uiService.laodingStateChanged.next(false);
-  //     this.state.updateCheckMetric(Metric.fromJSON(result));
-  //     console.log(result);
-  //   });
-  // }
 }

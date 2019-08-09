@@ -4,7 +4,7 @@ import { BehaviorSubject } from 'rxjs';
 import { Objective } from '../shared/models/objective.model';
 import { Key, KeyJSON } from '../shared/models/key.model';
 import { Article, ArticleJSON } from '../shared/models/article.model';
-import { Entry } from '../shared/models/entry';
+import {Entry, EntryJSON} from '../shared/models/entry';
 import { Metric, MetricJSON } from '../shared/models/metric.model';
 import { Okr, OkrJSON } from '../shared/models/okr.model';
 
@@ -13,8 +13,8 @@ import { Okr, OkrJSON } from '../shared/models/okr.model';
 })
 export class StateService {
   private objectiveUrl = 'https://us-central1-okr-platform.cloudfunctions.net/objectives';
-  private clockifyUrl = 'https://us-central1-okr-platform.cloudfunctions.net/clockify';
-  // private clockifyUrl = 'http://localhost:5001/okr-platform/us-central1/clockify';
+  // private clockifyUrl = 'https://us-central1-okr-platform.cloudfunctions.net/clockify';
+  private clockifyUrl = 'http://localhost:5001/okr-platform/us-central1/clockify';
   private keysUrl = 'https://us-central1-okr-platform.cloudfunctions.net/keys';
   // private keysUpdateUrl = 'https://us-central1-okr-platform.cloudfunctions.net/keysUpdate';
   private keysUpdateUrl = 'http://localhost:5001/okr-platform/us-central1/keysUpdate';
@@ -73,11 +73,9 @@ export class StateService {
 
   // GET - Get the current okr comparing current date with starting and ending date of each okr.
   getOkrs() {
-    const currentDate = new Date().getTime();
     // if (this.makeRequest(this.url)) {
     //   return;
     // }
-    // this.getClockifyTimeEntries();
     this.http.get(this.url).subscribe((okrs: OkrJSON[]) => {
       this.lastUpdate[this.url] = new Date();
       okrs.forEach((okr: OkrJSON) => {
@@ -248,20 +246,23 @@ export class StateService {
     return ((new Date().getTime() - key.lastUpdate.getTime()) / diff) > 7;
   }
 
-  getClockifyTimeEntries() {
-    this.http.get(this.clockifyUrl)
-      .subscribe((entries: Entry[]) => {
-        const usersCount = Object.keys(entries).length;
-        let average = 0;
-        entries.forEach((entry: Entry) => {
-          if (entry.average >= 1) {
-            average += 1;
-          } else {
-            average += entry.average;
-          }
+  getClockifyTimeEntries(startedAt: Date) {
+    if (startedAt) {
+      this.http.get(`${this.clockifyUrl}?startedAt=${startedAt.getTime()}`)
+        .subscribe((entries: EntryJSON[]) => {
+          const usersCount = Object.keys(entries).length;
+          let average = 0;
+          entries.forEach((entryJSON: EntryJSON) => {
+            const entry = Entry.fromJSON(entryJSON);
+            if (entry.average >= 1) {
+              average += 1;
+            } else {
+              average += entry.average;
+            }
+          });
+          this._clockifyAverage.next((average / usersCount) * 100);
         });
-        this._clockifyAverage.next((average / usersCount) * 100);
-      });
+    }
   }
 
   getTechArticles(keyId: string) {

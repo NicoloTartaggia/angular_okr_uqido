@@ -3,25 +3,29 @@ interface TimeInterval {
   start: string;
 }
 
+interface Activity {
+  description: string;
+  timeInterval: TimeInterval;
+}
+
 export interface EntryJSON {
-  activities: string[];
+  userActivities: Activity[];
   average: number;
   totalUserTime: number;
-  start: string;
 }
 
 export class Entry {
-  activities: string[];
+  userActivities: Activity[];
   average: number;
   totalUserTime: number;
-  start: Date;
+  // start: Date;
 
   constructor(object?: any) {
     if (object) {
-      this.activities = object.activities;
+      this.userActivities = object.userActivities;
       this.average = object.average;
       this.totalUserTime = object.totalUserTime;
-      this.start = object.start && new Date(object.timeInterval.start);
+      // this.start = object.start && new Date(object.start);
     }
   }
     static fromJSON(json?: EntryJSON) {

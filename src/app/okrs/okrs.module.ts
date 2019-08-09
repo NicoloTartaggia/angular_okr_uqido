@@ -16,6 +16,8 @@ import { CheckDialogComponent } from '../dialogs/check-dialog/check-dialog.compo
 import { QuarterDialogComponent } from '../dialogs/quarter-dialog/quarter-dialog.component';
 import { ObjectiveDialogComponent } from '../dialogs/objective-dialog/objective-dialog.component';
 import { KeyDialogComponent } from '../dialogs/key-dialog/key-dialog.component';
+import { MetricDialogComponent } from '../dialogs/metric-dialog/metric-dialog.component';
+import {MetricsComponent} from '../keys/key/metrics/metrics.component';
 
 @NgModule({
   imports: [
@@ -35,7 +37,9 @@ import { KeyDialogComponent } from '../dialogs/key-dialog/key-dialog.component';
     OkrsComponent,
     PieChartComponent,
     QuarterDialogComponent,
-    ObjectiveDialogComponent
+    ObjectiveDialogComponent,
+    MetricDialogComponent,
+    MetricsComponent
   ],
   exports: [],
   entryComponents: [
@@ -43,7 +47,8 @@ import { KeyDialogComponent } from '../dialogs/key-dialog/key-dialog.component';
     LimitDialogComponent,
     KeyDialogComponent,
     ObjectiveDialogComponent,
-    QuarterDialogComponent
+    QuarterDialogComponent,
+    MetricDialogComponent
   ]
 })
 export class OkrsModule { }

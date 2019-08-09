@@ -18,11 +18,13 @@ html, body{
 
 .contents-container{
   margin: 2rem auto;
-  padding-left: 2rem;
-  padding-right: 2rem;
+  padding-left: 15px;
+  padding-right: 15px;
   width: auto;
   @media screen and (min-width: 576px) {
     max-width: 540px;
+    padding-left: 2rem;
+    padding-right: 2rem;
   }
   @media screen and (min-width: 768px) {
     max-width: 720px;
@@ -120,10 +122,28 @@ html, body{
   font-size: 2.5rem;
 }
 
+.obj-button{
+  position: fixed !important;
+  right: 2rem;
+  bottom: 1.5rem;
+  @media screen and (min-width: 576px) {
+    position: relative !important;
+    float: right;
+    right: 2rem;
+    bottom: -2rem;
+    margin: 3rem 0 2rem 0;
+    width: 56px !important;
+    height: 56px !important;
+  }
+}
 
 .plus-button{
   padding: 0;
   min-width: 0;
+}
+
+.text-success {
+  color: green;
 }
 
 .radio-button-container{

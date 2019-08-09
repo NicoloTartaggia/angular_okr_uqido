@@ -38,6 +38,7 @@ export class KeyComponent implements OnInit {
   }
 
   public openDialog() {
+    if (this.key && this.key.keyPercentage >= 100 && this.key.evaluationType === 'check') { return; }
     const data = {
       title: this.key.description,
       evaluationType: this.key.evaluationType,

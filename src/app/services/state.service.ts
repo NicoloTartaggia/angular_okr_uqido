@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {BehaviorSubject, Subject} from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { Objective } from '../shared/models/objective.model';
 import { Key, KeyJSON } from '../shared/models/key.model';
 import { Article, ArticleJSON } from '../shared/models/article.model';

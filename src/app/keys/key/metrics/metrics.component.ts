@@ -8,6 +8,7 @@ import {Observable, Subscription} from 'rxjs';
 import {UiService} from '../../../services/ui.service';
 import {ConfirmDialogComponent} from '../../../dialogs/confirm-dialog/confirm-dialog.component';
 import {MatDialog} from '@angular/material';
+import {MetricDialogComponent} from '../../../dialogs/metric-dialog/metric-dialog.component';
 
 @Component({
   selector: 'app-metrics',
@@ -18,7 +19,7 @@ import {MatDialog} from '@angular/material';
 })
 export class MetricsComponent implements OnInit {
 
-  displayedColumns: string[] = ['author', 'description', 'data'];
+  displayedColumns: string[] = ['author', 'description', 'data', 'action'];
   id: string;
   private metricsDeleteUrl = 'https://us-central1-okr-platform.cloudfunctions.net/metricsDelete';
   public isLoading$: Observable<boolean>;
@@ -57,6 +58,14 @@ export class MetricsComponent implements OnInit {
             this.state.downdateMetric(metric.id);
             this.uiService.laodingStateChanged.next(false);
           });
+      }
+    });
+  }
+
+  openAddMetricDialog() {
+    this.dialog.open(MetricDialogComponent, {
+      data: {
+        keyId: this.id
       }
     });
   }

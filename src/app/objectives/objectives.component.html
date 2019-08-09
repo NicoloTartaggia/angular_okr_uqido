@@ -31,11 +31,7 @@
                         (click)="openKeyDialog(objective.id)">Aggiungi chiave
                 </button>
             </mat-expansion-panel>
-            <button mat-mini-fab class="admin-button obj-button" color="primary" (click)="openObjectiveDialog()">
-                <i class="material-icons">add</i>
-            </button>
-            <button mat-fab class="admin-button obj-big-button" color="primary"
-                    matTooltip="Aggiungi obiettivo" matTooltipClass="dialog-title" (click)="openObjectiveDialog()">
+            <button mat-mini-fab class="admin-button obj-button" [ngClass]="{'show-button': state.option}" color="primary" (click)="openObjectiveDialog()">
                 <i class="material-icons">add</i>
             </button>
         </mat-accordion>

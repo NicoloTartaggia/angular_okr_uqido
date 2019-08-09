@@ -57,20 +57,3 @@
   }
 }
 
-.obj-button{
-  position: fixed;
-  right: 2rem;
-  bottom: 1.5rem;
-  @media screen and (min-width: 576px) {
-    visibility: hidden;
-  }
-}
-
-.obj-big-button{
-  visibility: hidden;
-  @media screen and (min-width: 576px) {
-    visibility: unset;
-    float: right;
-    margin: 1rem 0 2rem 0;
-  }
-}

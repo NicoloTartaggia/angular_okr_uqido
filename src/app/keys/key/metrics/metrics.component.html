@@ -25,6 +25,14 @@
             <td mat-cell class="row-cell" *matCellDef="let metric">
                 <div class="contents-container delete-container">
                     {{metric.createdAt | date}}
+                </div>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+            <th mat-header-cell class="header-cell dialog-title" *matHeaderCellDef>Action</th>
+            <td mat-cell class="row-cell" *matCellDef="let metric">
+                <div class="contents-container delete-container">
                     <button mat-button color="warn" class="delete-icon" [disabled]="isLoading$ | async" (click)="deleteMetric(metric)">
                         <i class="material-icons" *ngIf="!(isLoading$ | async)">delete</i>
                         <mat-spinner *ngIf="isLoading$ | async" [diameter]="20"></mat-spinner>
@@ -36,4 +44,7 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
+    <button mat-mini-fab class="obj-button" color="primary" (click)="openAddMetricDialog()">
+        <i class="material-icons">add</i>
+    </button>
 </div>

@@ -74,7 +74,7 @@ export class CheckDialogComponent implements OnInit {
     }).subscribe((result: MetricJSON) => {
       this.uiService.laodingStateChanged.next(false);
       this.state.updateCheckMetricCount(Metric.fromJSON(result));
-      this.state.updateCheckMetric(Metric.fromJSON(result));
+      // this.state.updateCheckMetric(Metric.fromJSON(result));
       console.log(result);
       this.dialogRef.close();
     });

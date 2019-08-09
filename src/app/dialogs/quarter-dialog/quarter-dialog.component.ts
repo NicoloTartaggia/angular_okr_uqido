@@ -58,12 +58,12 @@ export class QuarterDialogComponent implements OnInit, OnDestroy {
   onSubmit() {
     this.uiService.laodingStateChanged.next(true);
     this.http.post(this.postUrl, {
-      createdAt: this.quarterModal.value.createdAt,
-      endingAt: this.quarterModal.value.endingAt
+      createdAt: this.quarterModal.value.createdAt._d,
+      endingAt: this.quarterModal.value.endingAt._d
     }).subscribe((result: OkrJSON) => {
       console.log(result);
       this.uiService.laodingStateChanged.next(false);
-      // this.state.updateCurrentOkr(Okr.fromJSON(result));
+      this.state.updateCurrentOkr(Okr.fromJSON(result));
       this.dialogRef.close();
     });
   }

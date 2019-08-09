@@ -1,10 +1,7 @@
-import * as firebase from 'firebase';
-import Timestamp = firebase.firestore.Timestamp;
-
 export interface MetricJSON {
   author: string;
   checked?: boolean;
-  createdAt: Timestamp;
+  createdAt: string;
   description: string;
   id: string;
   keyId: string;

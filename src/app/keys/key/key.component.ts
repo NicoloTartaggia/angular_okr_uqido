@@ -43,6 +43,7 @@ export class KeyComponent implements OnInit, OnDestroy {
   }
 
   public openDialog() {
+    console.log(this.key)
     const data = {
       title: this.key.description,
       evaluationType: this.key.evaluationType,
@@ -61,6 +62,7 @@ export class KeyComponent implements OnInit, OnDestroy {
   }
 
   deleteKey(key: Key) {
+    console.log(key)
     this.uiService.laodingStateChanged.next(true);
     this.http.delete(`${this.keysDeletetUrl}/${key.id}`, {responseType: 'text'})
       .subscribe(result => {

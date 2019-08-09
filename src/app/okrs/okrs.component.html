@@ -46,10 +46,10 @@
         <mat-menu #modeMenu="matMenu">
             <mat-list-item>
                 <button mat-button (click)="state.changeOption()">
-                    Modalità sviluppatore
+                    Gestisci quarter
                     <span class="fa-stack fa-1x">
                       <i class="far fa-square fa-stack-2x"></i>
-                      <i class="fas fa-check fa-stack-1x admin-button"></i>
+                      <i class="fas fa-check fa-stack-1x admin-button" [ngClass]="{'show-button': state.option}"></i>
                     </span>
                 </button>
             </mat-list-item>

@@ -1,18 +1,18 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, Inject, OnInit, OnDestroy} from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MomentDateAdapter } from '@angular/material-moment-adapter';
-import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import {HttpClient} from '@angular/common/http';
+import {Component, Inject, OnInit, OnDestroy} from '@angular/core';
+import {MatDialogRef, MAT_DIALOG_DATA, MatDialog} from '@angular/material/dialog';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {MomentDateAdapter} from '@angular/material-moment-adapter';
+import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 
-import { UiService } from '../../services/ui.service';
-import { AuthService } from '../../services/auth.service';
+import {UiService} from '../../services/ui.service';
+import {AuthService} from '../../services/auth.service';
 
-import { Subscription } from 'rxjs';
+import {Subscription} from 'rxjs';
 import * as _moment from 'moment';
 // tslint:disable-next-line:no-duplicate-imports
 // @ts-ignore
-import { default as _rollupMoment } from 'moment';
+import {default as _rollupMoment} from 'moment';
 import {StateService} from '../../services/state.service';
 import {Metric, MetricJSON} from '../../shared/models/metric.model';
 
@@ -40,12 +40,14 @@ export const MY_FORMATS = {
   ],
 })
 export class LimitDialogComponent implements OnInit, OnDestroy {
+  // private postUrl = 'http://localhost:5001/okr-platform/us-central1/metricsCreate';
   private postUrl = 'https://us-central1-okr-platform.cloudfunctions.net/metricsCreate';
   private subscriptions: Subscription[] = [];
   public isLoading = false;  // Used for loading spinner
   public modalWithLimit: FormGroup;
 
   constructor(private dateAdapter: DateAdapter<any>,
+              public dialog: MatDialog,
               public dialogRef: MatDialogRef<LimitDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any,
               private http: HttpClient,
@@ -69,6 +71,10 @@ export class LimitDialogComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach(s => s.unsubscribe());
   }
 
+  get currentState() {
+    return this.state;
+  }
+
   onSubmit() {
     this.uiService.laodingStateChanged.next(true);
     this.http.post(this.postUrl, {
@@ -76,11 +82,15 @@ export class LimitDialogComponent implements OnInit, OnDestroy {
       createdAt: this.modalWithLimit.value.createdAt._d,
       description: this.modalWithLimit.value.description,
       keyId: this.data.id
+    }, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
+      }
     }).subscribe((result: MetricJSON) => {
-      console.log(result);
       this.uiService.laodingStateChanged.next(false);
-      this.state.updateLimitMetricCount(this.data.id);
       this.state.updateLimitMetric(Metric.fromJSON(result));
+      this.state.updateLimitMetricCount(this.data.id);
       this.dialogRef.close();
     });
   }

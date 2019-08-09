@@ -15,23 +15,23 @@
         <mat-accordion>
             <mat-expansion-panel *ngFor="let objective of (state.objectives | async)">
                 <mat-expansion-panel-header>
-                    <button mat-button *ngIf="!isLoading" class="admin-button" (click)="deleteObjective(objective)"
-                            color="warn"><i class="material-icons">
-                        delete
-                    </i></button>
-                    <mat-spinner *ngIf="isLoading" [diameter]="20"></mat-spinner>
+                    <button mat-button [disabled]='isLoading$|async'
+                            [ngClass]="{'admin-button': true, 'show-button': state.option}"
+                            (click)="deleteObjective(objective); $event.stopPropagation()"
+                            color="warn">
+                        <i class="material-icons" *ngIf="!(isLoading$|async)">delete</i>
+                        <mat-spinner *ngIf="isLoading$|async" [diameter]="20"></mat-spinner>
+                    </button>
                     {{objective.description}}
                 </mat-expansion-panel-header>
                 <app-keys [objectiveId]="objective.id"></app-keys>
-                <button mat-raised-button class="add-key" matTooltip="Aggiungi chiave" color="primary"
+                <button mat-raised-button class="add-key"
+                        [ngClass]="{'admin-button': true, 'show-button': state.option}" matTooltip="Aggiungi chiave"
+                        color="primary"
                         (click)="openKeyDialog(objective.id)">Aggiungi chiave
                 </button>
             </mat-expansion-panel>
-            <button mat-mini-fab class="admin-button obj-button" color="primary" (click)="openObjectiveDialog()">
-                <i class="material-icons">add</i>
-            </button>
-            <button mat-fab class="admin-button obj-big-button" color="primary"
-                    matTooltip="Aggiungi obiettivo" matTooltipClass="dialog-title" (click)="openObjectiveDialog()">
+            <button mat-mini-fab class="admin-button obj-button" [ngClass]="{'show-button': state.option}" color="primary" (click)="openObjectiveDialog()">
                 <i class="material-icons">add</i>
             </button>
         </mat-accordion>

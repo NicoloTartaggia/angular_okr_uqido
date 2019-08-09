@@ -1,0 +1,14 @@
+<form [formGroup]="metricModal" (ngSubmit)="onSubmit()">
+    <div class="dialog-contents">
+    </div>
+    <mat-form-field class="mat-form-container">
+        <input matInput formControlName="description" placeholder="Inserisci metrica"/>
+    </mat-form-field>
+    <mat-dialog-actions class="buttons-container">
+        <button mat-raised-button (click)="dialogRef.close()" [disabled]="isLoading">Annulla</button>
+        <button type="submit" mat-raised-button color="primary" [disabled]="!metricModal.valid || isLoading">
+            <span *ngIf="!isLoading">Conferma</span>
+            <mat-spinner *ngIf="isLoading" [diameter]="36"></mat-spinner>
+        </button>
+    </mat-dialog-actions>
+</form>

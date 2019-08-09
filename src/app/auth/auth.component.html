@@ -10,7 +10,7 @@
         </div>
         <div class="button-container">
             <button mat-button class="google-btn"(click)="auth.googleSignin()">
-                <i class="fab fa-google fa-4x"></i>
+                <i class="fa-4x" [ngClass]="{'fa fa-spin fa-circle-notch': (auth.isLoading$|async), 'fab fa-google': !(auth.isLoading$|async)}"></i>
                 <span class="google-btn-text">Sign in with Google</span>
             </button>
         </div>

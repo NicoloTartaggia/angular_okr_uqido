@@ -2,42 +2,39 @@
   font-size: 2rem;
 }
 
+.check-icon{
+  margin-left: 0.5rem;
+}
+
 .column-header{
   padding-right: 2rem;
 }
 
 .contents-container{
-  display: flex;
   margin: 1rem auto !important;
-  justify-content: center;
 }
 
 .delete-container{
   align-items: center;
+  padding: 0;
 }
 
-.delete-icon{
-  position: absolute;
-  margin-left: 2.5rem;
+.mat-column-data {
+  display: none;
   @media screen and (min-width: 576px) {
-    margin-left: 4rem
+    display: table-cell;
   }
-  @media screen and (min-width: 768px) {
-    margin-left: 5rem
-  }
-  @media screen and (min-width: 992px) {
-    margin-left: 6rem
-  }
-  @media screen and (min-width: 1200px) {
-    margin-left: 7rem
-  }
+}
+
+.mat-column-action {
+  width: 50px;
 }
 
 .header-cell{
   text-align: center;
   padding: 1rem !important;
   @media screen and (min-width: 576px) {
-    padding: 3rem !important;
+    padding: 3rem 0 !important;
   }
 }
 

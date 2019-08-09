@@ -20,7 +20,6 @@ const routes: Routes = [
     ]
   },
   { path: 'login', component: AuthComponent },
-  { path: 'keys/:id/metrics', component: MetricsComponent },
   { path: '**', redirectTo: '/okrs' }
 ];
 

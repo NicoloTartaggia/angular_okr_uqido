@@ -6,8 +6,9 @@ import { ObjectiveDialogComponent } from '../dialogs/objective-dialog/objective-
 import { KeyDialogComponent } from '../dialogs/key-dialog/key-dialog.component';
 import { Objective } from '../shared/models/objective.model';
 import { UiService } from '../services/ui.service';
-import { Subscription } from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import {ConfirmDialogComponent} from '../dialogs/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-objectives',
@@ -15,13 +16,12 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./objectives.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ObjectivesComponent implements OnInit, OnDestroy {
+export class ObjectivesComponent implements OnInit {
 
   private objectivesDeletetUrl = 'https://us-central1-okr-platform.cloudfunctions.net/objectivesDelete';
   private start;
   private end;
-  private subscriptions: Subscription[] = [];
-  public isLoading = false;
+  isLoading$: Observable<boolean>;
 
   constructor(private http: HttpClient,
               private uiService: UiService,
@@ -29,18 +29,12 @@ export class ObjectivesComponent implements OnInit, OnDestroy {
               public state: StateService) {}
 
   ngOnInit() {
-    this.subscriptions.push(this.uiService.laodingStateChanged.subscribe(isLoading => {
-      this.isLoading = isLoading;
-    }));
+    this.isLoading$ = this.uiService.laodingStateChanged;
     this.state.currentOkr.subscribe((currentOkr: Okr) => {
       this.start = currentOkr.startingAt;
       this.end = currentOkr.endingAt;
       this.state.setObjectives(currentOkr.id);
     });
-  }
-
-  ngOnDestroy() {
-    this.subscriptions.forEach(s => s.unsubscribe());
   }
 
   get startingAt() {
@@ -65,12 +59,17 @@ export class ObjectivesComponent implements OnInit, OnDestroy {
   }
 
   deleteObjective(objective: Objective) {
-    this.uiService.laodingStateChanged.next(true);
-    this.http.delete(`${this.objectivesDeletetUrl}/${objective.id}`, {responseType: 'text'})
-      .subscribe(result => {
-        console.log(result);
-        this.uiService.laodingStateChanged.next(false);
-        this.state.downdateObjective(objective.id);
-      });
+    const dialogRef = this.dialog.open(ConfirmDialogComponent);
+    dialogRef.afterClosed().subscribe(resultConfirm => {
+      if (resultConfirm) {
+        this.uiService.laodingStateChanged.next(true);
+        this.http.delete(`${this.objectivesDeletetUrl}/${objective.id}`, {responseType: 'text'})
+          .subscribe(result => {
+            console.log(result);
+            this.uiService.laodingStateChanged.next(false);
+            this.state.downdateObjective(objective.id);
+          });
+      }
+    });
   }
 }

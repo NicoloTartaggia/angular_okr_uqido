@@ -13,9 +13,10 @@ export class AuthComponent implements OnInit {
 
   ngOnInit() {
     // If user's session exists navigate to okrs page
-    if (this.auth.user$) {
+    this.auth.user$.subscribe(user => {
+      if (!user) { return; }
       this.router.navigate(['../okrs']);
-    }
+    });
   }
 
 }

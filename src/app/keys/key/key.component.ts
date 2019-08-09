@@ -4,9 +4,10 @@ import { MatDialog } from '@angular/material';
 import { LimitDialogComponent } from '../../dialogs/limit-dialog/limit-dialog.component';
 import { CheckDialogComponent } from '../../dialogs/check-dialog/check-dialog.component';
 import { StateService } from '../../services/state.service';
-import { Subscription } from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import { UiService } from '../../services/ui.service';
 import { HttpClient } from '@angular/common/http';
+import { ConfirmDialogComponent } from '../../dialogs/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-key',
@@ -14,28 +15,22 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./key.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class KeyComponent implements OnInit, OnDestroy {
+export class KeyComponent implements OnInit {
   @Input()
   key: Key;
 
   private keysDeletetUrl = 'https://us-central1-okr-platform.cloudfunctions.net/keysDelete';
-  private subscriptions: Subscription[] = [];
-  public isLoading = false;
+  public isLoading$: Observable<boolean>;
   public users;
 
   constructor(private http: HttpClient,
-              private state: StateService,
               private uiService: UiService,
-              public dialog: MatDialog) { }
-
-  ngOnInit() {
-    this.subscriptions.push(this.uiService.laodingStateChanged.subscribe(isLoading => {
-      this.isLoading = isLoading;
-    }));
+              public dialog: MatDialog,
+              public state: StateService) {
   }
 
-  ngOnDestroy() {
-    this.subscriptions.forEach(s => s.unsubscribe());
+  ngOnInit() {
+    this.isLoading$ = this.uiService.laodingStateChanged;
   }
 
   get getState() {
@@ -43,6 +38,7 @@ export class KeyComponent implements OnInit, OnDestroy {
   }
 
   public openDialog() {
+    if (this.key && this.key.keyPercentage >= 100 && this.key.evaluationType === 'check') { return; }
     const data = {
       title: this.key.description,
       evaluationType: this.key.evaluationType,
@@ -61,12 +57,17 @@ export class KeyComponent implements OnInit, OnDestroy {
   }
 
   deleteKey(key: Key) {
-    this.uiService.laodingStateChanged.next(true);
-    this.http.delete(`${this.keysDeletetUrl}/${key.id}`, {responseType: 'text'})
-      .subscribe(result => {
-        console.log(result);
-        this.uiService.laodingStateChanged.next(false);
-        this.state.downdateKey(key.id);
-      });
+    const dialofRef = this.dialog.open(ConfirmDialogComponent);
+    dialofRef.afterClosed().subscribe(confirmResult => {
+      if (confirmResult) {
+        this.uiService.laodingStateChanged.next(true);
+        this.http.delete(`${this.keysDeletetUrl}/${key.id}`, {responseType: 'text'})
+          .subscribe(result => {
+            console.log(result);
+            this.uiService.laodingStateChanged.next(false);
+            this.state.downdateKey(key.id);
+          });
+      }
+    });
   }
 }

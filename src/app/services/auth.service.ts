@@ -2,7 +2,7 @@ import { Injectable, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from '../shared/models/user.model';
 
-import { Observable, of } from 'rxjs';
+import {Observable, of, Subject} from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
 import * as firebase from 'firebase';
@@ -15,6 +15,7 @@ export class AuthService {
 
   user$: Observable<User>;
   user: User;
+  isLoading$ = new Subject<boolean>();
 
   constructor(
     private afAuth: AngularFireAuth,
@@ -24,7 +25,7 @@ export class AuthService {
   ) {
     this.user$ = this.afAuth.authState.pipe(
       switchMap(user => {
-        console.log(user)
+        this.isLoading$.next(false);
         // Logged in
         if (user) {
           this.user = user;
@@ -48,19 +49,8 @@ export class AuthService {
     // Persistence sets to LOCAL, in order to mantain user logged in even if he closes the browser.
     firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
       .then(() => {
-        return firebase.auth().signInWithRedirect(provider)
-          .then((results) => {
-            console.log(results);
-            this.updateUserData(results);
-            this.ngZone.run(() => {
-              this.router.navigate(['../okrs']);
-            });
-          }).catch(error => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            const email = error.email;
-            const credential = error.credential;
-          });
+        this.isLoading$.next(true);
+        return firebase.auth().signInWithPopup(provider);
       });
   }
 

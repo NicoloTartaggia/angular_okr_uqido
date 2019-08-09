@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {MatDialogRef, MAT_DIALOG_DATA, MatDialog} from '@angular/material/dialog';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
@@ -15,7 +15,6 @@ import * as _moment from 'moment';
 // tslint:disable-next-line:no-duplicate-imports
 // @ts-ignore
 import { default as _rollupMoment } from 'moment';
-
 const moment = _rollupMoment || _moment;
 
 export const MY_FORMATS = {
@@ -41,11 +40,13 @@ export const MY_FORMATS = {
 })
 export class CheckDialogComponent implements OnInit {
   private putUrl = 'https://us-central1-okr-platform.cloudfunctions.net/metricsUpdate';
+  private postUrl = 'https://us-central1-okr-platform.cloudfunctions.net/metricsCreate';
   private loadingSubs: Subscription;
   public isLoading = false;  // Used for loading spinner
   public modalWithCheck: FormGroup;
 
   constructor(private dateAdapter: DateAdapter<any>,
+              public dialog: MatDialog,
               public dialogRef: MatDialogRef<CheckDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any,
               private http: HttpClient,
@@ -63,6 +64,10 @@ export class CheckDialogComponent implements OnInit {
       createdAt: new FormControl(moment()),
       id: new FormControl('', Validators.required)
     });
+  }
+
+  get currentState() {
+    return this.state;
   }
 
   onSubmit() {

@@ -251,7 +251,7 @@ export class StateService {
   getClockifyTimeEntries() {
     this.http.get(this.clockifyUrl)
       .subscribe((entries: Entry[]) => {
-        let users = 0;
+        const usersCount = Object.keys(entries).length;
         let average = 0;
         entries.forEach((entry: Entry) => {
           if (entry.average >= 1) {
@@ -259,9 +259,8 @@ export class StateService {
           } else {
             average += entry.average;
           }
-          users += 1;
         });
-        this._clockifyAverage.next((average / users) * 100);
+        this._clockifyAverage.next((average / usersCount) * 100);
       });
   }
 

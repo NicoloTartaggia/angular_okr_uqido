@@ -13,8 +13,8 @@ import { Okr, OkrJSON } from '../shared/models/okr.model';
 })
 export class StateService {
   private objectiveUrl = 'https://us-central1-okr-platform.cloudfunctions.net/objectives';
-  // private clockifyUrl = 'https://us-central1-okr-platform.cloudfunctions.net/clockify';
-  private clockifyUrl = 'http://localhost:5001/okr-platform/us-central1/clockify';
+  private clockifyUrl = 'https://us-central1-okr-platform.cloudfunctions.net/clockify';
+  // private clockifyUrl = 'http://localhost:5001/okr-platform/us-central1/clockify';
   private keysUrl = 'https://us-central1-okr-platform.cloudfunctions.net/keys';
   // private keysUpdateUrl = 'https://us-central1-okr-platform.cloudfunctions.net/keysUpdate';
   private keysUpdateUrl = 'http://localhost:5001/okr-platform/us-central1/keysUpdate';

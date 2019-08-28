@@ -45,7 +45,6 @@ export class AuthService {
   async googleSignin() {
     // Initializing new Google provider
     const provider = new auth.GoogleAuthProvider();
-
     // Persistence sets to LOCAL, in order to mantain user logged in even if he closes the browser.
     firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
       .then(() => {

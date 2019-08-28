@@ -34,7 +34,7 @@ export class ObjectivesComponent implements OnInit {
       this.start = currentOkr.startingAt;
       this.end = currentOkr.endingAt;
       this.state.setObjectives(currentOkr.id);
-      this.state.getClockifyTimeEntries(currentOkr.startingAt);
+      // this.state.getClockifyTimeEntries(currentOkr.startingAt);
     });
   }
 

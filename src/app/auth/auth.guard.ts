@@ -15,9 +15,12 @@ export class AuthGuard implements CanActivate {
       take(1),  // Emits only the first count values emitted by the source Observable
       // Perform a side effect for every emission on the source Observable, but return an Observable that is identical to the source.
       map(user => {
+        if (!user) {
+          this.router.navigate(['./login']);
+        }
         const email = user.email;
         const notUqido = email.slice(email.indexOf('@') + 1, email.length) !== 'uqido.com';
-        if (!user || notUqido) {
+        if (notUqido) {
           if (notUqido) {
             alert('Il servizio è accessibile solo agli utenti del dominio Uqido');
           }
